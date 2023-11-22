@@ -1,0 +1,60 @@
+h3 {
+    margin-left : 10px;
+}
+
+table {
+    width: 98%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+    margin-left: 10px;
+}
+
+thead tr th {
+    background-color: blueviolet;
+    color:white;
+}
+
+th, td {
+    border-bottom: 1px solid #444444;
+    padding: 10px;
+}
+
+th:first-child, td:first-child {
+    border-left: none;
+}
+
+.btn_qna {
+    padding:10px;
+    margin:auto;
+    float:right;
+}
+
+.docu_ans {
+    float: left;
+    width : 95%;
+    padding:10px;
+    margin-left:3%;
+    
+}
+
+.name, .title, .mail {
+    width : 300px;
+}
+
+.content {
+    width: 500px;
+    height: 300px;;
+}
+
+#d_save_btn, #d_cancel_btn {
+    position: fixed;
+    float: left;
+    width : 7%;
+    padding: 3px;
+    left: 45%;
+    top : 80%;
+}
+
+#d_cancel_btn {
+    left: 55%;
+}

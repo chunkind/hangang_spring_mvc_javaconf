@@ -1,0 +1,49 @@
+#section{
+    display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+#id{
+    padding-right: 130px;
+}
+#id input{
+    width: 300px;
+	height: 30px;
+}
+#email{
+    padding-right: 130px;
+}
+#email input{
+    width: 300px;
+	height: 30px;
+}
+#pwd{
+    padding-right: 130px;
+}
+#pwd input{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    width: 300px;
+	height: 30px;
+}
+#ph input{
+    width: 100px;
+	height: 30px;
+}
+#ph #c_btn{
+    width: 100px;
+	height: 30px;
+}
+#ymd select{
+    width: 100px;
+	height: 30px;
+}
+#ymd{
+    padding-right: 130px;
+}
+#join_btn{
+    width: 150px;
+	height: 40px;
+    margin-top: 30px;
+}

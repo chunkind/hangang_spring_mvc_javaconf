@@ -1,0 +1,67 @@
+/* 배경색 */
+.bc_black{background-color: #474747;}
+.bc_red{background-color: #ff6b6b;}
+.bc_green{background-color: #00df00;}
+.bc_blue{background-color: #3333ff;}
+.bc_sky{background-color: #46fdfd;}
+.bc_puff{background-color: #ff7aff;}
+.bc_yellow{background-color: #fcfc8a;}
+.bc_white{background-color: #ffffff;}
+
+.bc_puff_pastel{background-color: #ff9ff3;}
+.bc_yellow_pastel{background-color: #feca57;}
+.bc_red_pastel{background-color: #ff6b6b;}
+.bc_sky_pastel{background-color: #48dbfb;}
+.bc_green_pastel{background-color: #1dd1a1;}
+
+.bc_pink_pastel{background-color: #f368e0;}
+.bc_orange_pastel{background-color: #ff9f43;}
+.bc_red_pastel2{background-color: #ee5253;}
+.bc_sky_pastel2{background-color: #0abde3;}
+.bc_green_pastel2{background-color: #10ac84;}
+
+.bc_green_pastel3{background-color: #00d2d3;}
+.bc_sky_pastel3{background-color: #54a0ff;}
+.bc_puff_pastel2{background-color: #5f27cd;}
+.bc_white_pastel{background-color: #c8d6e5;}
+.bc_gray{background-color: #9c9c9c;}
+
+.bc_green_pastel4{background-color: #01a3a4;}
+.bc_blue_pastel{background-color: #2e86de;}
+.bc_puff_pastel3{background-color: #341f97;}
+.bc_gray_pastel{background-color: #8395a7;}
+.bc_black_pastel{background-color: #222f3e;}
+
+/* 글자색 */
+.pc_black{color: #000000;}
+.pc_red{color: #ff0000;}
+.pc_green{color: #00ff00;}
+.pc_blue{color: #0000ff;}
+.pc_sky{color: #00ffff;}
+.pc_puff{color: #ff00ff;}
+.pc_yellow{color: #ffff00;}
+.pc_white{color: #ffffff;}
+
+.pc_puff_pastel{color: #ff9ff3;}
+.pc_yellow_pastel{color: #feca57;}
+.pc_red_pastel{color: #ff6b6b;}
+.pc_sky_pastel{color: #48dbfb;}
+.pc_green_pastel{color: #1dd1a1;}
+
+.pc_pink_pastel{color: #f368e0;}
+.pc_orange_pastel{color: #ff9f43;}
+.pc_red_pastel2{color: #ee5253;}
+.pc_sky_pastel2{color: #0abde3;}
+.pc_green_pastel2{color: #10ac84;}
+
+.pc_green_pastel3{color: #00d2d3;}
+.pc_sky_pastel3{color: #54a0ff;}
+.pc_puff_pastel2{color: #5f27cd;}
+.pc_white_pastel{color: #c8d6e5;}
+.pc_gray{color: #576574;}
+
+.pc_green_pastel4{color: #01a3a4;}
+.pc_blue_pastel{color: #2e86de;}
+.pc_puff_pastel3{color: #341f97;}
+.pc_gray_pastel{color: #8395a7;}
+.pc_black_pastel{color: #222f3e;}

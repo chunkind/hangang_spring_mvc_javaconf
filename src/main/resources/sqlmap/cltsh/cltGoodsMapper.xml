@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.goods.service.CltGoodsMapper">
+	<select id="goodsCnt" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM CLT_GOODS_INFO
+	</select>
+	
+	<select id="selectGoodsPagingList" resultType="cltGoodsDto">
+		/* goodsDao.selectGoodsPagingList - 상품 페이징 리스트 */
+		SELECT GOODS_INFO_SEQ AS goodsInfoSeq 	/*상품 시퀀스*/
+			, GOODS_CD AS goodsCd 				/*상품 코드*/
+			, ENTR_NO AS entrNo 				/*거래처 번호*/
+			, GOODS_NM AS goodsNm 				/*상품이름*/
+			, GOODS_PRC AS goodsPrc 			/*상품가격*/
+			, CATGRY_CD AS catgryCd 			/*대분류*/
+			, CATGRY_CD2 AS catgryCd2 			/*소분류*/
+			, INY_QTY AS inyQty 				/*재고수량*/
+			, DLV_PRC AS dlvPrc 				/*배송비*/
+			, GOODS_SIZE AS goodsSize 			/*상품싸이즈*/
+			, GOODS_CLR AS goodsClr 			/*상품컬러*/
+			, IMG_PATH AS imgPath 				/*이미지경로*/
+			, IMG_NM AS imgNm 					/*이미지이름*/
+			, GOODS_INTR AS goodsIntr 			/*상품소개*/
+			, SALE_STAT_CD AS saleStatCd 		/*판매상태*/
+			, USE_YN AS useYn 					/*사용여부*/
+			, RGST_ID AS rgstId 				/*등록자*/
+			, RGST_DATE AS rgstDate 			/*등록일*/
+			, UPDT_ID AS updtId 				/*수정자*/
+			, UPDT_DATE AS updtDate 			/*수정일*/
+		FROM CLT_GOODS_INFO
+		WHERE 1=1
+		<if test="entrNo gt 0">
+			AND ENTR_NO = #{entrNo }
+		</if>
+		LIMIT #{startIdx }, #{pagePerRows }		
+    </select>
+    
+	<select id="selectGoodsOne" resultType="cltGoodsDto">
+		/* goodsDao.selectGoodsOne - 상품 상세 */
+		SELECT GOODS_INFO_SEQ AS goodsInfoSeq 	/*상품 시퀀스*/
+			, GOODS_CD AS goodsCd 				/*상품 코드*/
+			, ENTR_NO AS entrNo 				/*거래처 번호*/
+			, GOODS_NM AS goodsNm 				/*상품이름*/
+			, GOODS_PRC AS goodsPrc 			/*상품가격*/
+			, CATGRY_CD AS catgryCd 			/*대분류*/
+			, CATGRY_CD2 AS catgryCd2 			/*소분류*/
+			, INY_QTY AS inyQty 				/*재고수량*/
+			, DLV_PRC AS dlvPrc 				/*배송비*/
+			, GOODS_SIZE AS goodsSize 			/*상품싸이즈*/
+			, GOODS_CLR AS goodsClr 			/*상품컬러*/
+			, IMG_PATH AS imgPath 				/*이미지경로*/
+			, IMG_NM AS imgNm 					/*이미지이름*/
+			, GOODS_INTR AS goodsIntr 			/*상품소개*/
+			, SALE_STAT_CD AS saleStatCd 		/*판매상태*/
+			, USE_YN AS useYn 					/*사용여부*/
+			, RGST_ID AS rgstId 				/*등록자*/
+			, RGST_DATE AS rgstDate 			/*등록일*/
+			, UPDT_ID AS updtId 				/*수정자*/
+			, UPDT_DATE AS updtDate 			/*수정일*/
+		FROM CLT_GOODS_INFO
+		WHERE 1=1
+		AND GOODS_INFO_SEQ = #{goodsInfoSeq}
+    </select>
+    
+    <select id="selectGoodsList" resultType="cltGoodsDto">
+		/* goodsDao.selectGoodsList - 상품 리스트 */
+		SELECT GOODS_INFO_SEQ AS goodsInfoSeq 	/*상품 시퀀스*/
+			, GOODS_CD AS goodsCd 				/*상품 코드*/
+			, ENTR_NO AS entrNo 				/*거래처 번호*/
+			, GOODS_NM AS goodsNm 				/*상품이름*/
+			, GOODS_PRC AS goodsPrc 			/*상품가격*/
+			, CATGRY_CD AS catgryCd 			/*대분류*/
+			, CATGRY_CD2 AS catgryCd2 			/*소분류*/
+			, INY_QTY AS inyQty 				/*재고수량*/
+			, DLV_PRC AS dlvPrc 				/*배송비*/
+			, GOODS_SIZE AS goodsSize 			/*상품싸이즈*/
+			, GOODS_CLR AS goodsClr 			/*상품컬러*/
+			, IMG_PATH AS imgPath 				/*이미지경로*/
+			, IMG_NM AS imgNm 					/*이미지이름*/
+			, GOODS_INTR AS goodsIntr 			/*상품소개*/
+			, SALE_STAT_CD AS saleStatCd 		/*판매상태*/
+			, USE_YN AS useYn 					/*사용여부*/
+			, RGST_ID AS rgstId 				/*등록자*/
+			, RGST_DATE AS rgstDate 			/*등록일*/
+			, UPDT_ID AS updtId 				/*수정자*/
+			, UPDT_DATE AS updtDate 			/*수정일*/
+		FROM CLT_GOODS_INFO
+		WHERE 1=1
+		<if test="entrNo gt 0">
+			AND ENTR_NO = #{entrNo}
+		</if>
+	</select>
+
+	<insert id="insertGoods">
+		<selectKey keyProperty="goodsInfoSeq" resultType="long" order="BEFORE">
+			SELECT IFNULL(MAX(GOODS_CD) + 1, 1)  FROM CLT_GOODS_INFO
+		</selectKey>
+		/* goodsDao.insertGoods - 상품 등록 */
+		INSERT INTO CLT_GOODS_INFO
+		( GOODS_CD /*상품 코드*/
+		, ENTR_NO /*거래처 번호*/
+		, GOODS_NM /*상품이름*/
+		, GOODS_PRC /*상품가격*/
+		, CATGRY_CD /*대분류*/
+		, CATGRY_CD2 /*소분류*/
+		, INY_QTY /*재고수량*/
+		, DLV_PRC /*배송비*/
+		, GOODS_SIZE /*상품싸이즈*/
+		, GOODS_CLR /*상품컬러*/
+		, IMG_PATH /*이미지경로*/
+		, IMG_NM /*이미지이름*/
+		, GOODS_INTR /*상품소개*/
+		, SALE_STAT_CD /*판매상태*/
+		, USE_YN /*사용여부*/
+		, RGST_ID /*등록자*/
+		, RGST_DATE /*등록일*/
+		) VALUES
+		( #{goodsInfoSeq} /*상품 코드*/
+		, #{entrNo} /*거래처 번호*/
+		, #{goodsNm} /*상품이름*/
+		, #{goodsPrc} /*상품가격*/
+		, #{catgryCd} /*대분류*/
+		, #{catgryCd2} /*소분류*/
+		, #{inyQty} /*재고수량*/
+		, #{dlvPrc} /*배송비*/
+		, #{goodsSize} /*상품싸이즈*/
+		, #{goodsClr} /*상품컬러*/
+		, #{imgPath} /*이미지경로*/
+		, #{imgNm} /*이미지이름*/
+		, #{goodsIntr} /*상품소개*/
+		, #{saleStatCd} /*판매상태*/
+		, #{useYn} /*사용여부*/
+		, #{rgstId} /*등록자*/
+		, NOW() /*등록일*/
+		)
+	</insert>
+
+	<update id="updateGoods">
+		/* goodsDao.updateGoods - 상품 수정 */
+		UPDATE CLT_GOODS_INFO 
+		SET GOODS_CD = #{goodsCd} 			/*상품 코드*/
+			, ENTR_NO = #{entrNo} 			/*거래처 번호*/
+			, GOODS_NM = #{goodsNm} 		/*상품이름*/
+			, GOODS_PRC = #{goodsPrc} 		/*상품가격*/
+			, CATGRY_CD = #{catgryCd} 		/*대분류*/
+			, CATGRY_CD2 = #{catgryCd2} 	/*소분류*/
+			, INY_QTY = #{inyQty} 			/*재고수량*/
+			, DLV_PRC = #{dlvPrc} 			/*배송비*/
+			, GOODS_SIZE = #{goodsSize} 	/*상품싸이즈*/
+			, GOODS_CLR = #{goodsClr} 		/*상품컬러*/
+			, IMG_PATH = #{imgPath} 		/*이미지경로*/
+			, IMG_NM = #{imgNm} 			/*이미지이름*/
+			, GOODS_INTR = #{goodsIntr} 	/*상품소개*/
+			, SALE_STAT_CD = #{saleStatCd}	/*판매상태*/
+			, USE_YN = #{useYn} 			/*사용여부*/
+			, UPDT_ID = #{updtId} 			/*수정자*/
+			, UPDT_DATE = NOW() 			/*수정일*/
+		WHERE 1=1
+		AND GOODS_INFO_SEQ = #{goodsInfoSeq}
+	</update>
+    
+	<delete id="deleteGoodsOne">
+		/* goodsDao.deleteGoodsOne - 상품 삭제 */
+		DELETE FROM CLT_GOODS_INFO
+		WHERE 1=1
+		AND GOODS_INFO_SEQ = #{goodsInfoSeq} /*상품 시퀀스*/
+    </delete>
+    
+    <select id="selectGoodsDetail" resultType="cltGoodsDto">
+		/* goodsDao.selectGoodsDetail - 상품 상세*/
+		SELECT GOODS.GOODS_CD AS goodsCd
+			, GOODS.ENTR_NO AS entrNo
+			, GOODS.GOODS_NM AS goodsNm
+			/*, GOODS.GOODS_PRC AS goodsPrc*/
+			, GOODS.INY_QTY AS inyQty
+			, GOODS.DLV_PRC AS dlvPrc
+			, GOODS.GOODS_SIZE AS goodsSize
+			, GOODS.GOODS_CLR AS goodsClr
+			, GOODS.IMG_PATH AS imgPath
+			, GOODS.IMG_NM AS imgNm
+			, GOODS.GOODS_INTR AS goodsIntr
+			, GOODS.SALE_STAT_CD AS saleStatCd
+			, GOODS.USE_YN AS useYn
+			, GOODS.RGST_ID AS rgstId
+			, GOODS.RGST_DATE AS rgstDate
+			, GOODS.UPDT_ID AS updtId
+			, GOODS.UPDT_DATE AS updtDate
+			, SALE.SALE_BOARD_SEQ AS saleBoardSeq
+			, SALE.SALE_STAT_CD AS saleStatCd
+			, SALE.BUL_TIT_NM AS bulTitNm
+			, SALE.BUL_STRT_DT AS bulStrtDt
+			, SALE.BUL_END_DT AS bulEndDt
+			, SALE.BUL_YN AS bulYn
+			, SALE.NTC_SCT_CD AS ntcSctCd
+			, SALE.BUL_CONT AS bulCont
+			, SALE.QRY_CNT AS qryCnt
+			, SALE.LKE_CNT AS lkeCnt
+			, SALE.GOODS_PRC AS goodsPrc
+			, SALE.GOODS_SALE_PRC AS goodsSalePrc
+			, SALE.PRCL_WAY AS prclWay
+			, SALE.SALE_CNT AS saleCnt
+			, SALE.RGST_ID AS rgstId
+			, SALE.RGST_DATE AS rgstDate
+			, SALE.UPDT_ID AS updtId
+			, SALE.UPDT_DATE AS updtDate
+			, SALE.USE_YN AS useYn
+			, SALE.DESCRIPTION AS description
+		FROM CLT_SALE_BOARD SALE
+			, CLT_GOODS_INFO GOODS
+		WHERE 1=1
+		AND SALE.GOODS_CD = GOODS.GOODS_CD
+		AND SALE.ENTR_NO = GOODS.ENTR_NO
+		AND SALE.SALE_BOARD_SEQ = #{saleBoardSeq}
+    </select>
+    
+    <select id="selectMypgGoodsOne" resultType="cltGoodsDto">
+		/* goodsDao.selectMypgGoodsOne - 마이페이지 상품 */
+		SELECT GOODS.GOODS_CD AS goodsCd
+			, GOODS.ENTR_NO AS entrNo
+			, GOODS.GOODS_NM AS goodsNm
+			, GOODS.GOODS_PRC AS goodsPrc
+			, GOODS.INY_QTY AS inyQty
+			, GOODS.DLV_PRC AS dlvPrc
+			, GOODS.GOODS_SIZE AS goodsSize
+			, GOODS.GOODS_CLR AS goodsClr
+			, GOODS.IMG_PATH AS imgPath
+			, GOODS.IMG_NM AS imgNm
+			, GOODS.GOODS_INTR AS goodsIntr
+			, GOODS.SALE_STAT_CD AS saleStatCd
+			, GOODS.USE_YN AS useYn
+			, GOODS.RGST_ID AS rgstId
+			, GOODS.RGST_DATE AS rgstDate
+			, GOODS.UPDT_ID AS updtId
+			, GOODS.UPDT_DATE AS updtDate
+			, SALE.SALE_BOARD_SEQ AS saleBoardSeq
+			, SALE.SALE_STAT_CD AS saleStatCd
+			, SALE.BUL_TIT_NM AS bulTitNm
+			, SALE.BUL_STRT_DT AS bulStrtDt
+			, SALE.BUL_END_DT AS bulEndDt
+			, SALE.BUL_YN AS bulYn
+			, SALE.NTC_SCT_CD AS ntcSctCd
+			, SALE.BUL_CONT AS bulCont
+			, SALE.QRY_CNT AS qryCnt
+			, SALE.LKE_CNT AS lkeCnt
+			, SALE.GOODS_PRC AS goodsPrc
+			, SALE.GOODS_SALE_PRC AS goodsSalePrc
+			, SALE.PRCL_WAY AS prclWay
+			, SALE.SALE_CNT AS saleCnt
+			, SALE.RGST_ID AS rgstId
+			, SALE.RGST_DATE AS rgstDate
+			, SALE.UPDT_ID AS updtId
+			, SALE.UPDT_DATE AS updtDate
+			, SALE.USE_YN AS useYn
+			, SALE.DESCRIPTION AS description
+		FROM CLT_SALE_BOARD SALE
+			, CLT_GOODS_INFO GOODS
+		WHERE 1=1
+		AND SALE.GOODS_CD = GOODS.GOODS_CD
+		AND SALE.ENTR_NO = GOODS.ENTR_NO
+		AND SALE.GOODS_CD = #{goodsCd}
+    </select>
+    
+    <delete id="deleteGoodsAll">
+		/* goodsDao.deleteGoodsAll - 모든 상품 삭제 */
+		DELETE FROM CLT_GOODS_INFO;
+    </delete>
+
+	<delete id="dropSeq">
+		/* goodsDao.dropSeq - 시퀀스 드랍 */
+		DROP SEQUENCE SQ_GOODS_INFO_SEQ
+	</delete>
+
+	<insert id="createSeq">
+		/* goodsDao.createSeq - 시퀀스 생성 */
+		CREATE SEQUENCE SQ_GOODS_INFO_SEQ
+	</insert>
+</mapper>

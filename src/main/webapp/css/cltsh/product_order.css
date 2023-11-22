@@ -1,0 +1,121 @@
+/* 주문관리 */
+.product_order_main{
+    width: 1000px;
+    padding-left: 250px;
+}
+
+.product_order_title{
+    margin-top: 30px;
+    border-bottom: 2px solid;
+}
+
+.product_order_search_sort{
+    border-bottom: 1px solid;
+}
+
+.product_order_search_date{
+    border-bottom: 1px solid;
+}
+
+.product_order_search_purchase{
+    margin-bottom: 50px;
+    border-bottom: 1px solid;
+}
+
+.product_order_result_sort{
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.product_order_result_sort select{
+    width: 120px;
+    height: 30px;
+}
+
+.product_order_table{
+    margin-bottom: 30px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product_order_table_head{
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+}
+
+.product_order_table_body{
+    border-bottom: 1px solid;
+}
+
+.page_button{
+    text-align: center;
+}
+
+/* 배송정보입력 */
+#product_order_delivery{
+    width: 100%;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+#product_order_delivery div{
+    width: 600px;
+}
+
+#product_order_delivery div h2{
+    text-align: center;
+}
+
+.product_order_delivery_title{
+    padding-top: 30px;
+    border-bottom: 1px solid;
+}
+
+.product_order_number{
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-bottom: 1px solid;
+}
+
+.product_order_detail{
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-bottom: 1px solid;
+}
+
+.product_delivery_detail{
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-bottom: 1px solid; 
+}
+
+.product_delivery_number{
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-bottom: 1px solid; 
+}
+
+.product_delivery_time{
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.product_delivery_button{
+    margin-top: 30px;
+}
+
+.product_delivery_button_div{
+    text-align: center;
+}

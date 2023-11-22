@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.cate.service.CltCateMapper">
+	
+	<insert id="insertCate">
+		/* cateDao.insertCate - 상품 카테고리 등록 */
+		INSERT INTO CLT_GOODS_CATA
+		( CATGRY_CD /*분류 코드*/
+		, GOODS_CD /*상품 코드*/
+		, CATGRY_NM /*분류 명*/
+		, NOTE_CONT /*비고 내용*/
+		, CLASS_LVL_CD /*분류 레벨 코드*/
+		, UPR_CLASS_CD /*상위 분류 코드*/
+		, RGST_ID /*등록아이디*/
+		, RGST_DATE /*등록일자*/
+		, USE_YN /*사용 여부*/
+		) VALUES
+		( #{catgryCd} /*분류 코드*/
+		, #{goodsCd} /*상품 코드*/
+		, #{catgryNm} /*분류 명*/
+		, #{noteCont} /*비고 내용*/
+		, #{classLvlCd} /*분류 레벨 코드*/
+		, #{uprClassCd} /*상위 분류 코드*/
+		, #{rgstId} /*등록아이디*/
+		, NOW() 	/*등록일자*/
+		, #{useYn} /*사용 여부*/
+		)
+	</insert>
+	
+	<select id="selectCateOne" resultType="cltCateDto">
+		/* cateDao.selectCateOne - 카테고리 한건 조회 */
+		SELECT GOODS_CATA_SEQ	AS goodsCataSeq
+			, CATGRY_CD 		AS catgryCd
+			, GOODS_CD			AS goodsCd
+			, CATGRY_NM		AS catgryNm
+			, NOTE_CONT		AS noteCont
+			, CLASS_LVL_CD		AS classLvlCd
+			, UPR_CLASS_CD		AS uprClassCd
+			, RGST_ID			AS rgstId
+			, RGST_DATE		AS rgstDate
+			, UPDT_ID			AS updtId
+			, UPDT_DATE		AS updtDate
+			, USE_YN			AS useYn
+		FROM CLT_GOODS_CATA
+		WHERE 1=1
+		AND GOODS_CATA_SEQ = #{goodsCataSeq}
+	</select>
+	
+	<select id="selectCateList" resultType="cltCateDto">
+		/* cateDao.selectCateList - 카테고리 리스트 */
+		SELECT GOODS_CATA_SEQ	AS goodsCataSeq
+			, CATGRY_CD 		AS catgryCd
+			, GOODS_CD			AS goodsCd
+			, CATGRY_NM		AS catgryNm
+			, NOTE_CONT		AS noteCont
+			, CLASS_LVL_CD		AS classLvlCd
+			, UPR_CLASS_CD		AS uprClassCd
+			, RGST_ID			AS rgstId
+			, RGST_DATE		AS rgstDate
+			, UPDT_ID			AS updtId
+			, UPDT_DATE		AS updtDate
+			, USE_YN			AS useYn
+		FROM CLT_GOODS_CATA
+		WHERE 1=1 
+		AND CLASS_LVL_CD = '1'
+		ORDER BY GOODS_CATA_SEQ ASC
+	</select>
+	
+	<select id="selectCateUnList" resultType="cltCateDto">
+		/* cateDao.selectCateUnList - 하위 카테고리 리스트 */
+		SELECT GOODS_CATA_SEQ	AS goodsCataSeq
+			, CATGRY_CD 		AS catgryCd
+			, GOODS_CD			AS goodsCd
+			, CATGRY_NM		AS catgryNm
+			, NOTE_CONT		AS noteCont
+			, CLASS_LVL_CD		AS classLvlCd
+			, UPR_CLASS_CD		AS uprClassCd
+			, RGST_ID			AS rgstId
+			, RGST_DATE		AS rgstDate
+			, UPDT_ID			AS updtId
+			, UPDT_DATE		AS updtDate
+			, USE_YN			AS useYn
+		FROM CLT_GOODS_CATA
+		WHERE 1=1
+		<if test="uprClassCd != null">
+			AND UPR_CLASS_CD = #{uprClassCd}
+		</if>
+		AND CLASS_LVL_CD = '2' 
+		ORDER BY GOODS_CATA_SEQ ASC
+	</select>
+	
+	<update id="updateCate">
+		/* cateDao.updateCate - 카테고리 수정 */
+		UPDATE CLT_GOODS_CATA 
+		SET CATGRY_CD  = #{catgryCd}
+			, CATGRY_NM  = #{catgryNm}
+			, NOTE_CONT  = #{noteCont}
+			, USE_YN  = #{useYn}
+			, UPDT_ID  = #{updtId}
+			, UPDT_DATE  = NOW()
+		WHERE 1=1
+		AND GOODS_CATA_SEQ = #{goodsCataSeq}
+	</update>
+	
+	<delete id="deleteCate">
+		/* cateDao.deleteCate - 카테고리 삭제 */
+		DELETE FROM CLT_GOODS_CATA 
+		WHERE 1=1 
+		AND GOODS_CATA_SEQ = #{goodsCataSeq}
+	</delete>
+	
+	<delete id="deleteCateAll">
+		/* cateDao.deleteCateAll - 카테고리 모두 삭제 */
+		DELETE FROM CLT_GOODS_CATA
+	</delete>
+	
+	<delete id="dropSeq">
+		/* cateDao.dropSeq - 시퀀스 드랍 */
+		DROP SEQUENCE SQ_GOODS_CATA_SEQ
+	</delete>
+	
+	<delete id="createSeq">
+		/* cateDao.createSeq - 카테고리 생성 */
+		CREATE SEQUENCE SQ_GOODS_CATA_SEQ
+	</delete>
+
+</mapper>

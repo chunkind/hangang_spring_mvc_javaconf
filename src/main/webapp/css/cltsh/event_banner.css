@@ -1,0 +1,126 @@
+#manageMain {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    left:0;
+    width: 200px;
+    background-color: #a75bff;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    font-weight: bold;
+    float:left;
+}
+#manageMain li {
+    padding-top : 10px;
+    padding-bottom : 10px;
+}
+#manageMain li a {
+    display: block;
+    color:white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#manageMain li:hover{
+    background-color:#dab9ff;
+} 
+
+#manageMain li:hover>a{
+    color:white;
+    font-weight:bold;
+} 
+
+#top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: 400px;
+    border-top: 1px solid #444444;
+    border-bottom: 1px solid #444444;
+}
+#bottom{
+    margin-left: 400px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /* border-bottom: 1px solid #444444; */
+}
+#bottom table th{
+    padding : 15px;
+    border: 1px solid #444444;
+    /* border-collapse: collapse; */
+}
+.b1{
+    width: 50px;
+    
+}
+.b2{
+    width: 500px;
+}
+.b3{
+    width: 150px;
+}
+.b4{
+    width: 150px;
+}
+.b5{
+    width: 200px;
+}
+.bb{
+    position: absolute;
+    width: 80%;
+    text-align: center;
+    padding-top: 150px;
+    padding-bottom: 150px;
+    border-bottom: 1px solid #444444;
+}
+
+
+
+
+.hidden{display: none;}
+#bg{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left:0;
+    background-color: rgb(0,0,0,0.5);
+}
+#popup{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    width: 60%;
+    height: 65%;
+}
+#popup > h3{
+    border-bottom: 2px solid rgb(77, 77, 77);
+    padding: 10px 0;
+    font-size: 20px;
+}
+#popup-text{
+    margin: 20px 0;
+} 
+
+#popup table{
+    border-collapse: collapse;
+    position: relative;
+    left: 0%;
+}
+#popup table th{
+    border: 1px solid #444444;
+    padding: 25px;
+}
+#popup table td{
+    border: 1px solid #444444;
+    padding: 25px;
+}

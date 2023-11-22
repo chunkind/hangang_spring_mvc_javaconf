@@ -1,0 +1,44 @@
+#point .top_point{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: 520px;
+    margin-top: 130px;
+    height: 100px;
+    width: 700px;
+    background-color: blanchedalmond;
+}
+#point strong{
+    font-size: 22px;
+}
+.color_point{
+    position: relative;
+    right: 70px;
+}
+h2{
+    font-weight: 600;
+    font-size: 27px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+    margin-top: 70px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+.point_details{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 20px 100px;
+}
+.point_details2{
+    text-align: center;
+    padding: 150px 0px;
+    margin-left: 200px;
+    margin-right: 200px;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #000;
+    /* 밑줄 보려고 생성 */
+    margin-bottom: 200px;
+}

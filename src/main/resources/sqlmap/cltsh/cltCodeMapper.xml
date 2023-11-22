@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.code.service.CltCodeMapper">
+	<select id="codeCnt" resultType="Integer">
+		SELECT COUNT(*) FROM CLT_STD_CD_BASE
+	</select>
+	
+	<select id="selectCodeList" resultType="cltCodeDto">
+		/* codeDao.selectCodeList - 코드 리스트 */
+		SELECT STD_CD_BASE_SEQ AS stdCdBaseSeq
+			, CODE_NM AS codeNm
+			, CODE_VAL AS codeVal
+			, CODE_DESC AS codeDesc
+			, GRP_CD AS grpCd
+			, GRP_ORDR AS grpOrdr
+			, USE_YN AS useYn
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, UPDT_ID AS updtId
+			, UPDT_DATE AS updtDate
+		FROM CLT_STD_CD_BASE
+		WHERE 1=1
+		ORDER BY STD_CD_BASE_SEQ ASC
+		LIMIT #{startIdx}, #{pagePerRows}
+	</select>
+
+	<select id="selectCodeOne" resultType="cltCodeDto">
+		/* codeDao.selectCodeOne - 코드 상세 */
+		SELECT STD_CD_BASE_SEQ AS stdCdBaseSeq
+			, CODE_NM AS codeNm
+			, CODE_VAL AS codeVal
+			, CODE_DESC AS codeDesc
+			, GRP_CD AS grpCd
+			, GRP_ORDR AS grpOrdr
+			, USE_YN AS useYn
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, UPDT_ID AS updtId
+			, UPDT_DATE AS updtDate
+		FROM CLT_STD_CD_BASE
+		WHERE 1=1
+		AND STD_CD_BASE_SEQ = #{stdCdBaseSeq}
+	</select>
+
+	<insert id="insertCode">
+	/* codeDao.insertCode - 공통 코드 등록 */
+	INSERT INTO CLT_STD_CD_BASE
+	( CODE_NM 		/*코드 이름*/
+	, CODE_VAL 	/*코드 값*/
+	, CODE_DESC 	/*설명*/
+	, GRP_CD 		/*코드 그룹*/
+	, GRP_ORDR 	/*그룹 순번*/
+	, USE_YN 		/*사용 여부*/
+	, RGST_ID 		/*등록 아이디*/
+	, RGST_DATE 	/*등록일*/
+	) VALUES
+	( #{codeNm}	/*코드 이름*/
+	, #{codeVal}	/*코드 값*/
+	, #{codeDesc}	/*설명*/
+	, #{grpCd}		/*코드 그룹*/
+	, #{grpOrdr}	/*그룹 순번*/
+	, #{useYn}		/*사용 여부*/
+	, #{rgstId}	/*등록 아이디*/
+	, NOW()		/*등록일*/
+	)
+	</insert>
+	
+	<select id="selectSaleStatCdList" resultType="cltCodeDto">
+		/* codeDao.selectSaleStatCdList - 판매 상태 코드 리스트 */
+		SELECT STD_CD_BASE_SEQ AS stdCdBaseSeq
+			, CODE_NM AS codeNm
+			, CODE_VAL AS codeVal
+			, CODE_DESC AS codeDesc
+			, GRP_CD AS grpCd
+			, GRP_ORDR AS grpOrdr
+			, USE_YN AS useYn
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, UPDT_ID AS updtId
+			, UPDT_DATE AS updtDate
+		FROM CLT_STD_CD_BASE
+		WHERE 1=1 
+		AND GRP_CD = 'STD001'
+		ORDER BY STD_CD_BASE_SEQ ASC
+	</select>
+	
+	<select id="selectUsrCdList" resultType="cltCodeDto">
+		/* codeDao.selectUsrCdList - 유저 코드 리스트 */
+		SELECT STD_CD_BASE_SEQ AS stdCdBaseSeq
+			, CODE_NM AS codeNm
+			, CODE_VAL AS codeVal
+			, CODE_DESC AS codeDesc
+			, GRP_CD AS grpCd
+			, GRP_ORDR AS grpOrdr
+			, USE_YN AS useYn
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, UPDT_ID AS updtId
+			, UPDT_DATE AS updtDate
+		FROM CLT_STD_CD_BASE
+		WHERE 1=1
+		AND GRP_CD = 'STD002'
+		ORDER BY STD_CD_BASE_SEQ ASC
+	</select>
+
+	<select id="selectAdmCdList" resultType="cltCodeDto">
+		/* codeDao.selectAdmCdList - 코드 리스트 */
+		SELECT STD_CD_BASE_SEQ AS stdCdBaseSeq
+			, CODE_NM AS codeNm
+			, CODE_VAL AS codeVal
+			, CODE_DESC AS codeDesc
+			, GRP_CD AS grpCd
+			, GRP_ORDR AS grpOrdr
+			, USE_YN AS useYn
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, UPDT_ID AS updtId
+			, UPDT_DATE AS updtDate
+		FROM CLT_STD_CD_BASE
+		WHERE 1=1 
+		AND GRP_CD = 'STD003'
+		ORDER BY STD_CD_BASE_SEQ ASC
+	</select>
+	
+	<select id="selectOrdCdList" resultType="cltCodeDto">
+		/* codeDao.selectOrdCdList - 주문 코드 리스트 */
+		SELECT STD_CD_BASE_SEQ AS stdCdBaseSeq
+			, CODE_NM AS codeNm
+			, CODE_VAL AS codeVal
+			, CODE_DESC AS codeDesc
+			, GRP_CD AS grpCd
+			, GRP_ORDR AS grpOrdr
+			, USE_YN AS useYn
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, UPDT_ID AS updtId
+			, UPDT_DATE AS updtDate
+		FROM CLT_STD_CD_BASE
+		WHERE 1=1
+		AND GRP_CD = 'STD004'
+		ORDER BY STD_CD_BASE_SEQ ASC
+	</select>
+
+	<update id="updateCode">
+	/* codeDao.updateCode - 공통 코드 수정 */
+	UPDATE CLT_STD_CD_BASE 
+	SET CODE_NM  = #{codeNm} 		/*코드 이름*/
+		, CODE_VAL  = #{codeVal} 	/*코드 값*/
+		, CODE_DESC  = #{codeDesc} 	/*설명*/
+		, GRP_CD  = #{grpCd} 		/*코드 그룹*/
+		, GRP_ORDR  = #{grpOrdr} 	/*그룹 순번*/
+		<if test="useYn != null">
+			, USE_YN  = #{useYn} 	/*사용 여부*/
+		</if>
+		, UPDT_ID  = #{updtId} 		/*수정 아이디*/
+		, UPDT_DATE  = NOW() 		/*수정일*/
+	WHERE 1=1
+	AND STD_CD_BASE_SEQ = #{stdCdBaseSeq}
+	</update>
+	
+	<delete id="deleteCodeOne">
+	/* codeDao.deleteCodeOne - 공통 코드 삭제 */
+	DELETE FROM CLT_STD_CD_BASE
+	WHERE 1=1
+	AND STD_CD_BASE_SEQ = #{stdCdBaseSeq} /*카테 시퀀스*/
+	</delete>
+	
+	<delete id="deleteCodeAll">
+	/* codeDao.deleteCodeAll - 공통 코드 모두 삭제 */
+	DELETE FROM CLT_STD_CD_BASE
+	</delete>
+
+	<delete id="dropSeq">
+	/* codeDao.dropSeq - 공통 코드 시퀀스 드랍 */
+	DROP SEQUENCE SQ_STD_CD_BASE_SEQ
+	</delete>
+
+	<insert id="createSeq">
+	/* codeDao.createSeq - 공통 코드 시퀀스 생성 */
+	CREATE SEQUENCE SQ_STD_CD_BASE_SEQ
+	</insert>
+</mapper>

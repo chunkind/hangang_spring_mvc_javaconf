@@ -1,0 +1,67 @@
+#manageMain {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    left:0;
+    width: 200px;
+    background-color: #a75bff;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    font-weight: bold;
+    float:left;
+}
+#manageMain li {
+    padding-top : 10px;
+    padding-bottom : 10px;
+}
+#manageMain li a {
+    display: block;
+    color:white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+#manageMain li:hover{
+    background-color:#dab9ff;
+} 
+
+#manageMain li:hover>a{
+    color:white;
+    font-weight:bold;
+} 
+
+
+
+
+#coupon_list{
+    position: relative;
+    left: 30%;
+}
+table{
+    border-collapse: collapse;
+}
+tr th,td {
+    padding : 15px;
+    border: 1px solid #444444;
+}
+.c_name{
+    width: 300px;
+}
+.discount{
+    width: 140px;
+}
+#coupon_making{
+    position: relative;
+    left: 40%;
+}
+#coupon_making h2{
+    padding-top: 120px;
+}
+#coupon_making div{
+    padding-top: 10px;
+}
+.coupon_btn{
+    margin-top: 20px;
+    margin-left: 100px;
+}

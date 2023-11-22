@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.dress.service.CltDressMapper">
+	<select id="selectDressOne" resultType="cltDressDto">
+		/* dressDao.selectDressOne - 드레스룸 상세 */
+		SELECT SALE_BOARD_RPY_SEQ AS saleBoardRpySeq
+			, SALE_BOARD_SEQ AS saleBoardSeq
+			, GOODS_CD AS goodsCd
+			, ENTR_NO AS entrNo
+			, BUL_TIT_NM AS bulTitNm
+			, BUL_CONT AS bulCont
+			, RPY_LVL AS rpyLvl
+			, PAR_SALE_BOARD_RPY_SN AS parSaleBoardRpySn
+			, QRY_CNT AS qryCnt
+			, LKE_CNT AS lkeCnt
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, UPDT_ID AS updtId
+			, UPDT_DATE AS updtDate
+			, USE_YN AS useYn
+			, IMG_PATH AS imgPath
+			, IMG_NM AS imgNm
+			, RVW_TAG AS rvwTag
+		FROM CLT_SALE_BOARD_RVW
+		WHERE 1 = 1
+		AND SALE_BOARD_RPY_SEQ = #{saleBoardRpySeq}
+	</select>
+	
+	<select id="selectDressList" resultType="cltDressDto">
+		/* dressDao.selectDressList - 드레스룸 리스트 */
+		SELECT SALE_BOARD_RPY_SEQ AS saleBoardRpySeq
+			, SALE_BOARD_SEQ AS saleBoardSeq
+			, GOODS_CD AS goodsCd
+			, ENTR_NO AS entrNo
+			, BUL_TIT_NM AS bulTitNm
+			, BUL_CONT AS bulCont
+			, RPY_LVL AS rpyLvl
+			, PAR_SALE_BOARD_RPY_SN AS parSaleBoardRpySn
+			, QRY_CNT AS qryCnt
+			, LKE_CNT AS lkeCnt
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, UPDT_ID AS updtId
+			, UPDT_DATE AS updtDate
+			, USE_YN AS useYn
+			, IMG_PATH AS imgPath
+			, IMG_NM AS imgNm
+			, RVW_TAG AS rvwTag
+		FROM CLT_SALE_BOARD_RVW
+		WHERE 1 = 1
+		ORDER BY SALE_BOARD_RPY_SEQ ASC
+	</select>
+
+	<insert id="insertDress">
+		/* dressDao.insertDress - 드레스룸 등록 */
+		INSERT INTO CLT_SALE_BOARD_RVW
+		( SALE_BOARD_SEQ
+		, GOODS_CD
+		, ENTR_NO
+		, BUL_TIT_NM
+		, BUL_CONT
+		, RPY_LVL
+		<if test="parSaleBoardRpySn != null">
+		, PAR_SALE_BOARD_RPY_SN
+		</if>
+		<if test="qryCnt != null">
+		, QRY_CNT
+		</if>
+		<if test="lkeCnt != null">
+		, LKE_CNT
+		</if>
+		, RGST_ID
+		, RGST_DATE
+		, UPDT_ID
+		, UPDT_DATE
+		, USE_YN
+		, IMG_PATH
+		, IMG_NM
+		, ORD_NO
+		, RVW_TAG
+		) VALUES
+		( #{saleBoardSeq}
+		, #{goodsCd}
+		, #{entrNo}
+		, #{bulTitNm}
+		, #{bulCont}
+		, #{rpyLvl}
+		<if test="parSaleBoardRpySn != null">
+		, #{parSaleBoardRpySn}
+		</if>
+		<if test="qryCnt != null">
+		, #{qryCnt}
+		</if>
+		<if test="lkeCnt != null">
+		, #{lkeCnt}
+		</if>
+		, #{rgstId}
+		, NOW()
+		, #{updtId}
+		, NOW()
+		, 'Y'
+		, #{imgPath}
+		, #{imgNm}
+		, #{ordNo}
+		, #{rvwTag}
+		)
+	</insert>
+	
+	<update id="updateDress">
+		/* dressDao.updateDress - 드레스룸 수정 */
+		UPDATE CLT_SALE_BOARD_RVW 
+		SET BUL_TIT_NM = #{bulTitNm}
+			, BUL_CONT = #{bulCont}
+			, USE_YN = #{useYn}
+			<if test="imgPath != null">
+			, IMG_PATH = #{imgPath}
+			</if>
+			<if test="imgNm != null">
+			, IMG_NM = #{imgNm}
+			</if>
+			, RVW_TAG = #{rvwTag}
+		WHERE 1=1
+		AND SALE_BOARD_RPY_SEQ = #{saleBoardRpySeq}
+	</update>
+	
+	<delete id="deleteDress">
+		/* dressDao.deleteDress - 드레스룸 삭제 */
+		DELETE FROM CLT_SALE_BOARD_RVW
+		WHERE 1=1
+		AND SALE_BOARD_RPY_SEQ = #{saleBoardRpySeq}
+	</delete>
+	
+	<select id="goodsDtlDressList" resultType="cltDressDto">
+		/* dressDao.goodsDtlDressList - 드레스룸  */
+		SELECT SALE_BOARD_RPY_SEQ AS saleBoardRpySeq
+			, SALE_BOARD_SEQ AS saleBoardSeq
+			, GOODS_CD AS goodsCd
+			, ENTR_NO AS entrNo
+			, BUL_TIT_NM AS bulTitNm
+			, BUL_CONT AS bulCont
+			, RPY_LVL AS rpyLvl
+			, PAR_SALE_BOARD_RPY_SN AS parSaleBoardRpySn
+			, QRY_CNT AS qryCnt
+			, LKE_CNT AS lkeCnt
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, UPDT_ID AS updtId
+			, UPDT_DATE AS updtDate
+			, USE_YN AS useYn
+			, IMG_PATH AS imgPath
+			, IMG_NM AS imgNm
+			, RVW_TAG AS rvwTag
+		FROM CLT_SALE_BOARD_RVW
+		WHERE 1 = 1
+		AND GOODS_CD = #{goodsCd}	
+		ORDER BY SALE_BOARD_RPY_SEQ ASC
+	</select>
+	
+	<select id="selectWriteSaleRvw" resultType="cltDressDto">
+		/* dressDao.selectWriteSaleRvw - 드레스룸  */
+		SELECT ORD.ORD_NO AS ordNo
+			, ORD.USR_ID AS usrId
+			, ORD.ENTR_NO AS entrNo
+			, ORD.ORD_STAT AS ordStat
+			, ORD.ORDR_ID AS ordrId
+			, ORD.ORDR_NM AS ordrNm
+			, ORD.ORDR_PHON AS ordrPhon
+			, ORD.ORDR_EMAIL AS ordrEmail
+			, ORD.ACQR_PHON AS acqrPhon
+			, ORD.ACQR_NM AS acqrNm
+			, ORD.ACQR_ADDR AS acqrAddr
+			, ORD.ACQR_ADDR_DTL AS acqrAddrDtl
+			, ORD.ACQR_EMAIL AS acqrEmail
+			, ORD.PRCL_WAY AS prclWay
+			, ORD.PACK_WAY AS packWay
+			, ORD.PAY_MNY AS payMny
+			, ORD.REQ_MEMO AS reqMemo
+			, ORD.ORD_DATE AS ordDate
+			, ORD.UPDT_DATE AS updtDate
+			, ORD.UPDT_ID AS updtId
+			, ORD.RGST_DATE AS rgstDate
+			, ORD.RGST_ID AS rgstId
+			, ORD.BILL_NUM AS billNum
+			, SBRW.SALE_BOARD_RPY_SEQ AS saleBoardRpySeq
+			, ORD.SALE_BOARD_SEQ AS saleBoardSeq
+			, ORD.GOODS_CD AS goodsCd
+			, SBRW.RPY_LVL AS rpyLvl
+			, SBRW.PAR_SALE_BOARD_RPY_SN AS parSaleBoardRpySn
+			, SBRW.QRY_CNT AS qryCnt
+			, SBRW.LKE_CNT AS lkeCnt
+			, SBRW.USE_YN AS useYn
+			, GOODS.IMG_PATH AS imgPath
+			, GOODS.IMG_NM AS imgNm
+			, SALE.BUL_TIT_NM AS bulTitNm
+			, SALE.BUL_CONT AS bulCont
+		FROM CLT_ORD_BASE ORD
+		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SBRW ON ORD.ORD_NO = SBRW.ORD_NO
+		LEFT OUTER JOIN CLT_GOODS_INFO GOODS ON ORD.GOODS_CD = GOODS.GOODS_CD
+		LEFT OUTER JOIN CLT_SALE_BOARD SALE ON ORD.SALE_BOARD_SEQ = SALE.SALE_BOARD_SEQ
+		WHERE 1=1
+		AND SBRW.ORD_NO IS NULL
+		AND ORD.USR_ID = #{usrId}
+		<if test="ordNo != null">
+			AND ORD.ORD_NO = #{ordNo}
+		</if>
+	</select>
+	
+	<delete id="deleteDressAll">
+		/* dressDao.deleteDressAll - 드레스룸  */
+		DELETE FROM CLT_SALE_BOARD_RVW
+	</delete>
+
+	<delete id="dropSeq">
+		/* dressDao.dropSeq - 드레스룸  */
+		DROP SEQUENCE SQ_SALE_BOARD_RPY_SEQ
+	</delete>
+
+	<insert id="createSeq">
+		/* dressDao.createSeq - 드레스룸  */
+		CREATE SEQUENCE SQ_SALE_BOARD_RPY_SEQ
+	</insert>
+</mapper>

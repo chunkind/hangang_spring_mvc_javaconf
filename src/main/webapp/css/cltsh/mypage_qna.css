@@ -1,0 +1,20 @@
+h2{
+    font-weight: 600;
+    font-size: 27px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 15px;
+    margin-bottom: 0px;
+    margin-top: 70px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+.qna_body{
+    text-align: center;
+    padding: 150px 0px;
+    margin-left: 200px;
+    margin-right: 200px;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #000;
+    /* 밑줄 보려고 생성 */
+    margin-bottom: 200px;
+}

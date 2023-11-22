@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.order.service.CltOrderMapper">
+	<select id="ordCnt" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM CLT_ORD_BASE
+	</select>
+	
+	<select id="selectOrdList" resultType="cltOrderDto">
+		/* orderDao.selectOrdList - 주문 리스트 */
+		SELECT BASE.ORD_NO AS ordNo
+			, BASE.USR_ID AS usrId
+			, BASE.ENTR_NO AS entrNo
+			, BASE.ORD_STAT AS ordStat
+			, BASE.ORDR_ID AS ordrId
+			, BASE.ORDR_NM AS ordrNm
+			, BASE.ORDR_PHON AS ordrPhon
+			, BASE.ORDR_EMAIL AS ordrEmail
+			, BASE.ACQR_PHON AS acqrPhon
+			, BASE.ACQR_NM AS acqrNm
+			, BASE.ACQR_ADDR AS acqrAddr
+			, BASE.ACQR_ADDR_DTL AS acqrAddrDtl
+			, BASE.ACQR_EMAIL AS acqrEmail
+			, BASE.PRCL_WAY AS prclWay
+			, BASE.PACK_WAY AS packWay
+			, BASE.PAY_WAY AS payWay
+			, BASE.PAY_MNY AS payMny
+			, BASE.REQ_MEMO AS reqMemo
+			, BASE.ORD_DATE AS ordDate
+			, BASE.UPDT_DATE AS updtDate
+			, BASE.UPDT_ID AS updtId
+			, BASE.RGST_DATE AS rgstDate
+			, BASE.RGST_ID AS rgstId
+			, BASE.BILL_NUM AS billNum
+			, DTL.ORD_DTL_NO AS ordDtlNo
+			, DTL.GOODS_NM AS goodsNm
+			, DTL.GOODS_CD AS goodsCd
+			, DTL.GOODS_QTY AS goodsQty
+			, STD.CODE_NM AS codeNm
+		FROM  CLT_ORD_BASE BASE 
+			, CLT_ORD_DTL DTL
+			, CLT_STD_CD_BASE STD
+		WHERE 1=1
+		AND BASE.ORD_NO = DTL.ORD_NO
+		AND BASE.ORD_STAT = STD.CODE_VAL
+		AND STD.GRP_CD = 'STD004'
+		ORDER BY BASE.ORD_NO ASC
+		LIMIT #{startIdx }, #{pagePerRows };
+    </select>
+
+	<!-- 주문 -->
+	<select id="selectOrdOne" resultType="cltOrderDto">
+		SELECT ORD_NO AS ordNo
+			, USR_ID AS usrId
+			, ENTR_NO AS entrNo
+			, ORD_STAT AS ordStat
+			, ORDR_ID AS ordrId
+			, ORDR_NM AS ordrNm
+			, ORDR_PHON AS ordrPhon
+			, ORDR_EMAIL AS ordrEmail
+			, ACQR_PHON AS acqrPhon
+			, ACQR_NM AS acqrNm
+			, ACQR_ADDR AS acqrAddr
+			, ACQR_ADDR_DTL AS acqrAddrDtl
+			, ACQR_EMAIL AS acqrEmail
+			, PRCL_WAY AS prclWay
+			, PACK_WAY AS packWay
+			, PAY_WAY AS payWay
+			, PAY_MNY AS payMny
+			, REQ_MEMO AS reqMemo
+			, ORD_DATE AS ordDate
+			, UPDT_DATE AS updtDate
+			, UPDT_ID AS updtId
+			, RGST_DATE AS rgstDate
+			, RGST_ID AS rgstId
+			, BILL_NUM AS billNum
+		FROM  CLT_ORD_BASE
+		WHERE 1=1
+		AND ORD_NO = #{ordNo}
+    </select>
+    
+    <!-- <select id="selectOrdList" resultType="cltOrderDto">
+		SELECT BASE.ORD_NO AS ordNo
+			, BASE.USR_ID AS usrId
+			, BASE.ENTR_NO AS entrNo
+			, BASE.ORD_STAT AS ordStat
+			, BASE.ORDR_ID AS ordrId
+			, BASE.ORDR_NM AS ordrNm
+			, BASE.ORDR_PHON AS ordrPhon
+			, BASE.ORDR_EMAIL AS ordrEmail
+			, BASE.ACQR_PHON AS acqrPhon
+			, BASE.ACQR_NM AS acqrNm
+			, BASE.ACQR_ADDR AS acqrAddr
+			, BASE.ACQR_ADDR_DTL AS acqrAddrDtl
+			, BASE.ACQR_EMAIL AS acqrEmail
+			, BASE.PRCL_WAY AS prclWay
+			, BASE.PACK_WAY AS packWay
+			, BASE.PAY_WAY AS payWay
+			, BASE.PAY_MNY AS payMny
+			, BASE.REQ_MEMO AS reqMemo
+			, BASE.ORD_DATE AS ordDate
+			, BASE.UPDT_DATE AS updtDate
+			, BASE.UPDT_ID AS updtId
+			, BASE.RGST_DATE AS rgstDate
+			, BASE.RGST_ID AS rgstId
+			, BASE.BILL_NUM AS billNum
+			, DTL.ORD_DTL_NO AS ordDtlNo
+			, DTL.GOODS_NM AS goodsNm
+			, DTL.GOODS_CD AS goodsCd
+			, DTL.GOODS_QTY AS goodsQty
+			, STD.CODE_NM AS codeNm
+		FROM  CLT_ORD_BASE BASE 
+			, CLT_ORD_DTL DTL
+			, CLT_STD_CD_BASE STD
+		WHERE 1=1
+		AND BASE.ORD_NO = DTL.ORD_NO
+		AND BASE.ORD_STAT = STD.CODE_VAL
+		AND STD.GRP_CD = 'STD004'
+		ORDER BY BASE.ORD_NO ASC
+    </select> -->
+
+	<insert id="insertOrd">
+		INSERT INTO CLT_ORD_BASE
+		( ORD_NO
+		, USR_ID
+		, ENTR_NO
+		, ORD_STAT
+		, ORDR_ID
+		, ORDR_NM
+		, ORDR_PHON
+		, ORDR_EMAIL
+		, ACQR_PHON
+		, ACQR_NM
+		, ACQR_ADDR
+		, ACQR_ADDR_DTL
+		, ACQR_EMAIL
+		, PRCL_WAY
+		, PACK_WAY
+		, PAY_WAY
+		, PAY_MNY
+		, REQ_MEMO
+		, ORD_DATE
+		, UPDT_DATE
+		, UPDT_ID
+		, RGST_DATE
+		, RGST_ID
+		, BILL_NUM
+		, GOODS_CD
+		, SALE_BOARD_SEQ
+		) VALUES
+		( #{ordNo}
+		, #{usrId}
+		, #{entrNo}
+		, #{ordStat}
+		, #{ordrId}
+		, #{ordrNm}
+		, #{ordrPhon}
+		, #{ordrEmail}
+		, #{acqrPhon}
+		, #{acqrNm}
+		, #{acqrAddr}
+		, #{acqrAddrDtl}
+		, #{acqrEmail}
+		, #{prclWay}
+		, #{packWay}
+		, #{payWay}
+		, #{payMny}
+		, #{reqMemo}
+		, NOW()
+		, NOW()
+		, #{updtId}
+		, NOW()
+		, #{rgstId}
+		, #{billNum}
+		, #{goodsCd}
+		, #{saleBoardSeq})
+    </insert>
+    
+	<update id="updateOrd">
+		UPDATE CLT_ORD_BASE 
+			SET USR_ID  = #{usrId}
+			, ENTR_NO  = #{entrNo}
+			, ORD_STAT  = #{ordStat}
+			, ORDR_ID  = #{ordrId}
+			, ORDR_NM  = #{ordrNm}
+			, ORDR_PHON  = #{ordrPhon}
+			, ORDR_EMAIL  = #{ordrEmail}
+			, ACQR_PHON  = #{acqrPhon}
+			, ACQR_NM  = #{acqrNm}
+			, ACQR_ADDR  = #{acqrAddr}
+			, ACQR_ADDR_DTL  = #{acqrAddrDtl}
+			, ACQR_EMAIL  = #{acqrEmail}
+			, PRCL_WAY  = #{prclWay}
+			, PACK_WAY  = #{packWay}
+			, PAY_WAY  = #{payWay}
+			, PAY_MNY  = #{payMny}
+			, REQ_MEMO  = #{reqMemo}
+			, ORD_DATE  = NOW()
+			, UPDT_DATE  = NOW()
+			, UPDT_ID  = #{updtId}
+			, BILL_NUM = #{billNum}
+		WHERE 1=1
+		AND ORD_NO = #{ordNo}
+	</update>
+    
+	<delete id="deleteOrd">
+		DELETE FROM CLT_ORD_BASE
+		WHERE 1=1 
+		AND ORD_NO = #{ordNo}
+    </delete>
+    
+    
+    <!-- 주문 상세 -->
+    <select id="selectOrdDtlOne" resultType="cltOrderDto">
+		SELECT ORD_DTL_NO AS ordDtlNo
+			, USR_ID AS usrId
+			, ORD_NO AS ordNo
+			, GOODS_NM AS goodsNm
+			, GOODS_CD AS goodsCd
+			, GOODS_QTY AS goodsQty
+			, UPDT_DATE AS updtDate
+			, UPDT_ID AS updtId
+			, RGST_DATE AS rgstDate
+			, RGST_ID AS rgstId
+		FROM CLT_ORD_DTL
+		WHERE 1=1
+		AND ORD_NO = #{ordNo}
+    </select>
+    
+    <select id="selectOrdDtlList" resultType="cltOrderDto">
+		SELECT ORD_DTL_NO AS ordDtlNo
+			, USR_ID AS usrId
+			, ORD_NO AS ordNo
+			, GOODS_NM AS goodsNm
+			, GOODS_CD AS goodsCd
+			, GOODS_QTY AS goodsQty
+			, UPDT_DATE AS updtDate
+			, UPDT_ID AS updtId
+			, RGST_DATE AS rgstDate
+			, RGST_ID AS rgstId
+		FROM CLT_ORD_DTL
+		WHERE 1=1
+    </select>
+
+	<insert id="insertOrdDtl">
+		INSERT INTO CLT_ORD_DTL
+		( USR_ID
+		, ORD_NO
+		, GOODS_NM
+		, GOODS_CD
+		, GOODS_QTY
+		, UPDT_DATE
+		, UPDT_ID
+		, RGST_DATE
+		, RGST_ID
+		) VALUES
+		( #{usrId}
+		, #{ordNo}
+		, #{goodsNm}
+		, #{goodsCd}
+		, #{goodsQty}
+		, NOW()
+		, #{updtId}
+		, NOW()
+		, #{rgstId})
+    </insert>
+    
+	<update id="updateOrdDtl">
+		UPDATE CLT_ORD_DTL 
+			SET USR_ID  = #{usrId}
+			, ORD_NO  = #{ordNo}
+			, GOODS_NM  = #{goodsNm}
+			, GOODS_CD  = #{goodsCd}
+			, GOODS_QTY  = #{goodsQty}
+			, UPDT_DATE  = NOW()
+			, UPDT_ID  = #{updtId}
+		WHERE 1=1
+		AND ORD_DTL_NO = #{ordDtlNo}
+	</update>
+    
+	<delete id="deleteOrdDtl">
+		DELETE FROM CLT_ORD_DTL
+		WHERE 1=1 
+		AND ORD_DTL_NO = #{ordDtlNo}
+    </delete>
+    
+    
+	<!-- 장바구니 -->
+	<select id="ordBasketSelect" resultType="cltOrderDto">
+		SELECT ORD.SALE_BOARD_SEQ AS saleBoardSeq
+			, SALE.GOODS_PRC AS goodsPrc
+			, SALE.GOODS_SALE_PRC AS goodsSalePrc
+			, GOODS.ENTR_NO AS entrNo
+			, GOODS.GOODS_NM AS goodsNm
+			, GOODS.GOODS_CD AS goodsCd
+			, GOODS.DLV_PRC AS dlvPrc
+		FROM CLT_ORD_BASKET ORD
+			, CLT_SALE_BOARD SALE
+			, CLT_GOODS_INFO GOODS
+		WHERE 1=1
+		AND ORD.SALE_BOARD_SEQ = SALE.SALE_BOARD_SEQ
+		AND ORD.GOODS_CD = GOODS.GOODS_CD
+		AND ORD.ORD_BASKET_SEQ = ${ordBasketSeq}
+    </select>
+    
+    <select id="selectBasketList" resultType="cltOrderDto">
+		SELECT BSKT.ORD_BASKET_SEQ AS ordBasketSeq<!-- 다시 구현 -->
+			, BSKT.USR_ID AS usrId
+			, BSKT.GOODS_QTY AS goodsQty
+			, BSKT.SALE_BOARD_SEQ AS saleBoardSeq /*판매게시판시퀀스*/
+			, GODS.IMG_PATH AS imgPath /*상품이미지경로*/
+			, GODS.IMG_NM AS imgNm /*상품이미지이름*/
+			, SALE.BUL_TIT_NM AS bulTitNm /*제목*/
+			, SALE.GOODS_CD AS goodsCd /*상품 코드*/
+			, SALE.ENTR_NO AS entrNo /*거래처 번호*/
+			, SALE.GOODS_PRC AS goodsPrc /*상품 가격*/
+			, SALE.GOODS_SALE_PRC AS goodsSale /*상품 할인 가격*/
+			, SALE.SALE_CNT AS saleCnt /*판매 수량*/
+			, SALE.SALE_STAT_CD AS saleStatCd /*판매 상태 코드*/
+			, SALE.DESCRIPTION AS description /*설명*/
+		FROM CLT_ORD_BASKET BSKT
+			, CLT_GOODS_INFO GODS
+			, CLT_SALE_BOARD SALE
+		WHERE 1=1
+		AND BSKT.GOODS_CD = GODS.GOODS_CD
+		AND BSKT.SALE_BOARD_SEQ = SALE.SALE_BOARD_SEQ
+		AND BSKT.USE_YN = 'Y'
+		AND BSKT.USR_ID = #{usrId}
+    </select>
+
+	<insert id="insertBasket">
+		INSERT INTO CLT_ORD_BASKET 
+		( USR_ID
+		, GOODS_QTY
+		, GOODS_CD
+		, ENTR_NO
+		, RGST_DATE
+		, USE_YN
+		, SALE_BOARD_SEQ
+		) VALUES
+		( #{usrId}
+		, #{goodsQty}
+		, #{goodsCd}
+		, #{entrNo}
+		, NOW()
+		, 'Y'
+		, #{saleBoardSeq})
+    </insert>
+    
+	<update id="updateBasket">
+		UPDATE CLT_ORD_BASKET 
+		SET USE_YN  = 'N'
+		WHERE 1=1
+		AND ORD_BASKET_SEQ = #{ordBasketSeq}
+	</update>
+    
+	<delete id="deleteBasket">
+		DELETE FROM CLT_ORD_BASKET
+		WHERE ORD_BASKET_SEQ = #{ordBasketSeq}
+    </delete>
+    
+    
+    <!-- 검색 -->
+    <select id="searchIdOrdList" resultType="cltOrderDto">
+		SELECT BASE.ORD_NO AS ordNo
+			, BASE.USR_ID AS usrId
+			, BASE.ENTR_NO AS entrNo
+			, BASE.ORD_STAT AS ordStat
+			, BASE.ORDR_ID AS ordrId
+			, BASE.ORDR_NM AS ordrNm
+			, BASE.ORDR_PHON AS ordrPhon
+			, BASE.ORDR_EMAIL AS ordrEmail
+			, BASE.ACQR_PHON AS acqrPhon
+			, BASE.ACQR_NM AS acqrNm
+			, BASE.ACQR_ADDR AS acqrAddr
+			, BASE.ACQR_ADDR_DTL AS acqrAddrDtl
+			, BASE.ACQR_EMAIL AS acqrEmail
+			, BASE.PRCL_WAY AS prclWay
+			, BASE.PACK_WAY AS packWay
+			, BASE.PAY_WAY AS payWay
+			, BASE.PAY_MNY AS payMny
+			, BASE.REQ_MEMO AS reqMemo
+			, BASE.ORD_DATE AS ordDate
+			, BASE.UPDT_DATE AS updtDate
+			, BASE.UPDT_ID AS updtId
+			, BASE.RGST_DATE AS rgstDate
+			, BASE.RGST_ID AS rgstId
+			, BASE.BILL_NUM AS billNum
+			, DTL.ORD_DTL_NO AS ordDtlNo
+			, DTL.GOODS_NM AS goodsNm
+			, DTL.GOODS_CD AS goodsCd
+			, DTL.GOODS_QTY AS goodsQty
+			, STD.CODE_NM AS codeNm
+		FROM CLT_ORD_BASE BASE
+		, CLT_ORD_DTL DTL
+		, CLT_STD_CD_BASE STD
+		WHERE 1=1
+		AND BASE.USR_ID = DTL.USR_ID
+		AND BASE.ORD_NO = DTL.ORD_NO
+		AND BASE.ORD_STAT = STD.CODE_VAL
+		AND STD.GRP_CD = 'STD004'
+		AND BASE.USR_ID = #{usrId}
+    </select>
+    
+    <select id="searchOrdNoList" resultType="cltOrderDto">
+		SELECT BASE.ORD_NO AS ordNo
+			, BASE.USR_ID AS usrId
+			, BASE.ENTR_NO AS entrNo
+			, BASE.ORD_STAT AS ordStat
+			, BASE.ORDR_ID AS ordrId
+			, BASE.ORDR_NM AS ordrNm
+			, BASE.ORDR_PHON AS ordrPhon
+			, BASE.ORDR_EMAIL AS ordrEmail
+			, BASE.ACQR_PHON AS acqrPhon
+			, BASE.ACQR_NM AS acqrNm
+			, BASE.ACQR_ADDR AS acqrAddr
+			, BASE.ACQR_ADDR_DTL AS acqrAddrDtl
+			, BASE.ACQR_EMAIL AS acqrEmail
+			, BASE.PRCL_WAY AS prclWay
+			, BASE.PACK_WAY AS packWay
+			, BASE.PAY_WAY AS payWay
+			, BASE.PAY_MNY AS payMny
+			, BASE.REQ_MEMO AS reqMemo
+			, BASE.ORD_DATE AS ordDate
+			, BASE.UPDT_DATE AS updtDate
+			, BASE.UPDT_ID AS updtId
+			, BASE.RGST_DATE AS rgstDate
+			, BASE.RGST_ID AS rgstId
+			, BASE.BILL_NUM AS billNum
+			, DTL.ORD_DTL_NO AS ordDtlNo
+			, DTL.GOODS_NM AS goodsNm
+			, DTL.GOODS_CD AS goodsCd
+			, DTL.GOODS_QTY AS goodsQty
+			, STD.CODE_NM AS codeNm
+			, SALERVW.RVW_TAG AS rvwTag
+		FROM CLT_ORD_BASE BASE
+		INNER JOIN CLT_ORD_DTL DTL ON BASE.USR_ID = DTL.USR_ID AND BASE.ORD_NO = DTL.ORD_NO
+		LEFT OUTER JOIN CLT_STD_CD_BASE STD ON BASE.ORD_STAT = STD.CODE_VAL
+		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SALERVW ON BASE.ORD_NO = SALERVW.ORD_NO
+		WHERE 1=1
+		AND STD.GRP_CD = 'STD004'
+		AND BASE.ORD_NO = #{ordNo}
+    </select>
+    
+    <select id="searchOrdDtlGoods" resultType="cltOrderDto">
+		SELECT GOODS_NM AS goodsNm
+			, GOODS_CD AS goodsCd
+			, GOODS_QTY AS goodsQty
+		FROM CLT_ORD_DTL
+		WHERE 1=1
+		AND USR_ID = #{usrId}
+    </select>
+    
+    <select id="selectOrdBaseList" resultType="cltOrderDto">
+		SELECT ORD_NO AS ordNo
+			, USR_ID AS usrId
+			, ENTR_NO AS entrNo
+			, ORD_STAT AS ordStat
+			, ORDR_ID AS ordrId
+			, ORDR_NM AS ordrNm
+			, ORDR_PHON AS ordrPhon
+			, ORDR_EMAIL AS ordrEmail
+			, ACQR_PHON AS acqrPhon
+			, ACQR_NM AS acqrNm
+			, ACQR_ADDR AS acqrAddr
+			, ACQR_ADDR_DTL AS acqrAddrDtl
+			, ACQR_EMAIL AS acqrEmail
+			, PRCL_WAY AS prclWay
+			, PACK_WAY AS packWay
+			, PAY_WAY AS payWay
+			, PAY_MNY AS payMny
+			, REQ_MEMO AS reqMemo
+			, ORD_DATE AS ordDate
+			, UPDT_DATE AS updtDate
+			, UPDT_ID AS updtId
+			, RGST_DATE AS rgstDate
+			, RGST_ID AS rgstId
+			, BILL_NUM AS billNum
+		FROM  CLT_ORD_BASE
+		WHERE 1=1
+    </select>
+    
+    <!-- 테이블 삭제, 시퀀스 삭제 생성-->
+    <delete id="deleteOrdAll">
+        DELETE FROM CLT_ORD_BASE;
+    </delete>
+    
+    <delete id="deleteOrdDtlAll">
+        DELETE FROM CLT_ORD_DTL;
+    </delete>
+
+	<delete id="dropDtlSeq">
+		DROP SEQUENCE SQ_ORD_DTL_NO
+	</delete>
+	
+	<delete id="dropBasketSeq">
+		DROP SEQUENCE SQ_ORD_BASKET_SEQ
+	</delete>
+
+	<insert id="createDtlSeq">
+		CREATE SEQUENCE SQ_ORD_DTL_NO
+	</insert>
+	
+	<insert id="createBasketSeq">
+		CREATE SEQUENCE SQ_ORD_BASKET_SEQ
+	</insert>
+</mapper>

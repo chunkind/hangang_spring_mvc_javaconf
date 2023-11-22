@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+<!-- Cltsh-->
+	<definition name="cltshTemplate" template="/WEB-INF/jsp/cltsh/cmm/default_template.jsp">
+		<put-attribute name="title" value="cltshop" />
+	</definition>
+	<definition name="cltshAdmTemplate" template="/WEB-INF/jsp/cltsh/cmm/default_template.jsp">
+		<put-attribute name="title" value="cltshop admin" />
+		<put-attribute name="header" value="/WEB-INF/jsp/cltsh/cmm/admHeader.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/cltsh/cmm/admFooter.jsp" />
+	</definition>
+	
+	<definition name="cltsh/adm/*/*" extends="cltshAdmTemplate">
+		<put-attribute name="body" value="/WEB-INF/jsp/cltsh/adm/{1}/{2}.jsp" />
+	</definition>
+	<definition name="cltsh/adm/*/*/*" extends="cltshAdmTemplate">
+		<put-attribute name="body" value="/WEB-INF/jsp/cltsh/adm/{1}/{2}/{3}.jsp" />
+	</definition>
+	<definition name="cltsh/adm/*/*/*/*" extends="cltshAdmTemplate">
+		<put-attribute name="body" value="/WEB-INF/jsp/cltsh/adm/{1}/{2}/{3}/{4}.jsp" />
+	</definition>
+	
+	<definition name="cltsh/*/*" extends="cltshTemplate">
+		<put-attribute name="body" value="/WEB-INF/jsp/cltsh/{1}/{2}.jsp" />
+	</definition>
+	<definition name="cltsh/*/*/*" extends="cltshTemplate">
+		<put-attribute name="body" value="/WEB-INF/jsp/cltsh/{1}/{2}/{3}.jsp" />
+	</definition>
+	<definition name="cltsh/*/*/*/*" extends="cltshTemplate">
+		<put-attribute name="body" value="/WEB-INF/jsp/cltsh/{1}/{2}/{3}/{4}.jsp" />
+	</definition>
+
+	
+</tiles-definitions>

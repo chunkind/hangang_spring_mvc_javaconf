@@ -1,0 +1,90 @@
+#one {
+    position : fixed;
+    left : 250px;
+}
+
+#one select {
+    position : fixed;
+    left : 88%;
+    width:10%;
+    padding:7px;
+    top:11%;
+    margin-bottom:17px;
+}
+
+.onetbl {
+    position : fixed;
+    float: left;
+    width: 85%;
+    top: 15%;
+    border-top: 1px solid #000;
+    border-collapse: collapse;
+    text-align: center; 
+}
+
+.onetbl th {
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    padding: 30px;
+}
+
+.onetbl td {
+    border-bottom: 1px solid #000;
+    padding: 30px;
+}
+
+.onetbl th:first-child, td:first-child {
+    border-left: none;
+}
+
+.one_btn {
+    padding: 5px;
+    width: 100px;
+}
+
+/*▽one_management_answer.html의 css▽*/
+
+#one_answer {
+    position : relative;
+    left : 250px;
+    width:50%;
+    height:100%;
+}
+
+#one_answer .answer_box1 {
+    position : fixed;
+    float: left;
+    width : 85%;
+    padding : 10px;
+    border : 1px solid #444444;
+    box-sizing: border-box;
+}
+
+#one_answer .answer_box2 {
+    position : fixed;
+    float: left;
+    width : 85%;
+    height: 60%;
+    top : 17%;
+    padding : 10px;
+    border : 1px solid #444444;
+    box-sizing: border-box;
+}
+
+#one_save_btn {
+    position : fixed;
+    float: left;
+    width: 8%;
+    padding: 5px;
+    top : 80%;
+    left: 45%;
+}
+
+#one_cancel_btn {
+    position : fixed;
+    float: left;
+    width: 8%;
+    padding: 5px;
+    top : 80%;
+    left: 55%;
+}

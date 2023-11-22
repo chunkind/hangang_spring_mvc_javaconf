@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.mypage.service.CltMypgMapper">
+	<select id="selectMypgList" resultType="cltMypgDto">
+		SELECT ORDB.ORD_NO AS ordNo /*주문번호*/
+			, ORDB.RGST_DATE AS rgstDate/*주문일자*/
+			, ORDB.ORDR_ID AS ordrId /*주문자 아이디*/
+			, ORDB.ORDR_NM AS ordrNm /*주문자 이름*/
+			, ORDB.ORDR_PHON AS ordrPhon /*주문자 폰번호*/
+			, ORDB.PAY_MNY AS payMny /*결제금액*/
+			, GOOD.IMG_PATH AS imgPath /*이미지 경로*/
+			, GOOD.IMG_NM AS imgNm /*이미지 이름*/
+			, SALE.BUL_TIT_NM AS bulTitNm /*판매게시판 제목*/
+			, ORDT.GOODS_QTY AS goodsQty /*수량*/
+			, GOOD.GOODS_PRC AS goodsPrc /*상품금액*/
+			, ORDB.ORD_STAT AS ordStat /*주문상태코드*/
+			, STD004.CODE_NM AS codeNm /*주문상태코드이름*/
+			, ORDB.PAY_WAY AS payWay /*결제수단*/
+			, GOOD.DLV_PRC AS dlvPrc /*배송비*/
+			, ORDB.ACQR_NM AS acqrNm /*수령자 이름*/
+			, ORDB.ACQR_PHON AS acqrPhon /*수령자 휴대폰*/
+			, ORDB.ACQR_ADDR AS acqrAddr /*수령지 주소*/
+			, ORDB.ACQR_ADDR_DTL AS acqrAddrDtl /*수령지 상세 주소*/
+			, ORDB.REQ_MEMO AS reqMemo /*배송메모*/
+			, SALERVW.SALE_BOARD_RPY_SEQ AS saleBoardRpySeq /*리뷰시퀀스*/
+		FROM CLT_ORD_BASE ORDB
+			INNER JOIN CLT_ORD_DTL ORDT ON ORDB.ORD_NO = ORDT.ORD_NO
+			INNER JOIN CLT_GOODS_INFO GOOD ON ORDT.GOODS_CD = GOOD.GOODS_CD
+			INNER JOIN CLT_STD_CD_BASE STD004 ON ORDB.ORD_STAT = STD004.CODE_VAL
+			INNER JOIN CLT_SALE_BOARD SALE ON ORDB.SALE_BOARD_SEQ = SALE.SALE_BOARD_SEQ
+			LEFT OUTER JOIN CLT_SALE_BOARD_RVW SALERVW ON ORDT.ORD_NO = SALERVW.ORD_NO
+		WHERE 1=1
+		/* AND ordt.GOODS_CD = sale.GOODS_CD */
+		AND STD004.GRP_CD = 'STD004'
+		AND ORDB.USR_ID = #{usrId}
+		ORDER BY ORDB.ORD_NO DESC;
+    </select>
+</mapper>

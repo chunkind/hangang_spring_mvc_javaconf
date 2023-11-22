@@ -1,0 +1,114 @@
+.dressroom_manager_main{
+    margin-left: 250px;
+}
+
+.dressroom_manager_dresser_title{
+    padding-left: 30px;
+}
+
+.dressroom_manager_table{
+    width: 700px;
+    border-collapse: collapse;
+}
+
+.dressroom_manager_table_head{
+    border-bottom: 2px solid;
+}
+
+.dressroom_manager_table_body{
+    border-bottom: 1px solid;
+}
+
+.dressroom_manager_list_title{
+    padding-left: 30px;
+    margin-left: 250px;
+    margin-top: 50px;
+}
+
+#dressroom_manager_list{
+    margin-left: 250px;
+    display: flex;
+}
+
+.dressroom_manager_list_category{
+    width: 50px;
+    padding: 10px;
+}
+
+.dressroom_manager_list_item{
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.dressroom_manager_list_item li{
+    width: 100px;
+    height: 30px;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid;
+}
+
+.dressroom_manager_list_detail{
+    width: 800px;
+    height: 50px;
+    padding-top: 50px;
+    padding-left: 100px;
+}
+
+.dressroom_manager_list_detail_up{
+    width: 800px;
+    height: 50px;
+}
+
+.dressroom_manager_list_detail_sort{
+    float: left;
+}
+
+.dressroom_manager_list_detail_search{
+    float: right;
+}
+
+.dressroom_manager_list_detail_down{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dressroom_manager_item{
+    width: 210px;
+    height: 300px;
+    margin: 20px;
+
+}
+
+.dressroom_manager_item_img{
+    width: 100%;
+    height: 70%;
+    align-self: center;
+    border: 1px solid;
+}
+
+.dressroom_manager_item_ul{
+    list-style: none;
+}
+
+.dressroom_create_title{
+    padding-left: 5%;
+}
+
+#dressroom_create{
+    width: 800px;
+    padding: 5%;
+}
+
+.dressroom_create_content{
+    width: 800px;
+    height: 600px;
+    border: 1px solid;
+}
+
+.dressroom_create_button{
+    width: 80px;
+    height: 30px;
+    float: right;
+}

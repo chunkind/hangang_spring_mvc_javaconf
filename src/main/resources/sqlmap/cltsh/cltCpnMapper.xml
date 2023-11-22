@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.cpn.service.CltCpnMapper">
+	<select id="cpnCnt" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM CLT_COUPON_TBL
+	</select>
+	
+	<select id="selectCpnList" resultType="cltCpnDto">
+		SELECT COU_INFO_SEQ AS couInfoSeq 	    /*쿠폰 시퀀스*/
+			, COU_NUM AS couNum 				/*쿠폰 코드*/
+			, COU_NAME AS couName 				/*쿠폰 이름*/
+			, COU_DISCOUNT AS couDiscount		/*쿠폰 할인율*/
+			, COU_REGIST_DATE AS couRegistDate 	/*쿠폰 등록 날짜*/
+			, COU_END_DATE AS couEndDate 		/*쿠폰 만료 날짜*/
+			, COU_COUNT AS couCount 			/*쿠폰 개수*/
+		FROM CLT_COUPON_TBL
+		WHERE 1 = 1
+		ORDER BY COU_INFO_SEQ ASC
+		LIMIT #{startIdx }, #{pagePerRows }
+    </select>
+
+	<select id="selectCpnOne" resultType="cltCpnDto">
+		SELECT COU_INFO_SEQ AS couInfoSeq 	    /*쿠폰 시퀀스*/
+			, COU_NUM AS couNum 				/*쿠폰 코드*/
+			, COU_NAME AS couName 				/*쿠폰 이름*/
+			, COU_DISCOUNT AS couDiscount 		/*쿠폰 할인율*/
+			, COU_REGIST_DATE AS couRegistDate 	/*쿠폰 등록 날짜*/
+			, COU_END_DATE AS couEndDate 		/*쿠폰 만료 날짜*/
+			, COU_COUNT AS couCount 			/*쿠폰 개수*/
+		FROM CLT_COUPON_TBL
+		WHERE 1 = 1
+		AND COU_INFO_SEQ = #{couInfoSeq}		/*쿠폰 시퀀스*/
+    </select>
+    
+    <!-- <select id="selectCpnList" resultType="cltCpnDto">
+	  SELECT COU_INFO_SEQ AS couInfoSeq 	/*쿠폰 시퀀스*/
+ 	  	, COU_NUM AS couNum 				/*쿠폰 코드*/
+      	, COU_NAME AS couName 				/*쿠폰 이름*/
+      	, COU_DISCOUNT AS couDiscount		/*쿠폰 할인율*/
+      	, COU_REGIST_DATE AS couRegistDate 	/*쿠폰 등록 날짜*/
+      	, COU_END_DATE AS couEndDate 		/*쿠폰 만료 날짜*/
+      	, COU_COUNT AS couCount 			/*쿠폰 개수*/
+	  FROM CLT_COUPON_TBL
+	  WHERE 1 = 1
+	  ORDER BY COU_INFO_SEQ ASC
+    </select>
+ -->
+	<insert id="insertCpn">
+		INSERT INTO CLT_COUPON_TBL
+		( COU_INFO_SEQ 				/*쿠폰 시퀀스*/
+		, COU_NUM 					/*쿠폰 코드*/
+		, COU_NAME 					/*쿠폰 이름*/
+		, COU_DISCOUNT 				/*쿠폰 할인율*/
+		, COU_REGIST_DATE 			/*쿠폰 등록 날짜*/
+		, COU_END_DATE 				/*쿠폰 만료 날짜*/
+		, COU_COUNT 				/*쿠폰 개수*/
+		) VALUES
+		( SQ_COU_INFO_SEQ.NEXTVAL 	/*쿠폰 시퀀스*/
+		, (SELECT NVL(MAX(COU_NUM),0)+1 FROM CLT_COUPON_TBL) /*쿠폰 코드*/
+		, #{couName} 				/*쿠폰 이름*/
+		, #{couDiscount} 			/*쿠폰 할인율*/
+		, NOW() 					/*쿠폰 등록 날짜*/
+		, #{couEndDate} 			/*쿠폰 만료 날짜*/
+		, #{couCount} 				/*쿠폰 개수*/
+		)
+    </insert>
+    
+	<update id="updateCpn">
+		UPDATE CLT_COUPON_TBL 
+		SET COU_NAME = #{couName} 		    /*쿠폰 이름*/
+			, COU_DISCOUNT = #{couDiscount} /*쿠폰 할인율*/
+			, COU_END_DATE = #{couEndDate} 	/*쿠폰 만료 날짜*/
+			, COU_COUNT = #{couCount} 		/*쿠폰 개수*/
+		WHERE 1=1
+		AND COU_INFO_SEQ = #{couInfoSeq}
+	</update>
+    
+	<delete id="deleteCpn">
+		DELETE FROM CLT_COUPON_TBL
+		WHERE 1=1
+		AND COU_INFO_SEQ = #{couInfoSeq}
+    </delete>
+    
+    <delete id="deleteCpnAll">
+		DELETE FROM CLT_COUPON_TBL
+	</delete>
+
+	<delete id="dropSeq">
+		DROP SEQUENCE SQ_COU_INFO_SEQ
+	</delete>
+
+	<insert id="createSeq">
+		CREATE SEQUENCE SQ_COU_INFO_SEQ
+	</insert>
+</mapper>

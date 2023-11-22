@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.prom.service.CltPromMapper">
+	<select id="promCnt" resultType="Integer">
+		SELECT COUNT(1)
+		  FROM PROM_TBL
+	</select>
+	
+	<select id="selectPromList" resultType="cltPromDto">
+	  SELECT PROM_SEQ as promSeq 				/*프로모션시퀀스*/
+		   , PROM_NUM as promNum 				/*프로모션번호*/
+		   , PROM_NAME as promName 				/*프로모션명*/
+		   , PROM_TP as promTp 					/*프로모션유형*/
+		   , PROM_DISCOUNT as promDiscount 		/*할인율*/
+		   , PROM_REGIST_DATE as promRegistDate /*이벤트시작일*/
+		   , PROM_END_DATE as promEndDate 		/*이벤트종료일*/
+		   , PROM_CONT as promCont 				/*프로모션내용*/
+		   , IMG_PATH as imgPath 				/*대표이미지경로*/
+		   , IMG_NM as imgNm 					/*이미지명*/
+		   , RGST_ID as rgstId 					/*등록자ID*/
+		   , RGST_DATE as rgstDate 				/*등록일자*/
+		   , UPDT_ID as updtId 					/*수정자ID*/
+		   , UPDT_DATE as updtDate 				/*수정일자*/
+		FROM PROM_TBL
+	   WHERE 1 = 1
+	   ORDER BY PROM_SEQ ASC
+	   LIMIT #{page}, #{pagePerRows}
+    </select>
+
+	<select id="selectPromOne" resultType="cltPromDto">
+	  SELECT PROM_SEQ as promSeq 				/*프로모션시퀀스*/
+		   , PROM_NUM as promNum 				/*프로모션번호*/
+		   , PROM_NAME as promName 				/*프로모션명*/
+		   , PROM_TP as promTp 					/*프로모션유형*/
+		   , PROM_DISCOUNT as promDiscount 		/*할인율*/
+		   , DATE_FORMAT(PROM_REGIST_DATE, '%Y-%m-%d') as promRegistDate /*이벤트시작일*/
+		   , DATE_FORMAT(PROM_END_DATE, '%Y-%m-%d')    as promEndDate 	 /*이벤트종료일*/
+		   , PROM_CONT as promCont 				/*프로모션내용*/
+		   , IMG_PATH as imgPath 				/*대표이미지경로*/
+		   , IMG_NM as imgNm 					/*이미지명*/
+		   , RGST_ID as rgstId 					/*등록자ID*/
+		   , RGST_DATE as rgstDate 				/*등록일자*/
+		   , UPDT_ID as updtId 					/*수정자ID*/
+		   , UPDT_DATE as updtDate 				/*수정일자*/
+		FROM PROM_TBL
+	   WHERE 1 = 1
+	     AND PROM_SEQ = #{promSeq}				/*프로모션시퀀스*/
+    </select>
+    
+	<insert id="insertProm">
+		INSERT INTO PROM_TBL(
+			 PROM_NUM 			/*프로모션번호*/
+			,PROM_NAME 			/*프로모션명*/
+			,PROM_TP 			/*프로모션유형*/
+			,PROM_DISCOUNT 		/*할인율*/
+			,PROM_CONT 			/*프로모션내용*/
+			,RGST_ID 			/*등록자 id*/
+			,RGST_DATE 			/*등록일자*/
+		)VALUES(
+			'00002' 			/*프로모션번호*/
+			,'테스트프로모션' 		/*프로모션명*/
+			,'01' 				/*프로모션유형 [01:이벤트, 02:쿠폰]*/
+			,'5' 				/*할인율*/
+			,'프로모션테스트 내용' 	/*프로모션 내용*/
+			,'ksb' 				/*등록자 id*/
+			, SYSDATE() 		/*등록일자*/
+		)
+    </insert>
+    
+	<update id="updateProm">
+		UPDATE PROM_TBL 
+		   SET PROM_NAME 		= #{promName} 		/*프로모션명*/
+			 , PROM_TP 			= #{promTp}			/*프로모션유형*/
+			 , PROM_DISCOUNT 	= #{promDiscount} 	/*할인율*/
+		   	 , PROM_REGIST_DATE = #{promRegistDate} /*이벤트시작일*/
+		   	 , PROM_END_DATE 	= #{promEndDate} 	/*이벤트종료일*/
+			 , PROM_CONT 		= #{promCont} 		/*프로모션내용*/
+			 , UPDT_ID 			= #{updtId}			/*수정자id*/
+			 , UPDT_DATE 		= SYSDATE() 		/*수정일자*/
+		WHERE 1=1
+		AND PROM_SEQ = #{promSeq}
+	</update>
+    
+	<delete id="deleteProm">
+		DELETE FROM PROM_TBL
+		WHERE 1=1
+		AND PROM_SEQ = #{promSeq}
+    </delete>
+    
+    <delete id="deletePromAll">
+		DELETE FROM PROM_TBL
+	</delete>
+
+</mapper>

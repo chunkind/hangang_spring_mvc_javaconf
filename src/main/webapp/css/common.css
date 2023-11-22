@@ -1,0 +1,52 @@
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/*text 정렬*/
+.text-center{text-align: center;}
+.text-left{text-align: left;}
+.text-right{text-align: right;}
+/*h 테그정의*/
+h1, h2, h3, h4, h5, h6{
+  margin: 5px 2px 5px 2px;
+  font-weight: bold;
+}
+h1{font-size: 35px;}
+h2{font-size: 31px;}
+h3{font-size: 27px;}
+h4{font-size: 23px;}
+h5{font-size: 19px;}
+h6{font-size: 15px;}
+
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+
+.frm{
+  border-radius: 0;
+  background-color: #f8f9fa;
+}
+
+.frm input, .frm textarea{
+  display: block;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  color: #495057;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.frm input[readonly], .frm textarea[readonly]
+,.frm input[disabled], .frm textarea[disabled]{
+  background-color: #e9ecef;
+  opacity: 1;
+}

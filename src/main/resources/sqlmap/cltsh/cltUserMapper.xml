@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.user.service.CltUserMapper">
+	<select id="userCnt" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM CLT_USR_BASE
+	</select>
+	
+	<select id="selectUserPagingList" resultType="cltUserDto">
+		/* userDao.selectUserPagingList - 유저 페이징 리스트 */
+		SELECT USR_BASE_SEQ AS usrBaseSeq /*유저기본시퀀스*/
+			, USR_ID AS usrId /*사용자 아이디*/
+			, USR_NM AS usrNm /*사용자 이름*/
+			, PASS_WD AS passWd /*비밀번호*/
+			, USR_BIRTH AS usrBirth /*생년월일*/
+			, EMAIL_ADDR AS emailAddr /*이메일주소*/
+			, CELL_NO AS cellNo /*휴대폰번호*/
+			, LAND_ADDR_BASE AS landAddrBase /*지번 주소 기본*/
+			, LAND_ADDR_DTL AS landAddrDtl /*지번 주소 상세*/
+			, LAND_POST_NO AS landPostNo /*지번 우편 번호*/
+			, LOAD_ADDR_BASE AS loadAddrBase /*도로 주소 기본*/
+			, LOAD_ADDR_DTL AS loadAddrDtl /*도로 주소 상세*/
+			, LOAD_POST_NO AS loadPostNo /*도로 우편 번호*/
+			, PASS_WD_CHG_DATE AS passWdChgDate /*비밀번호변경일시*/
+			, LOCK_YN AS lockYn /*정지유무*/
+			, RGST_ID AS rgstId /*등록 아이디*/
+			, RGST_DATE AS rgstDate /*등록 일자*/
+			, UPDT_ID AS updtId /*수정 아이디*/
+			, UPDT_DATE AS updtDate /*수정 일자*/
+			, USE_YN AS useYn /*사용 여부*/
+		FROM CLT_USR_BASE
+		LIMIT #{startIdx }, #{pagePerRows };
+    </select>
+
+	<select id="admUserSearch" resultType="cltUserDto">
+		/* userDao.admUserSearch - 유저 검색 */
+		SELECT USR_BASE_SEQ AS usrBaseSeq /*유저기본시퀀스*/
+			, USR_ID AS usrId /*사용자 아이디*/
+			, USR_NM AS usrNm /*사용자 이름*/
+			, PASS_WD AS passWd /*비밀번호*/
+			, USR_BIRTH AS usrBirth /*생년월일*/
+			, EMAIL_ADDR AS emailAddr /*이메일주소*/
+			, CELL_NO AS cellNo /*휴대폰번호*/
+			, LAND_ADDR_BASE AS landAddrBase /*지번 주소 기본*/
+			, LAND_ADDR_DTL AS landAddrDtl /*지번 주소 상세*/
+			, LAND_POST_NO AS landPostNo /*지번 우편 번호*/
+			, LOAD_ADDR_BASE AS loadAddrBase /*도로 주소 기본*/
+			, LOAD_ADDR_DTL AS loadAddrDtl /*도로 주소 상세*/
+			, LOAD_POST_NO AS loadPostNo /*도로 우편 번호*/
+			, PASS_WD_CHG_DATE AS passWdChgDate /*비밀번호변경일시*/
+			, LOCK_YN AS lockYn /*정지유무*/
+			, RGST_ID AS rgstId /*등록 아이디*/
+			, RGST_DATE AS rgstDate /*등록 일자*/
+			, UPDT_ID AS updtId /*수정 아이디*/
+			, UPDT_DATE AS updtDate /*수정 일자*/
+			, USE_YN AS useYn /*사용 여부*/
+		FROM CLT_USR_BASE
+		WHERE 1=1
+		<if test="searchType == null or searchType == '' 
+				and searchGradeUpperType == null
+				and searchStartRgstDate == '' and searchEndRgstDate == '' ">
+			<choose>
+			    <when test="userSequence == null or userSequence == '' or userSequence == 'num'">
+			    	ORDER BY USR_BASE_SEQ ASC
+			    </when>
+			    <otherwise>
+			        ORDER BY RGST_DATE ASC
+			    </otherwise>
+			</choose>
+			<choose>
+			    <when test='searchType.equals("idType") and null != searchText'>
+			    	AND USR_ID LIKE '%' || #{searchText} || '%'
+			    </when>
+			    <when test='searchType.equals("nameType") and null != searchText'>
+			    	AND USR_NM LIKE '%' || #{searchText} || '%'
+			    </when>
+			</choose>
+		</if>
+    </select>
+
+	<select id="selectUserList" resultType="cltUserDto">
+		/* userDao.selectUserList - 유저 리스트 */
+		SELECT USR_BASE_SEQ AS usrBaseSeq /*유저기본시퀀스*/
+			, USR_ID AS usrId /*사용자 아이디*/
+			, USR_NM AS usrNm /*사용자 이름*/
+			, PASS_WD AS passWd /*비밀번호*/
+			, USR_BIRTH AS usrBirth /*생년월일*/
+			, EMAIL_ADDR AS emailAddr /*이메일주소*/
+			, CELL_NO AS cellNo /*휴대폰번호*/
+			, LAND_ADDR_BASE AS landAddrBase /*지번 주소 기본*/
+			, LAND_ADDR_DTL AS landAddrDtl /*지번 주소 상세*/
+			, LAND_POST_NO AS landPostNo /*지번 우편 번호*/
+			, LOAD_ADDR_BASE AS loadAddrBase /*도로 주소 기본*/
+			, LOAD_ADDR_DTL AS loadAddrDtl /*도로 주소 상세*/
+			, LOAD_POST_NO AS loadPostNo /*도로 우편 번호*/
+			, PASS_WD_CHG_DATE AS passWdChgDate /*비밀번호변경일시*/
+			, LOCK_YN AS lockYn /*정지유무*/
+			, RGST_ID AS rgstId /*등록 아이디*/
+			, RGST_DATE AS rgstDate /*등록 일자*/
+			, UPDT_ID AS updtId /*수정 아이디*/
+			, UPDT_DATE AS updtDate /*수정 일자*/
+			, USE_YN AS useYn /*사용 여부*/
+		FROM CLT_USR_BASE
+    </select>
+
+	<insert id="insertUser">
+		/* userDao.insertUser - 유저 생성 */
+		INSERT INTO CLT_USR_BASE 
+		( USR_ID /*사용자 아이디*/
+		, USR_NM /*사용자 이름*/
+		, PASS_WD /*비밀번호*/
+		, USR_BIRTH /*생년월일*/
+		, EMAIL_ADDR /*이메일주소*/
+		, CELL_NO /*휴대폰번호*/
+		, LAND_ADDR_BASE /*지번 주소 기본*/
+		, LAND_ADDR_DTL /*지번 주소 상세*/
+		, LAND_POST_NO /*지번 우편 번호*/
+		, LOAD_ADDR_BASE /*도로 주소 기본*/
+		, LOAD_ADDR_DTL /*도로 주소 상세*/
+		, LOAD_POST_NO /*도로 우편 번호*/
+		, PASS_WD_CHG_DATE /*비밀번호변경일시*/
+		, LOCK_YN /*정지유무*/
+		, RGST_ID /*등록 아이디*/
+		, RGST_DATE /*등록 일자*/
+		, UPDT_ID /*수정 아이디*/
+		, UPDT_DATE /*수정 일자*/
+		, USE_YN /*사용 여부*/
+		) VALUES
+		( #{usrId} /*사용자 아이디*/
+		, #{usrNm} /*사용자 이름*/
+		, #{passWd} /*비밀번호*/
+		, #{usrBirth} /*생년월일*/
+		, #{emailAddr} /*이메일주소*/
+		, #{cellNo} /*휴대폰번호*/
+		, #{landAddrBase} /*지번 주소 기본*/
+		, #{landAddrDtl} /*지번 주소 상세*/
+		, #{landPostNo} /*지번 우편 번호*/
+		, #{loadAddrBase} /*도로 주소 기본*/
+		, #{loadAddrDtl} /*도로 주소 상세*/
+		, #{loadPostNo} /*도로 우편 번호*/
+		, NULL /*비밀번호변경일시*/
+		, 'N' /*정지유무*/
+		, #{rgstId} /*등록 아이디*/
+		, NOW() /*등록 일자*/
+		, NULL /*수정 아이디*/
+		, NULL /*수정 일자*/
+		, 'Y' /*사용 여부*/)
+    </insert>
+
+	<select id="selectUserOne" resultType="cltUserDto">
+		/* userDao.selectUserOne - 유저 상세*/
+		SELECT USR_BASE_SEQ AS usrBaseSeq /*유저기본시퀀스*/
+			, USR_ID AS usrId /*사용자 아이디*/
+			, USR_NM AS usrNm /*사용자 이름*/
+			, PASS_WD AS passWd /*비밀번호*/
+			, USR_BIRTH AS usrBirth /*생년월일*/
+			, EMAIL_ADDR AS emailAddr /*이메일주소*/
+			, CELL_NO AS cellNo /*휴대폰번호*/
+			, LAND_ADDR_BASE AS landAddrBase /*지번 주소 기본*/
+			, LAND_ADDR_DTL AS landAddrDtl /*지번 주소 상세*/
+			, LAND_POST_NO AS landPostNo /*지번 우편 번호*/
+			, LOAD_ADDR_BASE AS loadAddrBase /*도로 주소 기본*/
+			, LOAD_ADDR_DTL AS loadAddrDtl /*도로 주소 상세*/
+			, LOAD_POST_NO AS loadPostNo /*도로 우편 번호*/
+			, PASS_WD_CHG_DATE AS passWdChgDate /*비밀번호변경일시*/
+			, LOCK_YN AS lockYn /*정지유무*/
+			, RGST_ID AS rgstId /*등록 아이디*/
+			, RGST_DATE AS rgstDate /*등록 일자*/
+			, UPDT_ID AS updtId /*수정 아이디*/
+			, UPDT_DATE AS updtDate /*수정 일자*/
+			, USE_YN AS useYn /*사용 여부*/
+		FROM CLT_USR_BASE
+		WHERE 1=1
+		<if test="usrBaseSeq gt 0">
+			AND USR_BASE_SEQ = #{usrBaseSeq}
+		</if>
+		<if test="usrId != null">
+			AND USR_ID = #{usrId}
+		</if>
+	</select>
+
+	<update id="updateUser">
+		/* userDao.updateUser - 유저 수정*/
+		UPDATE CLT_USR_BASE 
+		SET USR_NM = #{usrNm} /*사용자 이름*/
+			, PASS_WD = #{passWd} /*비밀번호*/
+			, USR_BIRTH = #{usrBirth} /*생년월일*/
+			, EMAIL_ADDR = #{emailAddr} /*이메일주소*/
+			, CELL_NO = #{cellNo} /*휴대폰번호*/
+			, LAND_ADDR_BASE = #{landAddrBase} /*지번 주소 기본*/
+			, LAND_ADDR_DTL = #{landAddrDtl} /*지번 주소 상세*/
+			, LAND_POST_NO = #{landPostNo} /*지번 우편 번호*/
+			, LOAD_ADDR_BASE = #{loadAddrBase} /*도로 주소 기본*/
+			, LOAD_ADDR_DTL = #{loadAddrDtl} /*도로 주소 상세*/
+			, LOAD_POST_NO = #{loadPostNo} /*도로 우편 번호*/
+			, PASS_WD_CHG_DATE = NOW() /*비밀번호변경일시*/
+			, LOCK_YN = #{lockYn} /*정지유무*/
+			, UPDT_ID = #{updtId} /*수정 아이디*/
+			, UPDT_DATE = NOW() /*수정 일자*/
+			, USE_YN = #{useYn} /*사용 여부*/
+		WHERE 1=1
+		AND USR_BASE_SEQ = #{usrBaseSeq}
+	</update>
+    
+    <delete id="deleteUser">
+		/* userDao.deleteUser - 유저 삭제*/
+		DELETE FROM CLT_USR_BASE
+		WHERE 1=1 
+		AND USR_BASE_SEQ = #{usrBaseSeq}
+    </delete>
+
+	<select id="userLogin" resultType="cltUserDto">
+		/* userDao.userLogin - 유저 로그인*/
+		SELECT USR_BASE_SEQ AS usrBaseSeq /*유저기본시퀀스*/
+			, USR_ID AS usrId /*사용자 아이디*/
+			, USR_NM AS usrNm /*사용자 이름*/
+			, PASS_WD AS passWd /*비밀번호*/
+			, USR_BIRTH AS usrBirth /*생년월일*/
+			, EMAIL_ADDR AS emailAddr /*이메일주소*/
+			, CELL_NO AS cellNo /*휴대폰번호*/
+			, LAND_ADDR_BASE AS landAddrBase /*지번 주소 기본*/
+			, LAND_ADDR_DTL AS landAddrDtl /*지번 주소 상세*/
+			, LAND_POST_NO AS landPostNo /*지번 우편 번호*/
+			, LOAD_ADDR_BASE AS loadAddrBase /*도로 주소 기본*/
+			, LOAD_ADDR_DTL AS loadAddrDtl /*도로 주소 상세*/
+			, LOAD_POST_NO AS loadPostNo /*도로 우편 번호*/
+			, PASS_WD_CHG_DATE AS passWdChgDate /*비밀번호변경일시*/
+			, LOCK_YN AS lockYn /*정지유무*/
+			, RGST_ID AS rgstId /*등록 아이디*/
+			, RGST_DATE AS rgstDate /*등록 일자*/
+			, UPDT_ID AS updtId /*수정 아이디*/
+			, UPDT_DATE AS updtDate /*수정 일자*/
+			, USE_YN AS useYn /*사용 여부*/
+		FROM CLT_USR_BASE
+		WHERE 1=1
+		AND USR_ID = #{usrId}
+	</select>
+	
+	<delete id="deleteUserAll">
+		/* userDao.deleteUserAll - 모든 유저 삭제*/
+		DELETE FROM CLT_USR_BASE;
+    </delete>
+
+	<delete id="dropSeq">
+		/* userDao.dropSeq - 시퀀스 드랍*/
+		DROP SEQUENCE SQ_USR_BASE_SEQ
+	</delete>
+
+	<insert id="createSeq">
+		/* userDao.createSeq - 시퀀스 생성*/
+		CREATE SEQUENCE SQ_USR_BASE_SEQ
+	</insert>
+</mapper>

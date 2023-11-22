@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.entr.service.CltEntrMapper">
+	<select id="entrCnt" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM CLT_ENTR_BASE
+	</select>
+	
+	<select id="selectEntrList" resultType="cltEntrDto">
+		/* entrDao.selectEntrList - 업체 리스트 */
+		SELECT ENTR_NO AS entrNo 			/*거래처 번호*/
+			, USR_ID AS usrId 				/*유저명*/
+			, ENTR_NM AS entrNm 			/*거래처명*/
+			, BMAN_REG_NO AS bmanRegNo 		/*사업자등록번호*/
+			, PRES_NM AS presNm 			/*대표자명*/
+			, PRES_TELL AS presTell 		/*대표자번호*/
+			, PRES_EMAIL AS presEmail 		/*대표자메일*/
+			, AEMP_NM AS aempNm 			/*담당자명*/
+			, AEMP_TELL AS aempTell	 		/*담당자번호*/
+			, AEMP_EMAIL AS aempEmail 		/*담당자메일*/
+			, SCORE AS score 				/*평점*/
+			, LAND_ADDR_BASE AS landAddrBase /*지번 주소 기본*/
+			, LAND_ADDR_DTL AS landAddrDtl 	/*지번 주소 상세*/
+			, LAND_POST_NO AS landPostNo 	/*지번 우편 번호*/
+			, LOAD_ADDR_BASE AS loadAddrBase /*도로 주소 기본*/
+			, LOAD_POST_NO AS loadPostNo 	/*도로 우편 번호*/
+			, OPN_DATE AS opnDate 			/*개점일*/
+			, CLOSE_DATE AS closeDate 		/*폐점일*/
+			, OPN_YN AS opnYn 				/*오픈여부*/
+			, USE_YN AS useYn 				/*사용 여부*/
+			, RGST_ID AS rgstId 			/*등록 아이디*/
+			, RGST_DATE AS rgstDate 		/*등록 일자*/
+			, UPDT_ID AS updtId 			/*수정 아이디*/
+			, UPDT_DATE AS updtDate 		/*수정 일자*/
+		FROM CLT_ENTR_BASE
+		LIMIT #{startIdx}, #{pagePerRows };
+    </select>
+
+	<select id="selectEntrOne" resultType="cltEntrDto">
+		/* entrDao.selectEntrOne - 업체 상세 */
+		SELECT ENTR_NO AS entrNo 			/*거래처 번호*/
+			, USR_ID AS usrId 				/*유저명*/
+			, ENTR_NM AS entrNm 			/*거래처명*/
+			, BMAN_REG_NO AS bmanRegNo 		/*사업자등록번호*/
+			, PRES_NM AS presNm 			/*대표자명*/
+			, PRES_TELL AS presTell 		/*대표자번호*/
+			, PRES_EMAIL AS presEmail 		/*대표자메일*/
+			, AEMP_NM AS aempNm 			/*담당자명*/
+			, AEMP_TELL AS aempTell	 		/*담당자번호*/
+			, AEMP_EMAIL AS aempEmail 		/*담당자메일*/
+			, SCORE AS score 				/*평점*/
+			, LAND_ADDR_BASE AS landAddrBase /*지번 주소 기본*/
+			, LAND_ADDR_DTL AS landAddrDtl 	/*지번 주소 상세*/
+			, LAND_POST_NO AS landPostNo 	/*지번 우편 번호*/
+			, LOAD_ADDR_BASE AS loadAddrBase /*도로 주소 기본*/
+			, LOAD_POST_NO AS loadPostNo 	/*도로 우편 번호*/
+			, OPN_DATE AS opnDate 			/*개점일*/
+			, CLOSE_DATE AS closeDate 		/*폐점일*/
+			, OPN_YN AS opnYn 				/*오픈여부*/
+			, USE_YN AS useYn 				/*사용 여부*/
+			, RGST_ID AS rgstId 			/*등록 아이디*/
+			, RGST_DATE AS rgstDate 		/*등록 일자*/
+			, UPDT_ID AS updtId 			/*수정 아이디*/
+			, UPDT_DATE AS updtDate 		/*수정 일자*/
+		FROM CLT_ENTR_BASE
+		WHERE 1=1
+		AND ENTR_NO = #{entrNo}
+    </select>
+    
+    <!-- <select id="selectEntrList" resultType="cltEntrDto">
+	  SELECT ENTR_NO AS entrNo 				/*거래처 번호*/
+	      , USR_ID AS usrId 				/*유저명*/
+	      , ENTR_NM AS entrNm 				/*거래처명*/
+	      , BMAN_REG_NO AS bmanRegNo 		/*사업자등록번호*/
+	      , PRES_NM AS presNm 				/*대표자명*/
+	      , PRES_TELL AS presTell 			/*대표자번호*/
+	      , PRES_EMAIL AS presEmail 		/*대표자메일*/
+	      , AEMP_NM AS aempNm 				/*담당자명*/
+	      , AEMP_TELL AS aempTell	 		/*담당자번호*/
+	      , AEMP_EMAIL AS aempEmail 		/*담당자메일*/
+	      , SCORE AS score 					/*평점*/
+	      , LAND_ADDR_BASE AS landAddrBase 	/*지번 주소 기본*/
+	      , LAND_ADDR_DTL AS landAddrDtl 	/*지번 주소 상세*/
+	      , LAND_POST_NO AS landPostNo 		/*지번 우편 번호*/
+	      , LOAD_ADDR_BASE AS loadAddrBase 	/*도로 주소 기본*/
+	      , LOAD_POST_NO AS loadPostNo 		/*도로 우편 번호*/
+	      , OPN_DATE AS opnDate 			/*개점일*/
+	      , CLOSE_DATE AS closeDate 		/*폐점일*/
+	      , OPN_YN AS opnYn 				/*오픈여부*/
+	      , USE_YN AS useYn 				/*사용 여부*/
+	      , RGST_ID AS rgstId 				/*등록 아이디*/
+	      , RGST_DATE AS rgstDate 			/*등록 일자*/
+	      , UPDT_ID AS updtId 				/*수정 아이디*/
+	      , UPDT_DATE AS updtDate 			/*수정 일자*/
+	   FROM CLT_ENTR_BASE
+	   WHERE 1=1
+    </select> -->
+    
+    <select id="selectIdEntrList" resultType="cltEntrDto">
+		/* entrDao.selectIdEntrList - 업체 리스트 (아이디 검색) */
+		SELECT ENTR_NO AS entrNo 			/*거래처 번호*/
+			, USR_ID AS usrId 				/*유저명*/
+			, ENTR_NM AS entrNm 			/*거래처명*/
+			, BMAN_REG_NO AS bmanRegNo 		/*사업자등록번호*/
+			, PRES_NM AS presNm 			/*대표자명*/
+			, PRES_TELL AS presTell 		/*대표자번호*/
+			, PRES_EMAIL AS presEmail 		/*대표자메일*/
+			, AEMP_NM AS aempNm 			/*담당자명*/
+			, AEMP_TELL AS aempTell	 		/*담당자번호*/
+			, AEMP_EMAIL AS aempEmail 		/*담당자메일*/
+			, SCORE AS score 				/*평점*/
+			, LAND_ADDR_BASE AS landAddrBase /*지번 주소 기본*/
+			, LAND_ADDR_DTL AS landAddrDtl 	/*지번 주소 상세*/
+			, LAND_POST_NO AS landPostNo 	/*지번 우편 번호*/
+			, LOAD_ADDR_BASE AS loadAddrBase /*도로 주소 기본*/
+			, LOAD_POST_NO AS loadPostNo 	/*도로 우편 번호*/
+			, OPN_DATE AS opnDate 			/*개점일*/
+			, CLOSE_DATE AS closeDate 		/*폐점일*/
+			, OPN_YN AS opnYn 				/*오픈여부*/
+			, USE_YN AS useYn 				/*사용 여부*/
+			, RGST_ID AS rgstId 			/*등록 아이디*/
+			, RGST_DATE AS rgstDate 		/*등록 일자*/
+			, UPDT_ID AS updtId 			/*수정 아이디*/
+			, UPDT_DATE AS updtDate 		/*수정 일자*/
+		FROM CLT_ENTR_BASE
+		WHERE 1=1
+		AND USR_ID = #{usrId}
+    </select>
+
+	<insert id="insertEntr">
+		/* entrDao.insertEntr - 업체 등록 */
+		INSERT INTO CLT_ENTR_BASE
+		( USR_ID 			/*유저 아이디*/
+		, ENTR_NM 			/*거래처명*/
+		, BMAN_REG_NO 		/*사업자등록번호*/
+		, PRES_NM 			/*대표자명*/
+		, PRES_TELL 		/*대표자번호*/
+		, PRES_EMAIL 		/*대표자메일*/
+		, AEMP_NM 			/*담당자명*/
+		, AEMP_TELL 		/*담당자번호*/
+		, AEMP_EMAIL 		/*담당자메일*/
+		, SCORE 			/*평점*/
+		, LAND_ADDR_BASE 	/*지번 주소 기본*/
+		, LAND_ADDR_DTL 	/*지번 주소 상세*/
+		, LAND_POST_NO 		/*지번 우편 번호*/
+		, LOAD_ADDR_BASE 	/*도로 주소 기본*/
+		, LOAD_POST_NO 		/*도로 우편 번호*/
+		, OPN_DATE 			/*개점일*/
+		, CLOSE_DATE 		/*폐점일*/
+		, OPN_YN 			/*오픈여부*/
+		, USE_YN 			/*사용 여부*/
+		, RGST_ID 			/*등록 아이디*/
+		, RGST_DATE 		/*등록 일자*/
+		, UPDT_ID 			/*수정 아이디*/
+		, UPDT_DATE 		/*수정 일자*/
+		) VALUES
+		( #{usrId}			/*유저 아이디*/
+		, #{entrNm}			/*거래처명*/
+		, #{bmanRegNo} 		/*사업자등록번호*/
+		, #{presNm} 		/*대표자명*/
+		, #{presTell} 		/*대표자번호*/
+		, #{presEmail} 		/*대표자메일*/
+		, #{aempNm} 		/*담당자명*/
+		, #{aempTell} 		/*담당자번호*/
+		, #{aempEmail} 		/*담당자메일*/
+		, #{score} 			/*평점*/
+		, #{landAddrBase}	/*지번 주소 기본*/
+		, #{landAddrDtl} 	/*지번 주소 상세*/
+		, #{landPostNo} 	/*지번 우편 번호*/
+		, #{loadAddrBase}	/*도로 주소 기본*/
+		, #{loadPostNo} 	/*도로 우편 번호*/
+		, #{opnDate} 		/*개점일*/
+		, #{closeDate} 		/*폐점일*/
+		, #{opnYn} 			/*오픈여부*/
+		, #{useYn} 			/*사용 여부*/
+		, #{rgstId} 		/*등록 아이디*/
+		, NOW() 			/*등록 일자*/
+		, #{updtId}	 		/*수정 아이디*/
+		, NOW() 			/*수정 일자*/
+		)
+    </insert>
+    
+	<update id="updateEntr">
+		/* entrDao.updateEntr - 업체 수정 */
+		UPDATE CLT_ENTR_BASE
+		SET USR_ID = #{usrId} 					/*유저명*/
+			, ENTR_NM = #{entrNm} 				/*거래처명*/
+			, BMAN_REG_NO = #{bmanRegNo} 		/*사업자등록번호*/
+			, PRES_NM = #{presNm} 				/*대표자명*/
+			, PRES_TELL = #{presTell}  			/*대표자번호*/
+			, PRES_EMAIL = #{presEmail}  		/*대표자메일*/
+			, AEMP_NM = #{aempNm} 				/*담당자명*/
+			, AEMP_TELL = #{aempTell} 			/*담당자번호*/
+			, AEMP_EMAIL = #{aempEmail} 		/*담당자메일*/
+			, SCORE = #{score} 					/*평점*/
+			, LAND_ADDR_BASE = #{landAddrBase} /*지번 주소 기본*/
+			, LAND_ADDR_DTL = #{landAddrDtl} 	/*지번 주소 상세*/
+			, LAND_POST_NO = #{landPostNo} 		/*지번 우편 번호*/
+			, LOAD_ADDR_BASE = #{loadAddrBase} /*도로 주소 기본*/
+			, LOAD_POST_NO = #{loadPostNo} 		/*도로 우편 번호*/
+			, OPN_DATE = #{opnDate} 			/*개점일*/
+			, CLOSE_DATE = #{closeDate} 		/*폐점일*/
+			, OPN_YN = #{opnYn} 				/*오픈여부*/
+			, USE_YN = #{useYn} 				/*사용 여부*/
+			, UPDT_ID = #{updtId} 				/*수정 아이디*/
+			, UPDT_DATE = NOW()  				/*수정 일자*/
+		WHERE 1=1
+		AND ENTR_NO = #{entrNo} 				/*업체 시퀀스*/
+	</update>
+    
+	<delete id="deleteEntr">
+		/* entrDao.deleteEntr - 업체 삭제 */
+		DELETE FROM CLT_ENTR_BASE
+		WHERE 1=1
+		AND ENTR_NO = #{entrNo}
+    </delete>
+    
+    <delete id="deleteEntrAll">
+		/* entrDao.deleteEntrAll - 모든 업체 삭제*/
+		DELETE FROM CLT_ENTR_BASE
+	</delete>
+
+	<delete id="dropSeq">
+		/* entrDao.dropSeq - 시퀀스 드랍 */
+		DROP SEQUENCE SQ_ENTR_BASE_SEQ
+	</delete>
+
+	<insert id="createSeq">
+		/* entrDao.createSeq - 시퀀스 생성 */
+		CREATE SEQUENCE SQ_ENTR_BASE_SEQ
+	</insert>
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.main.service.CltMainMapper">
+	<select id="goodsCnt" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM CLT_GOODS_INFO
+	</select>
+	
+	<select id="searchGoodsCnt" resultType="Integer">
+		SELECT 
+			COUNT(*)
+		FROM CLT_GOODS_INFO
+		WHERE 1=1
+	 	AND CATGRY_CD = #{searchCatgryCd};
+	</select>
+	
+	<select id="selectListMainCate" resultType="cltGoodsDetailDto">
+		/* mainDao.selectListMainCate - */
+		SELECT
+			GOODS.GOODS_CD AS goodsCd,
+			GOODS.ENTR_NO AS entrNo,
+			GOODS.GOODS_NM AS goodsNm,
+			GOODS.INY_QTY AS inyQty,
+			GOODS.DLV_PRC AS dlvPrc,
+			GOODS.GOODS_SIZE AS goodsSize,
+			GOODS.GOODS_CLR AS goodsClr,
+			GOODS.IMG_PATH AS imgPath,
+			GOODS.IMG_NM AS imgNm,
+			GOODS.GOODS_INTR AS goodsIntr,
+			GOODS.CATGRY_CD AS catgryCd,
+			GOODS.CATGRY_CD2 AS catgryCd2,
+			SALE.SALE_BOARD_SEQ AS saleBoardSeq,
+			SALE.SALE_STAT_CD AS saleStatCd,
+			SALE.BUL_TIT_NM AS bulTitNm,
+			SALE.BUL_STRT_DT AS bulStrtDt,
+			SALE.BUL_END_DT AS bulEndDt,
+			SALE.BUL_YN AS bulYn,
+			SALE.NTC_SCT_CD AS ntcSctCd,
+			SALE.BUL_CONT AS bulCont,
+			SALE.QRY_CNT AS qryCnt,
+			SALE.LKE_CNT AS lkeCnt,
+			SALE.GOODS_PRC AS goodsPrc,
+			SALE.GOODS_SALE_PRC AS goodsSalePrc,
+			SALE.PRCL_WAY AS prclWay,
+			SALE.SALE_CNT AS saleCnt,
+			SALE.RGST_ID AS rgstId,
+			SALE.RGST_DATE AS rgstDate,
+			SALE.UPDT_ID AS updtId,
+			SALE.UPDT_DATE AS updtDate,
+			SALE.USE_YN AS useYn,
+			SALE.DESCRIPTION AS description
+		FROM CLT_SALE_BOARD SALE
+			INNER JOIN CLT_GOODS_INFO GOODS
+			ON SALE.GOODS_CD = GOODS.GOODS_CD
+			AND SALE.ENTR_NO = GOODS.ENTR_NO
+		WHERE 1=1
+			<if test="catgryCd != null">
+			    AND GOODS.CATGRY_CD = #{catgryCd}
+			</if>
+			<if test="catgryCd2 != null">
+			    AND GOODS.CATGRY_CD2 = #{catgryCd2}
+			</if>
+			<if test="goodsCd gt 0">
+			    AND GOODS.GOODS_CD = #{goodsCd}
+			</if>
+		ORDER BY SALE.SALE_BOARD_SEQ ASC
+		LIMIT #{startIdx}, #{pagePerRows }
+	</select>
+
+	<select id="selectListMainHome" resultType="cltGoodsDetailDto">
+		/* mainDao.selectListMainHome - */
+		<![CDATA[
+		SELECT GOODS.GOODS_CD		AS goodsCd
+			, GOODS.ENTR_NO		AS entrNo
+			, GOODS.GOODS_NM		AS goodsNm
+			/*, GOODS.GOODS_PRC		AS goodsPrc*/
+			, GOODS.INY_QTY		AS inyQty
+			, GOODS.DLV_PRC		AS dlvPrc
+			, GOODS.GOODS_SIZE		AS goodsSize
+			, GOODS.GOODS_CLR		AS goodsClr
+			, GOODS.IMG_PATH		AS imgPath
+			, GOODS.IMG_NM			AS imgNm
+			, GOODS.GOODS_INTR		AS goodsIntr
+			, GOODS.SALE_STAT_CD	AS saleStatCd
+			, GOODS.CATGRY_CD		AS catgryCd
+			, GOODS.CATGRY_CD2		AS catgryCd2
+			, GOODS.USE_YN			AS useYn
+			, GOODS.RGST_ID		AS rgstId
+			, GOODS.RGST_DATE		AS rgstDate
+			, GOODS.UPDT_ID		AS updtId
+			, GOODS.UPDT_DATE		AS updtDate
+			, SALE.SALE_BOARD_SEQ	AS saleBoardSeq
+			, SALE.SALE_STAT_CD	AS saleStatCd
+			, SALE.BUL_TIT_NM		AS bulTitNm
+			, SALE.BUL_STRT_DT		AS bulStrtDt
+			, SALE.BUL_END_DT		AS bulEndDt
+			, SALE.BUL_YN			AS bulYn
+			, SALE.NTC_SCT_CD		AS ntcSctCd
+			, SALE.BUL_CONT		AS bulCont
+			, SALE.QRY_CNT			AS qryCnt
+			, SALE.LKE_CNT			AS lkeCnt
+			, SALE.GOODS_PRC		AS goodsPrc
+			, SALE.GOODS_SALE_PRC	AS goodsSalePrc
+			, SALE.PRCL_WAY		AS prclWay
+			, SALE.SALE_CNT		AS saleCnt
+			, SALE.RGST_ID			AS rgstId
+			, SALE.RGST_DATE		AS rgstDate
+			, SALE.UPDT_ID			AS updtId
+			, SALE.UPDT_DATE		AS updtDate
+			, SALE.USE_YN			AS useYn
+			, SALE.DESCRIPTION		AS description
+		FROM CLT_SALE_BOARD SALE
+		, CLT_GOODS_INFO GOODS
+		WHERE 1=1
+		AND SALE.GOODS_CD = GOODS.GOODS_CD
+		AND SALE.ENTR_NO = GOODS.ENTR_NO
+		ORDER BY SALE.LKE_CNT DESC
+		LIMIT 1, 10
+		]]>
+	</select>
+</mapper>

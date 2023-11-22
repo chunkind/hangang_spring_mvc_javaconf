@@ -1,0 +1,98 @@
+h1{
+    font-size: 25px;
+    font-weight: 400;
+    margin: 60px;
+    text-align: center;
+}
+h2{
+    font-weight: 300;
+    font-size: 25px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+.buy_item_top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 18px;
+    padding: 10px 10px 15px 10px;
+    margin: 0px 200px;
+    border-bottom: 1px solid #cccccc;
+}
+.buy_item_top .coupon{
+    position: relative;
+    left: 255px;
+}
+
+.buy_item_mid img{
+    width: 125%;
+    height: 150px;
+}
+
+.buy_item_mid{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+    margin-left: 200px;
+    margin-right: 200px;
+    border-bottom: 1px solid #cccccc;
+}
+.buy_item_bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-bottom: 150px;
+    border-bottom: 1px solid #000;
+}
+.buy_item_bottom div{
+    padding: 20px;
+}
+.order_money{
+    font-size: 18px;
+}
+#member_data div{
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 15px;
+}
+#delivery_location div{
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 15px;
+}
+#use_point div{
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 15px;
+}
+#payment{
+    margin-bottom: 100px;
+}
+#payment div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 15px;
+}
+button{
+    position: relative;
+    left: 820px;
+    height: 55px;
+    width: 140px;
+}
+.border{
+    border-bottom: 1px solid #cccccc;
+}
+.end_border{
+    border-bottom: 1px solid #000;
+}

@@ -1,0 +1,39 @@
+.item_list_area{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header_data{
+    margin-bottom: 40px;
+}
+
+.header_data .icon{
+    display: flex;
+    flex-display: row;
+}
+
+.header_data .icon span{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.header_data .icon i{
+    font-size: 80px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.data_list{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.data_list img{
+    width: 120px;
+}
