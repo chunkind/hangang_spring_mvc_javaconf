@@ -2,11 +2,9 @@ package com.dev.ck;
 
 import javax.servlet.ServletContext;
 
-import org.springframework.scheduling.annotation.EnableScheduling;
-
-import com.dev.ck.config.CommonWebApplicationInitializer;
-import com.dev.ck.config.app.ApplicationConfig;
-import com.dev.ck.config.webapp.CkWebAppConfig;
+import com.dev.ck.ackwd.config.CommonWebApplicationInitializer;
+import com.dev.ck.ackwd.config.app.ApplicationConfig;
+import com.dev.ck.ackwd.config.webapp.CkWebAppConfig;
 
 import lombok.extern.slf4j.Slf4j;
 //import nframework.web.authcontextfilter.AuthenticationContextFilter;

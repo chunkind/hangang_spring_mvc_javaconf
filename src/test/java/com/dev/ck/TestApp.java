@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.dev.ck.config.webapp.TestAppConfig;
+import com.dev.ck.ackwd.config.webapp.TestAppConfig;
 
 import lombok.extern.slf4j.Slf4j;
 
