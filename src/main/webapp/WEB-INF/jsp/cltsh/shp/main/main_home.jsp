@@ -15,7 +15,8 @@
 					<div class="txt_area">
 						<div class="item_name">${obj.bulTitNm}</div>
 						<div class="item_price">
-							<span class="color_red"><fmt:formatNumber value="${obj.goodsSalePrc/obj.goodsPrc * 100}" pattern="###" />%</span><span><fmt:formatNumber value="${obj.goodsPrc - obj.goodsSalePrc}" pattern="#,###" />원</span>
+							<span class="color_red">${(obj.goodsSalePrc/obj.goodsPrc * 100).intValue()}%</span>
+							<span>${String.format("%,d", obj.goodsPrc - obj.goodsSalePrc)}원</span>
 						</div>
 					</div>
 					<div class="dim"></div>

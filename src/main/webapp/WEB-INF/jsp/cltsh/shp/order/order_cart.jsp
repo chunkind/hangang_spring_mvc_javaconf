@@ -71,7 +71,7 @@
 var basketList = null;
 document.addEventListener("DOMContentLoaded", () => {
 	fn_ajax({
-		url: '/order/orderCartListAjax.do',
+		url: '/cltsh/order/orderCartListAjax.do',
 		method: 'get',
 		success: function(data){
 			basketList = data.dataList
@@ -125,7 +125,7 @@ function fn_order_seq_check(type){
 	document.querySelector('#command').value = '';
 	
 	let form = document.getElementById("frm");
-	form.action = "/order/orderCartRegister.do";
+	form.action = "/cltsh/order/orderCartRegister.do";
 	form.mothod = "POST";
 	form.submit();
 }

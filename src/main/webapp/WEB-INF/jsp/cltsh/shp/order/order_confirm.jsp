@@ -33,7 +33,7 @@ td{
         </tr>
         <tr>
             <th>결제 금액 : </th>
-            <td><fmt:formatNumber value="${orderOne.payMny}" pattern="#,###" />원</td>
+            <td>${String.format("%,d", orderOne.payMny)} 원</td>
         </tr>
         <tr>
             <th>배송지 :</th>

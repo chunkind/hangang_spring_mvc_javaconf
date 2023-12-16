@@ -95,13 +95,13 @@ textarea {
 		<th>수량</th>
 		<td><input type="number" name="goodsQty" value="1"> <!-- 상품 코드 --></td>
 		<th>상품 가격</th>
-		<td><fmt:formatNumber value="${detail.goodsPrc - detail.goodsSalePrc}" pattern="#,###" />원</td>
+		<td>${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc)} 원</td>
 	</tr>
 	<tr>
 		<th>배송비</th>
-		<td><fmt:formatNumber value="${detail.dlvPrc}" pattern="#,###" />원</td>
+		<td>${String.format("%,d", detail.dlvPrc)}원</td>
 		<th>총 결제 금액</th>
-		<td><fmt:formatNumber value="${detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc}" pattern="#,###" />원</td>
+		<td>${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)} 원</td>
 	</tr>
 	<tr>
 		<th>배송지</th>

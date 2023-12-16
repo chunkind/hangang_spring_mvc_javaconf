@@ -44,7 +44,7 @@
 			<tr>
 				<td>${obj.qnaBoardSeq}</td>
 				<td>${obj.qnaTp}</td>
-				<td><a href="/qna/qnaDetail.do?qnaBoardSeq=${obj.qnaBoardSeq}">${obj.titNm}</a></td>
+				<td><a href="/cltsh/qna/qnaDetail.do?qnaBoardSeq=${obj.qnaBoardSeq}">${obj.titNm}</a></td>
 				<td>${obj.rgstDate}</td>
 				<td>${obj.rgstId}</td> <!-- <td>처리일</td> -->
 				<td>${obj.ansrStat}</td>

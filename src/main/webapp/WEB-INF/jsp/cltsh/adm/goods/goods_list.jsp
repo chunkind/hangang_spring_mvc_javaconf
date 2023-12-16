@@ -63,7 +63,7 @@
 document.addEventListener("DOMContentLoaded", ()=>{
 	let sel_entrCd = document.querySelector("#searchEntrNo");
 	sel_entrCd.addEventListener('change', (e)=>{
-		location.href = '/adm/goods/admGoodsList.do?searchEntrNo='+sel_entrCd.value;
+		location.href = '/cltsh/adm/goods/admGoodsList.do?searchEntrNo='+sel_entrCd.value;
 	});
 });
 </script>

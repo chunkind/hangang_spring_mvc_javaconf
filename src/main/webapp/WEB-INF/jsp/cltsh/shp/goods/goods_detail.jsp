@@ -20,10 +20,10 @@
     </div>
     <div class="product_main_detail">
         <h3>${detail.bulTitNm}</h3>
-        <h2><fmt:formatNumber value="${detail.goodsSalePrc/detail.goodsPrc * 100}" pattern="###" />% <del><fmt:formatNumber value="${detail.goodsPrc}" pattern="#,###" />원</del> <fmt:formatNumber value="${detail.goodsPrc - detail.goodsSalePrc}" pattern="#,###" />원</h2>
-        <h5>배송비 <fmt:formatNumber value="${detail.dlvPrc}" pattern="#,###" />원</h5>
-        <h4>예상 구매가 ${detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc}원</h4>
-        <h5>적립 <fmt:formatNumber value="${(detail.goodsPrc - detail.goodsSalePrc) * 0.03}" pattern="#,###" />원</h5>
+        <h2>${(detail.goodsSalePrc/detail.goodsPrc * 100).intValue()}%<del> ${String.format("%,d", detail.goodsPrc)}원</del> ${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc)}원</h2>
+        <h5>배송비 ${String.format("%,d", detail.dlvPrc)}원</h5>
+        <h4>예상 구매가 ${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)}원</h4>
+        <h5>적립 ${String.format("%,d", ((detail.goodsPrc - detail.goodsSalePrc) * 0.03).intValue())}원</h5>
        <!--  <h5>리뷰정보 718개 <a href="#">리뷰 보기</a></h5> -->
         <select name="colorOption" id="colorOption">
             <option value="">[컬러] 옵션을 선택하세요.</option>
@@ -39,7 +39,7 @@
             <option value="L">L</option>
             <option value="XL">XL</option>
         </select>
-        <h3>총 상품 금액 ${detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc}원</h3>
+        <h3>총 상품 금액 ${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)}원</h3>
         <c:if test="${not empty sessionScope.loginInfo }">
 	        <button class="product_main_detail_button_mid" onclick="fn_add_basket('${detail.saleBoardSeq}')">장바구니</button>
         </c:if>

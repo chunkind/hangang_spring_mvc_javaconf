@@ -112,12 +112,12 @@ textarea {
 			<th>수량</th>
 			<td><input type="number" name="goodsQty" value="1"> <!-- 상품 코드 --></td>
 			<th>상품 가격</th>
-			<td><fmt:formatNumber value="${obj.goodsPrc - obj.goodsSalePrc}" pattern="#,###" />원</td>
+			<td>${String.format("%,d", obj.goodsPrc - obj.goodsSalePrc)} 원</td>
 		</tr>
 	</table>
 </c:forEach>
 <th>총 결제 금액 : </th>
-	<td><fmt:formatNumber value="${totalGoodsPrc}" pattern="#,###" />원 + 배송비 <fmt:formatNumber value="${totalDlvPrc}" pattern="#,###" />원 = <fmt:formatNumber value="${totalPayment}" pattern="#,###" />원</td>
+	<td>${String.format("%,d", totalGoodsPrc)} 원 + 배송비 ${String.format("%,d", totalDlvPrc)} 원 = ${String.format("%,d", totalPayment)} 원</td>
 <tr></br>
 	
 	<th>결제 수단</th>
