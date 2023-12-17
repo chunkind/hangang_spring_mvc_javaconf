@@ -170,7 +170,8 @@ public class CltOrderController{
 			orderService.updateBasket(pvo);
 		}
 		CltOrderDto orderOne = orderService.selectOrdOne(pvo);
-		List<CltOrderDto> orderDtlOne = orderService.selectCartOrdDtlList(pvo);
+//		List<CltOrderDto> orderDtlOne = orderService.selectCartOrdDtlList(pvo); 나중에 수정해야됨
+		CltOrderDto orderDtlOne = orderService.selectOrdDtlOne(pvo);
 		
 		req.setAttribute("orderOne", orderOne);
 		req.setAttribute("orderDtlOne", orderDtlOne);

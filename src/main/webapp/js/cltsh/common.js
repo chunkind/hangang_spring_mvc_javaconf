@@ -2,14 +2,14 @@
 
 function pageMove(pageName, searchSaleBoardSeq){
    if(pageName == 'product'){
-        location.href = '/goods/goodsDetail.do?searchSaleBoardSeq=' + searchSaleBoardSeq;
+        location.href = '/cltsh/goods/goodsDetail.do?searchSaleBoardSeq=' + searchSaleBoardSeq;
     }
 }
 
 function fn_add_basket(salesSeq){
     if(confirm("해당 상품을 장바구니에 담으시겠습니까?")){
         fn_ajax({
-            url:'/order/orderCartInsertAjax.do?searchSaleBoardSeq=' + salesSeq,
+            url:'/cltsh/order/orderCartInsertAjax.do?searchSaleBoardSeq=' + salesSeq,
             method:'get',
             success: function(data){
                 let resultCode = data.result;
