@@ -263,11 +263,17 @@ document.addEventListener("scroll", () => {
 function fn_order(){
 	let select_color_option = document.querySelector("#colorOption");
 	let select_size_option = document.querySelector("#sizeOption");
+	let usrId = '${sessionScope.loginInfo.usrId}';
 	
-	if(select_color_option.value != "" &&  select_size_option.value != ""){
-		location.href='/cltsh/order/order.do?searchSaleBoardSeq='+${detail.saleBoardSeq}+'&colorOption='+select_color_option.value+'&sizeOption='+select_size_option.value;
-	}else{
-		alert("옵션을 선택해주세요.");
-	}
+    if (usrId === null || usrId === '') {
+        alert('로그인이 필요합니다. 로그인 후 이용해주세요.');
+        location.href='/cltsh/user/userLogin.do';
+    } else{
+		 if(select_color_option.value != "" &&  select_size_option.value != ""){
+			location.href='/cltsh/order/order.do?searchSaleBoardSeq='+${detail.saleBoardSeq}+'&colorOption='+select_color_option.value+'&sizeOption='+select_size_option.value;
+		} else{
+			alert("옵션을 선택해주세요.");
+		}
+   }
 }
 </script>
