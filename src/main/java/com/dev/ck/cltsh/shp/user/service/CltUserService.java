@@ -125,6 +125,10 @@ public class CltUserService {
 		return userDao.userLogin(pvo);
 	}
 	
+	public CltUserDto kakaoLogin(String email) {
+		return userDao.kakaoLogin(email);
+	}
+	
 	public int deleteUserAll() {
 		return userDao.deleteUserAll();
 	}

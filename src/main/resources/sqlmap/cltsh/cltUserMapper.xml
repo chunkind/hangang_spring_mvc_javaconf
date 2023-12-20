@@ -237,6 +237,33 @@
 		AND USR_ID = #{usrId}
 	</select>
 	
+	<select id="kakaoLogin" resultType="cltUserDto">
+		/* userDao.userLogin - 유저 로그인*/
+		SELECT USR_BASE_SEQ AS usrBaseSeq /*유저기본시퀀스*/
+			, USR_ID AS usrId /*사용자 아이디*/
+			, USR_NM AS usrNm /*사용자 이름*/
+			, PASS_WD AS passWd /*비밀번호*/
+			, USR_BIRTH AS usrBirth /*생년월일*/
+			, EMAIL_ADDR AS emailAddr /*이메일주소*/
+			, CELL_NO AS cellNo /*휴대폰번호*/
+			, LAND_ADDR_BASE AS landAddrBase /*지번 주소 기본*/
+			, LAND_ADDR_DTL AS landAddrDtl /*지번 주소 상세*/
+			, LAND_POST_NO AS landPostNo /*지번 우편 번호*/
+			, LOAD_ADDR_BASE AS loadAddrBase /*도로 주소 기본*/
+			, LOAD_ADDR_DTL AS loadAddrDtl /*도로 주소 상세*/
+			, LOAD_POST_NO AS loadPostNo /*도로 우편 번호*/
+			, PASS_WD_CHG_DATE AS passWdChgDate /*비밀번호변경일시*/
+			, LOCK_YN AS lockYn /*정지유무*/
+			, RGST_ID AS rgstId /*등록 아이디*/
+			, RGST_DATE AS rgstDate /*등록 일자*/
+			, UPDT_ID AS updtId /*수정 아이디*/
+			, UPDT_DATE AS updtDate /*수정 일자*/
+			, USE_YN AS useYn /*사용 여부*/
+		FROM CLT_USR_BASE
+		WHERE 1=1
+		AND EMAIL_ADDR = #{emailAddr}
+	</select>
+	
 	<delete id="deleteUserAll">
 		/* userDao.deleteUserAll - 모든 유저 삭제*/
 		DELETE FROM CLT_USR_BASE;

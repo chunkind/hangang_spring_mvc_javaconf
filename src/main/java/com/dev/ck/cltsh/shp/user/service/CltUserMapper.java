@@ -17,6 +17,7 @@ public interface CltUserMapper {
 	int updateUser(CltUserDto pvo);
 	int deleteUser(CltUserDto pvo);
 	CltUserDto userLogin(CltUserDto pvo);
+	CltUserDto kakaoLogin(String email);
 	int deleteUserAll();
 	int dropSeq();
 	int createSeq();
