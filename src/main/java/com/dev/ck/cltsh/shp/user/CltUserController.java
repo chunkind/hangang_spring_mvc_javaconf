@@ -1,6 +1,7 @@
 package com.dev.ck.cltsh.shp.user;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,13 +10,18 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dev.ck.cltsh.shp.user.service.CltUserService;
+import com.dev.ck.cltsh.shp.user.service.kakaoLoginService;
 
 @Controller
 public class CltUserController {
 	@Autowired private CltUserService userService;
+	@Autowired private kakaoLoginService kakaoService;
 	
 	// 회원 정보 수정 화면
 	@RequestMapping("/cltsh/user/userEdit.do")
@@ -67,6 +73,42 @@ public class CltUserController {
 	@RequestMapping("/cltsh/user/userLogin.do")
 	public String userLogin() {
 		return "cltsh/shp/user/login";
+	}
+
+	// 카카오 로그인 화면 호출 //1번 카카오톡에 사용자 코드 받기(jsp의 a태그 href에 경로 있음)
+	@GetMapping("/cltsh/user/kakaoLogin.do") //	@RequestMapping(value = "/cltsh/user/kakaoLogin.do", method = RequestMethod.GET)
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, HttpServletRequest req) throws Throwable {
+		HttpSession session = req.getSession();
+		String returnPage = "";
+		
+		// 1번
+		System.out.println("code:" + code);
+		
+		// 2번
+		String access_Token = kakaoService.getAccessToken(code);
+		System.out.println("###access_Token#### : " + access_Token);
+		// 위의 access_Token 받는 걸 확인한 후에 밑에 진행
+		
+		// 3번
+		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_Token);
+//		System.out.println("###nickname#### : " + userInfo.get("nickname"));
+		String email = (String) userInfo.get("email");
+		
+		if (email == null || email.equals("")) {
+			returnPage = "/cltsh/user/userLogin.do";
+		} else {
+			CltUserDto pvo = userService.kakaoLogin(email);
+			CltUserDto sessionVO = userService.userLogin(pvo);
+			
+			if (null == sessionVO) {
+				returnPage = "redirect:/cltsh/user/userLogin.do";
+			} else if (pvo.getUsrId().equals(sessionVO.getUsrId()) && pvo.getPassWd().equals(sessionVO.getPassWd())) {
+				session.setAttribute("loginInfo", sessionVO);
+				returnPage = "redirect:/cltsh/main.do";
+			}
+		}
+		
+		return returnPage; // return에 페이지를 해도 되고, 여기서는 코드가 넘어오는지만 확인할거기 때문에 따로 return 값을 두지는 않았음
 	}
 	
 	// 로그인 - 아이디, 비밀번호 입력 시 호출
