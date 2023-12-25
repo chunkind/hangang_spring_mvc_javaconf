@@ -11,7 +11,7 @@
             <th rowspan="2">입금완료</th>
             <td>1건</td>
             <th rowspan="4" colspan="2">주문처리 완료<br><br>${detailOrderCount}건</th>
-            <td rowspan="4"><fmt:formatNumber value="${payMnyResult}" pattern="#,###" />원</td>
+            <td rowspan="4">${String.format("%,d", payMnyResult)}원</td>
             <th>취소요청</th>
             <th>교환요청</th>
             <th>반품요청</th>
