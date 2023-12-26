@@ -85,7 +85,7 @@
 
   #section {
     text-align: center;
-    margin-top: 30px;
+    margin-top: -80px;
   }
 
   .input_area {
