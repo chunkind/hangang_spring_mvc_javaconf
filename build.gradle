@@ -42,8 +42,7 @@ dependencies{
 	implementation 'com.googlecode.json-simple:json-simple:1.1'
 	implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 	implementation 'net.sf.json-lib:json-lib-ext-spring:1.0.2'
-	implementation 'com.google.code.gson:gson:2.2.4' /*버전 변경*/
-	/*implementation 'com.google.code.gson:gson:2.8.7'*/ /*버전 변경*/
+	implementation 'com.google.code.gson:gson:2.2.4'
 	implementation 'hsqldb:hsqldb:1.8.0.10'
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.4.1'
 	implementation 'servlets.com:cos:05Nov2002'
