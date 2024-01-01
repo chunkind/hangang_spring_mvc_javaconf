@@ -46,9 +46,9 @@ public class CltAdmOrderController{
 	
 	//주문 관리 상세
 	@RequestMapping("/cltsh/adm/order/admOrdStateChange.do")
-	public String admOrderDetail(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-		CltOrderDto ordVo = orderService.searchOrdNoList(pvo);
-		req.setAttribute("ordVo", ordVo);
+	public String admOrdStateChange(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+//		CltOrderDto ordVo = orderService.searchOrdNoList(pvo);
+//		req.setAttribute("ordVo", ordVo);
 		
 		return "cltsh/adm/order/order_detail";
 	}
