@@ -210,6 +210,12 @@
 		AND ORD_NO = #{ordNo}
     </delete>
     
+    <update id="admOrdStateChange">
+	    UPDATE CLT_ORD_BASE 
+			SET ORD_STAT  = #{ordStat}
+		WHERE 1=1
+		AND ORD_NO = #{ordNo}
+    </update>
     
     <!-- 주문 상세 -->
     <select id="selectOrdDtlOne" resultType="cltOrderDto">
