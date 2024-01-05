@@ -172,6 +172,10 @@ public class CltOrderService {
 			return dao.deleteOrdDtl(pvo);
 		}
 		
+		public int admOrdStateChange(CltOrderDto pvo) {
+			return dao.admOrdStateChange(pvo);
+		}
+		
 		public List<CltOrderDto> searchIdOrdList(CltOrderDto pvo){
 			return dao.searchIdOrdList(pvo);
 		}

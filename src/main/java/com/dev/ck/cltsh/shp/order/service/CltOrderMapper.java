@@ -19,6 +19,7 @@ public interface CltOrderMapper {
 	List<CltOrderDto> selectOrdDtlList(CltOrderDto pvo);
 	int updateOrdDtl(CltOrderDto pvo);
 	int deleteOrdDtl(CltOrderDto pvo);
+	int admOrdStateChange(CltOrderDto pvo);
 	List<CltOrderDto> searchIdOrdList(CltOrderDto pvo);
 	CltOrderDto searchOrdNoList(CltOrderDto pvo);
 	List<CltOrderDto> searchOrdDtlGoods(CltOrderDto pvo);
