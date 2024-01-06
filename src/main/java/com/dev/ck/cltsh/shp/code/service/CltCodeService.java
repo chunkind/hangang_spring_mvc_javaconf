@@ -68,6 +68,9 @@ public class CltCodeService {
 	public List<CltCodeDto> selectAdmCdList(CltCodeDto pvo){
 		return dao.selectAdmCdList(pvo);
 	};
+	public List<CltCodeDto> selectOrdStatCdList(){ //주문 상태 코드 리스트
+		return dao.selectOrdStatCdList();
+	};
 	public int updateCode(CltCodeDto pvo) {
 		return dao.updateCode(pvo);
 	};
