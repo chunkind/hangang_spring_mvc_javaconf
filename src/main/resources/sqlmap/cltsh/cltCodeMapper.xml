@@ -140,6 +140,25 @@
 		AND GRP_CD = 'STD004'
 		ORDER BY STD_CD_BASE_SEQ ASC
 	</select>
+	
+	<select id="selectOrdStatCdList" resultType="cltCodeDto">
+		/* codeDao.selectOrdStatCdList - 주문 상태 코드 리스트 */
+		SELECT STD_CD_BASE_SEQ AS stdCdBaseSeq
+			, CODE_NM AS codeNm
+			, CODE_VAL AS codeVal
+			, CODE_DESC AS codeDesc
+			, GRP_CD AS grpCd
+			, GRP_ORDR AS grpOrdr
+			, USE_YN AS useYn
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, UPDT_ID AS updtId
+			, UPDT_DATE AS updtDate
+		FROM CLT_STD_CD_BASE
+		WHERE 1=1 
+		AND GRP_CD = 'STD004'
+		ORDER BY STD_CD_BASE_SEQ ASC
+	</select>
 
 	<update id="updateCode">
 	/* codeDao.updateCode - 공통 코드 수정 */
