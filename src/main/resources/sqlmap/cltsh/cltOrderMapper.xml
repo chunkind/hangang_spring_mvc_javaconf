@@ -210,9 +210,11 @@
 		AND ORD_NO = #{ordNo}
     </delete>
     
+    <!-- 주문상태 변경 -->
     <update id="admOrdStateChange">
 	    UPDATE CLT_ORD_BASE 
 			SET ORD_STAT  = #{ordStat}
+			, BILL_NUM = #{billNum}
 		WHERE 1=1
 		AND ORD_NO = #{ordNo}
     </update>

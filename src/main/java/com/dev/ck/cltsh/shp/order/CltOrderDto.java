@@ -34,6 +34,8 @@ public class CltOrderDto extends PagingVO{
 	private String rgstId;
 	private Long billNum;
 	
+	private String ordStatNm; //주문 상태 -> "02"일 경우 "결제완료" 저장
+	 
 	//주문 상세
 	private Long ordDtlNo;
 	private String goodsNm;

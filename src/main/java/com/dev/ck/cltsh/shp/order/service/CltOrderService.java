@@ -173,7 +173,7 @@ public class CltOrderService {
 		}
 		
 		public int admOrdStateChange(CltOrderDto pvo) {
-			return dao.admOrdStateChange(pvo);
+			return dao.admOrdStateChange(pvo);  
 		}
 		
 		public List<CltOrderDto> searchIdOrdList(CltOrderDto pvo){
