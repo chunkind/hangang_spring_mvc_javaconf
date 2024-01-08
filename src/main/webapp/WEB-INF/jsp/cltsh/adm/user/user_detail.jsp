@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/jsp/cltsh/cltsh/cmm/admHeader.jsp" %>
+<%@ include file="/WEB-INF/jsp/cltsh/cmm/admHeader.jsp" %>
 <h2>회원 관리</h2>
 <div class="data_list">
 	<table>

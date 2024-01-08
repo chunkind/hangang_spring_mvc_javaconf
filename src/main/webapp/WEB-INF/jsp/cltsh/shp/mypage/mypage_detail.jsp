@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/jsp/cltsh/cmm/nomalMenu.jsp" %>
-<link href="/cltsh/css/mypage_detail.css" rel="stylesheet">
+<link href="/css/cltsh/mypage_detail.css" rel="stylesheet">
 
 <section class="title_area">
 	<h3 class="title">주문상세조회</h3>
