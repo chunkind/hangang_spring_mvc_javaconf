@@ -74,12 +74,19 @@ h2{
     padding-top: 10px;
 }
 
-.delivery_btn{
-    height: 50px;
-    position: relative;
-    left: 750px;
+.delivery_btn {
+    height: 46px;
+    position: absolute;
+    top: 185%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     margin-bottom: 50px;
 }
 .item_list_area{
 	padding-top: 5px;
+}
+.btn_area {
+    width: 100%;
+    padding: 80px;
+    text-align: right;
 }
