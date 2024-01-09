@@ -103,26 +103,7 @@
 		</tbody>
 	</table>
 </div>
-${paging }
-<%-- <div class="pageNav">
-	<a href='<c:url value="/adm/user/admUserList.do?page=1"/>'><i class="fa">◀</i></a> <!-- 맨 앞 페이지로 -->
-	<c:choose>
-		<c:when test="${page eq 1 && isNext eq 'true'}">
-			<a href='<c:url value="/adm/user/admUserList.do?page=1"/>'><i class="fa">◀</i></a>
-		</c:when>
-		<c:when test="${isNext eq 'true' }">
-			<a href='<c:url value="/adm/user/admUserList.do?page=${minPage - 10}"/>'><i class="fa">◀</i></a>
-		</c:when>
-	</c:choose>
-	<c:forEach begin="${minPage }" end="${maxPage }" var="pageNum">
-		<a <c:if test="${page eq pageNum}">class="active"</c:if> href='<c:url value="/adm/user/admUserList.do?page=${pageNum }"/>'><i class="fa">${pageNum }</i></a>
-	</c:forEach>
-	<c:if test="${isNext eq 'true' }">
-		<a href='<c:url value="/adm/user/admUserList.do?page=${maxPage + 1}"/>'><i class="fa">▶</i></a>
-	</c:if>
-	<a href='<c:url value="/adm/user/admUserList.do?page=${userCnt }"/>'><i class="fa">▶</i></a> <!-- 맨 뒤 페이지로 -->
-</div> --%>
-
+	${paging }
 <script>
 (function(){
 	document.getElementById("searchGradeUpperType").addEventListener('change', makeRequest);
