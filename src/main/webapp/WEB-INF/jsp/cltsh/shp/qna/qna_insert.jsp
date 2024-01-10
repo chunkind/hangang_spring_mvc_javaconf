@@ -21,8 +21,17 @@
 		<tr>
 			<th>제목</th>
 			<td><input type="text" name="titNm"></td>
+			<th>비밀글</th>
+			<td>
+			    <label>
+			        <input type="radio" name="passYn" value="Y"> 사용
+			    </label>
+			    <label>
+			        <input type="radio" name="passYn" value="N" checked> 미사용
+			    </label>
+			</td>
 		</tr>
-		<tr>
+		<!--  <tr>
 			<th>비밀글</th>
 			<td>
 				<select name="passYn" id="passYn">
@@ -32,7 +41,7 @@
 			</td>
 			<th>비밀글 비밀번호</th>
 			<td><input type="password" name="passWd" id="passWd"></td>
-		</tr>
+		</tr>-->
 		<tr>
 			<th>문의유형</th>
 			<td>
@@ -90,7 +99,7 @@
 </section>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-	let sel_passYn = document.querySelector('#passYn');
+	/* let sel_passYn = document.querySelector('#passYn');
 	sel_passYn.addEventListener('change', (e)=>{
 		let selectedVal = e.target.value;
 		
@@ -101,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 		
 	});
-	document.getElementById("passWd").style.display = "none";
+	document.getElementById("passWd").style.display = "none"; */
 	
 	let sel_qnaTp = document.querySelector('#qnaTp');
 	sel_qnaTp.addEventListener('change', (e)=>{
