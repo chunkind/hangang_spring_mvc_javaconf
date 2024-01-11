@@ -37,48 +37,60 @@
 			<tr><th>번호</th><th>구분</th><th>제목</th><th>등록일</th><th>작성자</th><th>상태</th></tr>
 		</thead>
 		<tbody>
+		
 		<c:if test="${empty list }">
 			<tr><td class="nodata" colspan="6">데이터가 없습니다.</td></tr>
 		</c:if>
-		<c:forEach items="${list }" var="obj">
-			<tr>
-				<td>${obj.qnaBoardSeq}</td>
-				<td>${obj.qnaTp}</td>
-				<td><a href="/cltsh/qna/qnaDetail.do?qnaBoardSeq=${obj.qnaBoardSeq}">${obj.titNm}</a></td>
-				<td>${obj.rgstDate}</td>
-				<td>${obj.rgstId}</td> <!-- <td>처리일</td> -->
-				<td>${obj.ansrStat}</td>
-			</tr>
+
+		<c:forEach items="${list}" var="obj">
+			<c:choose>
+				<c:when test="${obj.passYn eq 'Y'}"> <!-- 비밀글은 작성자만 조회할 수 있습니다. -->
+					<tr>
+						<td>${obj.qnaBoardSeq}</td>
+						<td>${obj.qnaTp}</td>
+						<td><c:choose>
+								<c:when test="${obj.rgstId eq loginInfo.usrId}">
+									<!-- 아이디가 같은 경우에는 링크 클릭 가능 -->
+									<a href="/cltsh/qna/qnaDetail.do?qnaBoardSeq=${obj.qnaBoardSeq}">${obj.titNm}</a>
+									<i class="fa-solid fa-lock"></i>
+								</c:when>
+								<c:otherwise>
+									<!-- 아이디가 다른 경우에는 JavaScript 경고창 띄우기 -->
+									<a href="javascript:void(0);" onclick="showAlert();">${obj.titNm}</a>
+									<i class="fa-solid fa-lock"></i>
+								</c:otherwise>
+							</c:choose></td>
+						<td>${obj.rgstDate}</td>
+						<td>${obj.rgstId}</td>
+						<td>${obj.ansrStat}</td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td>${obj.qnaBoardSeq}</td>
+						<td>${obj.qnaTp}</td>
+						<td><a href="/cltsh/qna/qnaDetail.do?qnaBoardSeq=${obj.qnaBoardSeq}">${obj.titNm}</a></td>
+						<td>${obj.rgstDate}</td>
+						<td>${obj.rgstId}</td>
+						<!-- <td>처리일</td> -->
+						<td>${obj.ansrStat}</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 		</c:forEach>
+
 		</tbody>
 	</table>
-	    ${paging}
-	<%-- <div class="pageNav">
-		<a href='<c:url value="/main/mainQnaList.do?page=1"/>'><i class="fa">◀</i></a> <!-- 맨 앞 페이지로 -->
-		
-		<c:choose>
-			<c:when test="${page eq 1 && isNext eq 'true'}">
-				<a href='<c:url value="/main/mainQnaList.do?page=1"/>'><i class="fa">◀</i></a>
-			</c:when>
-			<c:when test="${isNext eq 'true' }">
-				<a href='<c:url value="/main/mainQnaList.do?page=${minPage - 10}"/>'><i class="fa">◀</i></a>
-			</c:when>
-		</c:choose>
-		
-		<c:forEach begin="${minPage }" end="${maxPage }" var="pageNum">
-			<a <c:if test="${page eq pageNum}">class="active"</c:if> href='<c:url value="/main/mainQnaList.do?page=${pageNum }"/>'><i class="fa">${pageNum }</i></a>
-		</c:forEach>
-		
-		<c:if test="${isNext eq 'true' }">
-			<a href='<c:url value="/main/mainQnaList.do?page=${maxPage + 1}"/>'><i class="fa">▶</i></a>
-		</c:if>
-		
-		<a href='<c:url value="/main/mainQnaList.do?page=${qnaCnt }"/>'><i class="fa">▶</i></a> <!-- 맨 뒤 페이지로 -->
-	</div> --%>
-		
+	${paging}
 	<div class="btn_area">
 		<input type="button" class="w70" value="작성하기" onclick="location.href='/cltsh/qna/qnaInsert.do'" />
 	</div>
 </section>
+
+<script>
+	function showAlert() {
+		alert('비밀글은 작성자만 조회할 수 있습니다.');
+	}
+</script>
 
 <%@ include file="/WEB-INF/jsp/cltsh/cmm/auth.jsp" %>
