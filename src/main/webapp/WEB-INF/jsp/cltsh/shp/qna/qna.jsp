@@ -51,13 +51,13 @@
 						<td><c:choose>
 								<c:when test="${obj.rgstId eq loginInfo.usrId}">
 									<!-- 아이디가 같은 경우에는 링크 클릭 가능 -->
-									<a href="/cltsh/qna/qnaDetail.do?qnaBoardSeq=${obj.qnaBoardSeq}">${obj.titNm}</a>
 									<i class="fa-solid fa-lock"></i>
+									<a href="/cltsh/qna/qnaDetail.do?qnaBoardSeq=${obj.qnaBoardSeq}">${obj.titNm}</a>
 								</c:when>
 								<c:otherwise>
 									<!-- 아이디가 다른 경우에는 JavaScript 경고창 띄우기 -->
-									<a href="javascript:void(0);" onclick="showAlert();">${obj.titNm}</a>
 									<i class="fa-solid fa-lock"></i>
+									<a href="javascript:void(0);" onclick="showAlert();">${obj.titNm}</a>
 								</c:otherwise>
 							</c:choose></td>
 						<td>${obj.rgstDate}</td>

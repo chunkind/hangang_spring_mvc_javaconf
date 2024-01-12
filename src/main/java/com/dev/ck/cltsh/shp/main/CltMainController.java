@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import com.dev.ck.cltsh.shp.dress.service.CltDressService;
 import com.dev.ck.cltsh.shp.main.service.CltMainService;
 import com.dev.ck.cltsh.shp.qna.CltQnaDto;
 import com.dev.ck.cltsh.shp.qna.service.CltQnaService;
+import com.dev.ck.cltsh.shp.user.CltUserDto;
+import com.jcraft.jsch.Session;
 
 @Controller
 public class CltMainController{
@@ -107,6 +110,9 @@ public class CltMainController{
 	
 	@RequestMapping("/cltsh/main/mainQnaList.do")
 	public String mainQnaList(HttpServletRequest req, HttpServletResponse res, CltQnaDto pvo) {
+		HttpSession session = req.getSession();
+		CltUserDto loginInfo = (CltUserDto) session.getAttribute("loginInfo");
+		
 		String requestURI = (String) req.getAttribute("requestURI"); //페이징
 		String page = req.getParameter("page");
 		int totalCnt = qnaService.qnaCnt();
@@ -121,6 +127,7 @@ public class CltMainController{
 		List<CltQnaDto> list = qnaService.qnaPageing(pvo);
 		req.setAttribute("paging", pvo.getHtml());
 		req.setAttribute("list", list);
+		session.setAttribute("loginInfo", loginInfo);
 		return "cltsh/shp/qna/qna";
 	}
 
