@@ -26,9 +26,13 @@
         <span>결제금액</span>
         <span>${ordList.payMny}원</span>
     </div>
-    <div class="end">
+    <div>
         <span>적립포인트</span>
         <span>50원</span>
+    </div>
+    <div class="end">
+        <span>운송장 번호</span>
+        <span>${ordList.billNum}</span>
     </div>
 </div>
 <h2>주문상품</h2>
