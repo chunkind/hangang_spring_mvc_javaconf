@@ -33,6 +33,7 @@ public class CltAdmOrderController{
 		
 		List<CltOrderDto> orderList = orderService.selectOrdList(pvo);
 		
+		req.setAttribute("paging", pvo.getHtml());
 		req.setAttribute("orderList", orderList);
 		
 		return "cltsh/adm/order/order_list";
