@@ -111,15 +111,26 @@ document.querySelector('#someDeleteBasket').addEventListener('click', ()=>{
 function fn_order_seq_check(type){
 	let items = document.querySelectorAll('.ordBasketSn');
 	let strSeq = "";
-	for (let name of items) {
-		if(type == 'some' && name.checked){
-	    	strSeq += name.value + ",";
-		}
-		if(type == 'all'){
-			strSeq += name.value + ",";
-		}
-	    
-	}
+	
+	/* 어떤 상품이 선택되었는지 확인 */
+    let isAnyItemSelected = false;
+	
+    for (let name of items) {
+        if (type == 'some' && name.checked) {
+            strSeq += name.value + ",";
+            isAnyItemSelected = true;
+        }
+        if (type == 'all') {
+            strSeq += name.value + ",";
+            isAnyItemSelected = true;
+        }
+    }
+	
+	if (!isAnyItemSelected) {
+        alert('상품이 선택되지 않았습니다.');
+        return;
+    }
+	
 	document.querySelector('#gubun').value = type;
 	document.querySelector('#checkedList').value = strSeq;
 	document.querySelector('#command').value = '';
@@ -133,15 +144,24 @@ function fn_order_seq_check(type){
 function fn_delete_order_seq_check(type){
 	let items = document.querySelectorAll('.ordBasketSn');
 	let strSeq = "";
+	let isAnyItemSelected = false;
+	
 	for (let name of items) {
 		if(type == 'some' && name.checked){
 	    	strSeq += name.value + ",";
+	    	isAnyItemSelected = true;
 		}
 		if(type == 'all'){
 			strSeq += name.value + ",";
+			isAnyItemSelected = true;
 		}
-	    
 	}
+	
+	if (!isAnyItemSelected) {
+        alert('삭제할 상품이 선택되지 않았습니다.');
+        return;
+    }
+	
 	fn_ajax({
 		url: '/cltsh/order/orderCartDeleteAjax.do?checkedList='+strSeq,
 		method: 'get',
