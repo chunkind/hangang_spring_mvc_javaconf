@@ -489,6 +489,22 @@
 		WHERE 1=1
     </select>
     
+    <select id="selectCartOrdDtlList" resultType="cltOrderDto">
+		SELECT ORD_DTL_NO AS ordDtlNo
+			, USR_ID AS usrId
+			, ORD_NO AS ordNo
+			, GOODS_NM AS goodsNm
+			, GOODS_CD AS goodsCd
+			, GOODS_QTY AS goodsQty
+			, UPDT_DATE AS updtDate
+			, UPDT_ID AS updtId
+			, RGST_DATE AS rgstDate
+			, RGST_ID AS rgstId
+		FROM CLT_ORD_DTL
+		WHERE 1=1
+		AND ORD_NO = #{ordNo}
+    </select>
+    
     <!-- 테이블 삭제, 시퀀스 삭제 생성-->
     <delete id="deleteOrdAll">
         DELETE FROM CLT_ORD_BASE;
