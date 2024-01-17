@@ -169,12 +169,18 @@ public class CltOrderController{
 			pvo.setOrdBasketSeq(Long.parseLong(seqs[i]));
 			orderService.updateBasket(pvo);
 		}
-		CltOrderDto orderOne = orderService.selectOrdOne(pvo);
-//		List<CltOrderDto> orderDtlOne = orderService.selectCartOrdDtlList(pvo); 나중에 수정해야됨
-		CltOrderDto orderDtlOne = orderService.selectOrdDtlOne(pvo);
 		
-		req.setAttribute("orderOne", orderOne);
-		req.setAttribute("orderDtlOne", orderDtlOne);
+		if(seqs.length > 1) {
+			CltOrderDto orderOne = orderService.selectOrdOne(pvo);
+			List<CltOrderDto> orderDtlOne = orderService.selectCartOrdDtlList(pvo);
+			req.setAttribute("orderOne", orderOne);
+			req.setAttribute("orderDtlOne", orderDtlOne);
+		} else {
+			CltOrderDto orderOne = orderService.selectOrdOne(pvo);
+			CltOrderDto orderDtlOne = orderService.selectOrdDtlOne(pvo);
+			req.setAttribute("orderOne", orderOne);
+			req.setAttribute("orderDtlOne", orderDtlOne);
+		}
 		
 		return "cltsh/shp/order/order_basket_confirm";
 	}
