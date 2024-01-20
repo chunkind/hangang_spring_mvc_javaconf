@@ -172,9 +172,9 @@ public class CltOrderController{
 		
 		if(seqs.length > 1) {
 			CltOrderDto orderOne = orderService.selectOrdOne(pvo);
-			List<CltOrderDto> orderDtlOne = orderService.selectCartOrdDtlList(pvo);
+			List<CltOrderDto> orderDtlList = orderService.selectCartOrdDtlList(pvo);
 			req.setAttribute("orderOne", orderOne);
-			req.setAttribute("orderDtlOne", orderDtlOne);
+			req.setAttribute("orderDtlList", orderDtlList);
 		} else {
 			CltOrderDto orderOne = orderService.selectOrdOne(pvo);
 			CltOrderDto orderDtlOne = orderService.selectOrdDtlOne(pvo);
@@ -236,7 +236,7 @@ public class CltOrderController{
 		
 		CltSalesDto saleVO = salesService.selectSalesOne(pSaleVO);
 		
-		pvo.setGoodsCd(Long.parseLong(String.valueOf(saleVO.getGoodsCd())));
+		pvo.setGoodsCd(Integer.parseInt(String.valueOf(saleVO.getGoodsCd())));
 		pvo.setEntrNo(saleVO.getEntrNo());
 		pvo.setSaleBoardSeq(pSaleVO.getSaleBoardSeq()); //saleBoardSeq
 		pvo.setUsrId(loginVo.getUsrId());

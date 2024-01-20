@@ -43,7 +43,7 @@ public class CltOrderService {
 		// 주문 상세
 		long ordDtlNo = req.getParameter("ordDtlNo") == null ? 0L : Long.parseLong(req.getParameter("ordDtlNo"));
 		String goodsNm = req.getParameter("goodsNm");
-		long goodsCd = req.getParameter("goodsCd") == null ? 0L : Long.parseLong(req.getParameter("goodsCd"));
+		int goodsCd = req.getParameter("goodsCd") == null ? 0 : Integer.parseInt(req.getParameter("goodsCd"));
 		int goodsQty = req.getParameter("goodsQty") == null ? 0 : Integer.parseInt(req.getParameter("goodsQty"));
 
 		// 장바구니
@@ -228,7 +228,7 @@ public class CltOrderService {
 		if(seqs != null && GoodsNmArry != null) {
 			pvo.setSaleBoardSeq(Long.parseLong(pvo.getSaleBoardSeqs()[pvo.getIndex()]));
 			pvo.setGoodsNm(GoodsNmArry[pvo.getIndex()]);
-			pvo.setGoodsCd(Long.parseLong((seqs[pvo.getIndex()])));
+			pvo.setGoodsCd(Integer.parseInt((seqs[pvo.getIndex()])));
 			pvo.setGoodsQty(1);
 			dao.insertOrdDtl(pvo);
 		}else {

@@ -15,7 +15,7 @@ public class CltGoodsService {
 	
 	public CltGoodsDto parameterSetting(HttpServletRequest req) {
 		long goodsInfoSeq = req.getParameter("goodsInfoSeq") == null? 0L : Long.parseLong(req.getParameter("goodsInfoSeq"));
-		long goodsCd = req.getParameter("goodsCd") == null? 0L : Long.parseLong(req.getParameter("goodsCd"));
+		int goodsCd = req.getParameter("goodsCd") == null? 0 : Integer.parseInt(req.getParameter("goodsCd"));
 		long entrNo = req.getParameter("entrNo") == null? 0L : Long.parseLong(req.getParameter("entrNo"));
 		String saleStatCd = req.getParameter("saleStatCd");
 		String goodsNm = req.getParameter("goodsNm");

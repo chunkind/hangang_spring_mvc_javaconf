@@ -39,7 +39,7 @@ public class CltOrderDto extends PagingVO{
 	//주문 상세
 	private Long ordDtlNo;
 	private String goodsNm;
-	private Long goodsCd;
+	private int goodsCd;
 	private int goodsQty;
 	private String codeNm;
 	

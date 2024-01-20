@@ -62,7 +62,7 @@ public class CltQnaController{
 		commonCode(req);
 		
 		CltGoodsDto gvo = new CltGoodsDto();
-		gvo.setGoodsCd(Long.parseLong(req.getParameter("goodsCd")));
+		gvo.setGoodsCd(Integer.parseInt(req.getParameter("goodsCd")));
 		CltGoodsDto rvo = goodsService.selectMypgGoodsOne(gvo);
 		
 		req.setAttribute("rvo", rvo);

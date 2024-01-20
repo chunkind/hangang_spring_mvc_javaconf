@@ -40,7 +40,7 @@ public class CltGoodsDto extends PagingVO{
 	//new GoodsVO(1L, "흰색가방", 250000, "CT01", "CT0101", 10, 2500, "S", "흰색", "/img/cltsh/part/bag/backpack/", "backpack_01.jpg", "흰색 가방 입니다.", "01", "Y", "system", DateUtils.stringToSqlDate("2012-05-21"), "system", DateUtils.stringToSqlDate("2012-05-21"))
 
 	private long goodsInfoSeq;/*상품 시퀀스*/
-	private long goodsCd;/*상품 코드*/
+	private int goodsCd;/*상품 코드*/
 	private long entrNo;/*거래처 번호*/
 	private String goodsNm;/*상품이름*/
 	private int goodsPrc;/*상품가격*/
