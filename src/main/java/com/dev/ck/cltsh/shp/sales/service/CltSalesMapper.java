@@ -15,6 +15,7 @@ public interface CltSalesMapper {
 	List<CltSalesDto> entrSalesList(CltSalesDto pvo);
 	List<CltSalesDto> selectSalesList(CltSalesDto pvo);
 	CltSalesDto selectSalesOne(CltSalesDto pvo);
+	CltSalesDto selectMypgSalesOne(CltSalesDto pvo);
 	int dropSeq();
 	int createSeq();
 }

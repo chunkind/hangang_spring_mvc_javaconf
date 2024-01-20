@@ -30,6 +30,35 @@
 		AND SALE_BOARD_SEQ = #{saleBoardSeq}
 	</select>
 	
+	<select id="selectMypgSalesOne" resultType="cltSalesDto">
+		/* salesDao.selectMypgSalesOne - 마이페이지 상세 판매 게시글  */
+		SELECT SALE_BOARD_SEQ AS saleBoardSeq /*판매게시판시퀀스*/ 
+			, GOODS_CD AS goodsCd /*상품 코드*/ 
+			, ENTR_NO AS entrNo /*거래처 번호*/ 
+			, NTC_SCT_CD AS ntcSctCd /*공지구분코드*/ 
+			, BUL_YN AS bulYn /*게시여부*/ 
+			, BUL_STRT_DT AS bulStrtDt /*게시시작일자*/ 
+			, BUL_END_DT AS bulEndDt /*게시종료일자*/ 
+			, BUL_TIT_NM AS bulTitNm /*게시글 제목명*/ 
+			, BUL_CONT AS bulCont /*게시글 내용*/ 
+			, QRY_CNT AS qryCnt /*조회수*/ 
+			, LKE_CNT AS lkeCnt /*추천수*/ 
+			, GOODS_PRC AS goodsPrc /*상품 가격*/ 
+			, GOODS_SALE_PRC AS goodsSalePrc /*상품 할인 가격*/ 
+			, PRCL_WAY AS prclWay /*배송 방법*/ 
+			, SALE_CNT AS saleCnt /*판매 수량*/ 
+			, RGST_ID AS rgstId /*등록 아이디*/ 
+			, RGST_DATE AS rgstDate /*등록 일자*/ 
+			, UPDT_ID AS updtId /*수정 아이디*/ 
+			, UPDT_DATE AS updtDate /*수정 일자*/ 
+			, SALE_STAT_CD AS saleStatCd /*판매 상태 코드*/ 
+			, USE_YN AS useYn /*사용 여부*/ 
+			, DESCRIPTION AS description /*설명*/ 
+		FROM CLT_SALE_BOARD 
+		WHERE 1=1  
+		AND GOODS_CD = #{goodsCd}
+	</select>
+	
 	<select id="entrSalesList" resultType="cltSalesDto">
 		/* salesDao.entrSalesList - 업체 판매 게시판 리스트 */
 		SELECT SALE_BOARD_SEQ AS saleBoardSeq /*판매게시판시퀀스*/ 

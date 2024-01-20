@@ -96,6 +96,10 @@ public class CltSalesService {
 	public CltSalesDto selectSalesOne(CltSalesDto pvo) {
 		return dao.selectSalesOne(pvo);
 	}
+
+	public CltSalesDto selectMypgSalesOne(CltSalesDto pvo) {
+		return dao.selectMypgSalesOne(pvo);
+	}
 	
 	public int dropSeq() {
 		return dao.dropSeq();

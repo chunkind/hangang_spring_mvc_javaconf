@@ -19,6 +19,8 @@ import com.dev.ck.cltsh.shp.order.CltOrderDto;
 import com.dev.ck.cltsh.shp.order.service.CltOrderService;
 import com.dev.ck.cltsh.shp.qna.CltQnaDto;
 import com.dev.ck.cltsh.shp.qna.service.CltQnaService;
+import com.dev.ck.cltsh.shp.sales.CltSalesDto;
+import com.dev.ck.cltsh.shp.sales.service.CltSalesService;
 import com.dev.ck.cltsh.shp.user.CltUserDto;
 
 @Controller
@@ -28,6 +30,7 @@ public class CltMypgController{
 	@Autowired private CltQnaService qnaService;
 	@Autowired private CltMypgService mypgService;
 	@Autowired private CltCateService cateService;
+	@Autowired private CltSalesService salesService;
 	
 	@RequestMapping("/cltsh/mypage/mypage.do")
 	public String mypage(HttpServletRequest req, HttpServletResponse res, CltMypgDto mypgVO) {
@@ -94,10 +97,15 @@ public class CltMypgController{
 		
 		CltGoodsDto goodsVo = new CltGoodsDto();
 		goodsVo.setGoodsCd(ordList.getGoodsCd());
-		CltGoodsDto searchGoods = goodsService.selectMypgGoodsOne(goodsVo);
+		CltGoodsDto searchGoods = goodsService.selectMypgGoodsOne(goodsVo);//selectMypgSalesOne
+		
+		CltSalesDto salesVo = new CltSalesDto();
+		salesVo.setGoodsCd(ordList.getGoodsCd());
+		CltSalesDto searchSalesGoods = salesService.selectMypgSalesOne(salesVo);
 		
 		req.setAttribute("ordList", ordList);
 		req.setAttribute("searchGoods", searchGoods);
+		req.setAttribute("searchSalesGoods", searchSalesGoods);
 
 		return "cltsh/shp/mypage/mypage_detail";
 	}
