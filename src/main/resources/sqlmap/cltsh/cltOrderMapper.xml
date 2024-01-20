@@ -323,7 +323,7 @@
 			, SALE.GOODS_CD AS goodsCd /*상품 코드*/
 			, SALE.ENTR_NO AS entrNo /*거래처 번호*/
 			, SALE.GOODS_PRC AS goodsPrc /*상품 가격*/
-			, SALE.GOODS_SALE_PRC AS goodsSale /*상품 할인 가격*/
+			, SALE.GOODS_SALE_PRC AS goodsSalePrc /*상품 할인 가격*/
 			, SALE.SALE_CNT AS saleCnt /*판매 수량*/
 			, SALE.SALE_STAT_CD AS saleStatCd /*판매 상태 코드*/
 			, SALE.DESCRIPTION AS description /*설명*/

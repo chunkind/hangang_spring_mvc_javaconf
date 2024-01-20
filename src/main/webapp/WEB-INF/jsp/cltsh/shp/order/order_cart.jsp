@@ -174,6 +174,9 @@ function fn_delete_order_seq_check(type){
 function createBasketList(){
 	var html = "";
 	for(var i=0; i<basketList.length; i++){
+		// goodsPrc에서 goodsSalePrc를 뺀 가격 계산
+        let discountedPrice = basketList[i].goodsPrc - basketList[i].goodsSalePrc;
+
 		html += '<tr>';
 		html += '	<td>';
 		html += '		<label>';
@@ -186,7 +189,7 @@ function createBasketList(){
 		html += '	</td>';
 		html += '	<td><a href="/cltsh/goods/goodsDetail.do?searchSaleBoardSeq='+basketList[i].saleBoardSeq+'">'+basketList[i].bulTitNm+'</a></td>';
 		html += '	<td>'+basketList[i].goodsQty+'</td>';
-		html += '	<td>'+basketList[i].goodsPrc+'</td>';
+		html += '	<td>'+discountedPrice+'</td>';
 		html += '</tr>';
 	}
 	if(basketList.length == 0){
