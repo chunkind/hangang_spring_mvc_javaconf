@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev.ck.cltsh.shp.order.CltOrderDto;
+import com.dev.ck.cltsh.shp.sales.service.CltSalesService;
 
 @Service
 public class CltOrderService {
@@ -221,24 +222,21 @@ public class CltOrderService {
 	
 	public int insertCartOrdDtl(CltOrderDto pvo) {
 		int result = 1;
-		String seq = pvo.getCheckedList();
-		String[] GoodsNmArry = pvo.getGoodsNmArry();
-		String[] seqs = seq.split(",");
-		
-		if(seqs != null && GoodsNmArry != null) {
-			pvo.setSaleBoardSeq(Long.parseLong(pvo.getSaleBoardSeqs()[pvo.getIndex()]));
-			pvo.setGoodsNm(GoodsNmArry[pvo.getIndex()]);
-			pvo.setGoodsCd(Integer.parseInt((seqs[pvo.getIndex()])));
-			pvo.setGoodsQty(1);
-			dao.insertOrdDtl(pvo);
-		}else {
-			result = 0;
-		}
-		
+//		String seq = pvo.getCheckedList();
 //		String[] GoodsNmArry = pvo.getGoodsNmArry();
-//		Long[] GoodsCdArry = pvo.getGoodsCdArry();
-//		int[] GoodsQtyArry = pvo.getGoodsQtyArry();
-		
+//		String[] seqs = seq.split(",");
+//		
+//		if(seqs != null && GoodsNmArry != null) {
+//			pvo.setSaleBoardSeq(Long.parseLong(pvo.getSaleBoardSeqs()[pvo.getIndex()]));
+//			pvo.setGoodsNm(GoodsNmArry[pvo.getIndex()]);
+//			pvo.setGoodsCd(Integer.parseInt((seqs[pvo.getIndex()])));
+//			pvo.setGoodsQty(1);
+//			dao.insertOrdDtl(pvo);
+//		}else {
+//			result = 0;
+//		}
+		pvo.setGoodsQty(1);
+		dao.insertOrdDtl(pvo);
 		return result;
 	}
 }

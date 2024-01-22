@@ -154,15 +154,20 @@ public class CltOrderController{
 		pvo.setGoodsNmArry(goodsNmArry);
 		
 		for(int i = 0; i < seqs.length; i++) {
-			//묶음 주문하면 리뷰를 1건밖에 못쓴다...
-			if(null != pvo.getSaleBoardSeqs() && null != pvo.getSaleBoardSeqs()[i] && !"".equals(pvo.getSaleBoardSeqs()[i])) {
-				pvo.setSaleBoardSeq(Long.parseLong(pvo.getSaleBoardSeqs()[i]));
-				pvo.setIndex(i);
+			pvo.setOrdBasketSeq(Long.parseLong(seqs[i]));
+			CltOrderDto ordBasket = orderService.ordBasketSelect(pvo);
+			pvo.setSaleBoardSeq(ordBasket.getSaleBoardSeq());
+			
+			if(null != pvo.getGoodsNmArry() && null != pvo.getGoodsNmArry()[i] && !"".equals(pvo.getGoodsNmArry()[i])) {
+				pvo.setGoodsNm(goodsNmArry[i]);
+				pvo.setGoodsCd(ordBasket.getGoodsCd());
 			}
-				orderService.insertCartOrdDtl(pvo);
+			
 			if(i == 0) {
 				orderService.insertOrd(pvo);
 			}
+			
+			orderService.insertCartOrdDtl(pvo);	
 		}
 
 		for(int i = 0; i < seqs.length; i++) {
