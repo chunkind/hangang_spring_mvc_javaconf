@@ -148,6 +148,7 @@ input, button, select, textarea {
 .pageNav{
 	padding: 5px;
     cursor: pointer;
+    text-align: center; /* 텍스트를 가운데 정렬합니다. */
 }
 .pageNav a{
 	margin-right: 2px;
