@@ -34,49 +34,24 @@ public class CltMypgController{
 	
 	@RequestMapping("/cltsh/mypage/mypage.do")
 	public String mypage(HttpServletRequest req, HttpServletResponse res, CltMypgDto mypgVO) {
-	////////////////////////////////////////////////////////////////////////////////////////////
-//		int pagePerRows = Config.PAGE_PER_ROWS;
-//	
-//		int page = req.getParameter("page") == null ? 1 : Integer.parseInt(req.getParameter("page"));
-//		int x = 0;
-//	
-//		if (page > pagePerRows) {
-//			x = (int) (page / pagePerRows);
-//			if (page % 10 == 0 && page > 10) { // page가 10보다 크고 10의 배수일 경우 -1
-//				x--;
-//			}
-//		}
-//	
-//		mypgVO.setPage(page);
-//		mypgVO.setPagePerRow(pagePerRows);
-//	
-//		int ordCnt = mypgService.ordCnt(); // 문의 갯수
-//		int maxPage = ordCnt / pagePerRows; // 페이지 갯수
-//		ordCnt = maxPage;
-//		int minPage = 1;
-//		boolean isNext = false;
-//	
-//		if (maxPage > pagePerRows) {
-//			maxPage = pagePerRows + (pagePerRows * x);
-//			minPage = (pagePerRows * x) + 1;
-//			isNext = true;
-//		} else if (maxPage == pagePerRows) {
-//			maxPage = pagePerRows;
-//		}
-//		
-//		req.setAttribute("isNext", isNext);
-//		req.setAttribute("maxPage", maxPage);
-//		req.setAttribute("minPage", minPage);
-//		req.setAttribute("page", page);
-//		req.setAttribute("ordCnt", ordCnt);
-	////////////////////////////////////////////////////////////////////////////////////////////
 		CltUserDto loginVo = commonCode(req);
 		
 		mypgVO.setUsrId(loginVo.getUsrId());
 		List<CltMypgDto> mypgList = mypgService.selectMypgList(mypgVO);
-
+		
+		for (CltMypgDto mypg : mypgList) {
+			String bulTitNms = mypg.getBulTitNm();
+			
+			if (bulTitNms != null && !bulTitNms.isEmpty()) {
+				String[] titles = bulTitNms.split(",");
+				// titles 배열을 활용하여 원하는 처리 수행
+				// 예: 첫 번째 값은 대표 이름, 나머지는 ,로 구분된 추가 항목들
+				String processedBulTitNms = titles[0].trim() + " 외 " + (titles.length - 1) + "건";
+				mypg.setBulTitNms(processedBulTitNms);
+			}
+		}
+		
 		req.setAttribute("mypgList", mypgList);
-
 		return "cltsh/shp/mypage/mypage";
 	}
 	
