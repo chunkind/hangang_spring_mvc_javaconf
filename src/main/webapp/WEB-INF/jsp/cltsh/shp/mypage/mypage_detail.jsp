@@ -40,7 +40,6 @@
 		<div>
 			<img src="${searchGoods.imgPath}${searchGoods.imgNm}">
 		</div>
-		<!-- <div><img src="/img/cltsh/아우터4.jpg"></div> -->
 		<div>
 			<div>${searchGoods.bulTitNm}</div>
 		</div>
