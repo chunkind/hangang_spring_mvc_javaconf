@@ -235,7 +235,31 @@
 		WHERE 1=1
 		AND ORD_NO = #{ordNo}
     </select>
-    
+	
+	<select id="selectOrdDtlNoOne" resultType="cltOrderDto">
+		SELECT DTL.ORD_DTL_NO AS ordDtlNo
+			, DTL.USR_ID AS usrId
+			, DTL.ORD_NO AS ordNo
+			, DTL.GOODS_NM AS goodsNm
+			, DTL.GOODS_CD AS goodsCd
+			, DTL.GOODS_QTY AS goodsQty
+			, DTL.UPDT_DATE AS updtDate
+			, DTL.UPDT_ID AS updtId
+			, DTL.RGST_DATE AS rgstDate
+			, DTL.RGST_ID AS rgstId
+			, SALE.BUL_TIT_NM AS bulTitNm
+			, SALE.GOODS_PRC AS goodsPrc
+			, SALE.GOODS_SALE_PRC AS goodsSalePrc
+			, GOOD.IMG_PATH AS imgPath
+			, GOOD.IMG_NM AS imgNm
+			, GOOD.DLV_PRC AS dlvPrc
+		FROM CLT_ORD_DTL DTL
+		INNER JOIN CLT_SALE_BOARD SALE ON SALE.GOODS_CD = DTL.GOODS_CD
+		INNER JOIN CLT_GOODS_INFO GOOD ON GOOD.GOODS_CD = DTL.GOODS_CD
+		WHERE 1=1
+		AND ORD_DTL_NO = #{ordDtlNo}
+    </select>
+	
     <select id="selectOrdDtlList" resultType="cltOrderDto">
 		SELECT ORD_DTL_NO AS ordDtlNo
 			, USR_ID AS usrId

@@ -16,12 +16,13 @@ public interface CltOrderMapper {
 	int deleteOrd(CltOrderDto pvo);
 	int insertOrdDtl(CltOrderDto pvo); //주문 상세
 	CltOrderDto selectOrdDtlOne(CltOrderDto pvo);
+	CltOrderDto selectOrdDtlNoOne(CltOrderDto pvo);
 	List<CltOrderDto> selectOrdDtlList(CltOrderDto pvo);
 	int updateOrdDtl(CltOrderDto pvo);
 	int deleteOrdDtl(CltOrderDto pvo);
 	int admOrdStateChange(CltOrderDto pvo); //주문 상태 변경
 	List<CltOrderDto> searchIdOrdList(CltOrderDto pvo);
-	CltOrderDto searchOrdNoList(CltOrderDto pvo);
+	List<CltOrderDto> searchOrdNoList(CltOrderDto pvo);
 	List<CltOrderDto> searchOrdDtlGoods(CltOrderDto pvo);
 	List<CltOrderDto> selectOrdBaseList(CltOrderDto pvo); //매출관리 통계
 	int insertBasket(CltOrderDto pvo); //장바구니

@@ -160,6 +160,10 @@ public class CltOrderService {
 		public CltOrderDto selectOrdDtlOne(CltOrderDto pvo) {
 			return dao.selectOrdDtlOne(pvo);
 		}
+
+		public CltOrderDto selectOrdDtlNoOne(CltOrderDto pvo) {
+			return dao.selectOrdDtlNoOne(pvo);
+		}
 		
 		public List<CltOrderDto> selectOrdDtlList(CltOrderDto pvo){
 			return dao.selectOrdDtlList(pvo);
@@ -181,7 +185,7 @@ public class CltOrderService {
 			return dao.searchIdOrdList(pvo);
 		}
 		
-		public CltOrderDto searchOrdNoList(CltOrderDto pvo) {
+		public List<CltOrderDto> searchOrdNoList(CltOrderDto pvo) {
 			return dao.searchOrdNoList(pvo);
 		}
 		
