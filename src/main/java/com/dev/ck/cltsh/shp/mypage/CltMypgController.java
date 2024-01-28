@@ -46,8 +46,13 @@ public class CltMypgController{
 				String[] titles = bulTitNms.split(",");
 				// titles 배열을 활용하여 원하는 처리 수행
 				// 예: 첫 번째 값은 대표 이름, 나머지는 ,로 구분된 추가 항목들
-				String processedBulTitNms = titles[0].trim() + " 외 " + (titles.length - 1) + "건";
-				mypg.setBulTitNms(processedBulTitNms);
+				if(titles.length != 1) {
+					String processedBulTitNms = titles[0].trim() + " 외 " + (titles.length - 1) + "건";
+					mypg.setBulTitNms(processedBulTitNms);
+				}else {
+					String processedBulTitNms = titles[0].trim();
+					mypg.setBulTitNms(processedBulTitNms);
+				}
 			}
 		}
 		
@@ -63,24 +68,24 @@ public class CltMypgController{
 	
 	@RequestMapping("/cltsh/mypage/mypageDetail.do")
 	public String mypageDetail(HttpServletRequest req, HttpServletResponse res, CltOrderDto ordVo) {
-//		HttpSession session = req.getSession();
-//		UserVO loginVo = (UserVO) session.getAttribute("loginInfo");
 		CltUserDto loginVo = commonCode(req);
 		
-		CltOrderDto ordList = orderService.searchOrdNoList(ordVo);
-		ordVo.setUsrId(loginVo.getUsrId());
+		CltOrderDto ordList = orderService.selectOrdOne(ordVo);
 		
-		CltGoodsDto goodsVo = new CltGoodsDto();
-		goodsVo.setGoodsCd(ordList.getGoodsCd());
-		CltGoodsDto searchGoods = goodsService.selectMypgGoodsOne(goodsVo);//selectMypgSalesOne
+//		List<CltOrderDto> ordList = orderService.searchOrdNoList(ordVo);
+//		ordVo.setUsrId(loginVo.getUsrId());
 		
-		CltSalesDto salesVo = new CltSalesDto();
-		salesVo.setGoodsCd(ordList.getGoodsCd());
-		CltSalesDto searchSalesGoods = salesService.selectMypgSalesOne(salesVo);
+//		CltGoodsDto goodsVo = new CltGoodsDto();
+//		goodsVo.setGoodsCd(ordList.getGoodsCd());
+//		CltGoodsDto searchGoods = goodsService.selectMypgGoodsOne(goodsVo);//selectMypgSalesOne
+//		
+//		CltSalesDto salesVo = new CltSalesDto();
+//		salesVo.setGoodsCd(ordList.getGoodsCd());
+//		CltSalesDto searchSalesGoods = salesService.selectMypgSalesOne(salesVo);
 		
 		req.setAttribute("ordList", ordList);
-		req.setAttribute("searchGoods", searchGoods);
-		req.setAttribute("searchSalesGoods", searchSalesGoods);
+//		req.setAttribute("searchGoods", searchGoods);
+//		req.setAttribute("searchSalesGoods", searchSalesGoods);
 
 		return "cltsh/shp/mypage/mypage_detail";
 	}
