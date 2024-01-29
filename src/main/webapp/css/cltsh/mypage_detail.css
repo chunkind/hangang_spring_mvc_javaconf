@@ -36,7 +36,7 @@ h2{
     font-size: 18px;
     padding: 0px 10px 10px 10px;
     margin: 0px 200px;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #000000;
 }
 .order_item .price{
     position: relative;
@@ -44,7 +44,7 @@ h2{
 }
 
 .order_item2 img{
-    width: 125%;
+    width: 150px;
     height: 150px;
 }
 
