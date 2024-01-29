@@ -72,20 +72,21 @@ public class CltMypgController{
 		
 		CltOrderDto ordList = orderService.selectOrdOne(ordVo);
 		
-//		List<CltOrderDto> ordList = orderService.searchOrdNoList(ordVo);
+		List<CltOrderDto> ordDtlList = orderService.searchOrdNoList(ordVo);
 //		ordVo.setUsrId(loginVo.getUsrId());
 		
-//		CltGoodsDto goodsVo = new CltGoodsDto();
-//		goodsVo.setGoodsCd(ordList.getGoodsCd());
-//		CltGoodsDto searchGoods = goodsService.selectMypgGoodsOne(goodsVo);//selectMypgSalesOne
-//		
-//		CltSalesDto salesVo = new CltSalesDto();
-//		salesVo.setGoodsCd(ordList.getGoodsCd());
-//		CltSalesDto searchSalesGoods = salesService.selectMypgSalesOne(salesVo);
+		CltGoodsDto goodsVo = new CltGoodsDto();
+		goodsVo.setGoodsCd(ordList.getGoodsCd());
+		CltGoodsDto searchGoods = goodsService.selectMypgGoodsOne(goodsVo);//selectMypgSalesOne
+		
+		CltSalesDto salesVo = new CltSalesDto();
+		salesVo.setGoodsCd(ordList.getGoodsCd());
+		CltSalesDto searchSalesGoods = salesService.selectMypgSalesOne(salesVo);
 		
 		req.setAttribute("ordList", ordList);
-//		req.setAttribute("searchGoods", searchGoods);
-//		req.setAttribute("searchSalesGoods", searchSalesGoods);
+		req.setAttribute("ordDtlList", ordDtlList);
+		req.setAttribute("searchGoods", searchGoods);
+		req.setAttribute("searchSalesGoods", searchSalesGoods);
 
 		return "cltsh/shp/mypage/mypage_detail";
 	}

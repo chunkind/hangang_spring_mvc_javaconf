@@ -78,6 +78,7 @@
 		, IMG_NM
 		, ORD_NO
 		, RVW_TAG
+		, ORD_DTL_NO
 		) VALUES
 		( #{saleBoardSeq}
 		, #{goodsCd}
@@ -103,6 +104,7 @@
 		, #{imgNm}
 		, #{ordNo}
 		, #{rvwTag}
+		, #{ordDtlNo}
 		)
 	</insert>
 	
@@ -193,15 +195,17 @@
 			, GOODS.IMG_NM AS imgNm
 			, SALE.BUL_TIT_NM AS bulTitNm
 			, SALE.BUL_CONT AS bulCont
+			, DTL.ORD_DTL_NO AS ordDtlNo
 		FROM CLT_ORD_BASE ORD
 		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SBRW ON ORD.ORD_NO = SBRW.ORD_NO
 		LEFT OUTER JOIN CLT_GOODS_INFO GOODS ON ORD.GOODS_CD = GOODS.GOODS_CD
 		LEFT OUTER JOIN CLT_SALE_BOARD SALE ON ORD.SALE_BOARD_SEQ = SALE.SALE_BOARD_SEQ
+		LEFT OUTER JOIN CLT_ORD_DTL DTL ON DTL.ORD_NO = ORD.ORD_NO
 		WHERE 1=1
 		AND SBRW.ORD_NO IS NULL
 		AND ORD.USR_ID = #{usrId}
-		<if test="ordNo != null">
-			AND ORD.ORD_NO = #{ordNo}
+		<if test="ordDtlNo != null">
+			AND DTL.ORD_DTL_NO = #{ordDtlNo}
 		</if>
 	</select>
 	

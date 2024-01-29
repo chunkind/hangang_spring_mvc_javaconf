@@ -70,6 +70,7 @@ public class CltOrderDto extends PagingVO{
 	int[] goodsQtyArry;
 	private String[] saleBoardSeqs;
 	private int index;
+	private long saleBoardRpySeq;
 
 	//파라미터
 	private String searchSaleBoardSeq;

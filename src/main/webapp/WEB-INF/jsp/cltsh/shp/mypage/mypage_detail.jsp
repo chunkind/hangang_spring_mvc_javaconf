@@ -32,20 +32,26 @@
 	</div>
 	<h2>주문상품</h2>
 	<div class="order_item">
-		<div>회사명</div>
+		<div>상품 이미지</div>
 		<div class="price">주문금액</div>
 		<div>진행상황</div>
 	</div>
-	<div class="order_item2">
-		<div>
-			<img src="${searchGoods.imgPath}${searchGoods.imgNm}">
+	
+	<c:forEach items="${ordDtlList }" var="obj">
+		<div class="order_item2">
+			<div>
+				<img src="${obj.imgPath}${obj.imgNm}">
+			</div>
+			<div>
+				<div>${obj.bulTitNm}</div>
+			</div>
+			<div>${obj.goodsPrc - obj.goodsSalePrc}원</div>
+			<div>${obj.codeNm}</div>
+			<c:if test="${obj.saleBoardRpySeq eq 0}">
+				<input type="button" onclick="location.href='/cltsh/dress/dressRegister.do?ordDtlNo=${obj.ordDtlNo}'" value="드레스룸 등록" />
+			</c:if>
 		</div>
-		<div>
-			<div>${searchGoods.bulTitNm}</div>
-		</div>
-		<div>${ordList.payMny}원</div>
-		<div>${ordList.codeNm}</div>
-	</div>
+	</c:forEach>
 	<h2>주문정보</h2>
 	<div class="order_item3">
 		<div class="a">
