@@ -51,7 +51,7 @@ public class CltDressDto extends PagingVO{
 	private int billNum;
 
 	private String rvwTag;
-
+	private int ordDtlNo;
 	private String selectedSaleRvwItem;
 	
 	private MultipartFile file1;

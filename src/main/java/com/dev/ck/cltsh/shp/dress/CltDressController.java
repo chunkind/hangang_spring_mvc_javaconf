@@ -61,6 +61,7 @@ public class CltDressController {
 		pvo.setSaleBoardSeq(Integer.parseInt(strArr[1]));
 		pvo.setGoodsCd(Integer.parseInt(strArr[2]));
 		pvo.setEntrNo(Integer.parseInt(strArr[3]));
+		pvo.setOrdDtlNo(Integer.parseInt(strArr[4]));
 		pvo.setRgstId(loginVo.getUsrId());
 		pvo.setUpdtId(loginVo.getUsrId());
 		pvo.setImgPath((String) req.getAttribute("imgPath"));
