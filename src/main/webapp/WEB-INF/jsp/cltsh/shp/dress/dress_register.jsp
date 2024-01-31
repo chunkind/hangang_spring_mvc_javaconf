@@ -23,7 +23,7 @@
 			<td>
 				<select name="selectedSaleRvwItem">
 					<c:forEach items="${writeList}" var="obj">
-						<option value="${obj.ordNo}@${obj.saleBoardSeq}@${obj.goodsCd}@${obj.entrNo}">${obj.bulTitNm}</option>
+						<option value="${obj.ordNo}@${obj.saleBoardSeq}@${obj.goodsCd}@${obj.entrNo}@${obj.ordDtlNo}">${obj.bulTitNm}</option>
 					</c:forEach>
 				</select>
 			</td>
