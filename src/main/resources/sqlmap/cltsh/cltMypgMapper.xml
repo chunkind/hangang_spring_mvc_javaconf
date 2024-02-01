@@ -85,7 +85,7 @@
 			MAX(ORDB.PAY_MNY) AS payMny,
 			MAX(GOOD.IMG_PATH) AS imgPath,
 			MAX(GOOD.IMG_NM) AS imgNm,
-			GROUP_CONCAT(SALE.BUL_TIT_NM) AS bulTitNm, -- 여러 건으로 나오도록 GROUP_CONCAT 사용
+			GROUP_CONCAT(DISTINCT SALE.BUL_TIT_NM) AS bulTitNm, -- 여러 건으로 나오도록 GROUP_CONCAT 사용
 			MAX(ORDT.GOODS_QTY) AS goodsQty,
 			MAX(GOOD.GOODS_PRC) AS goodsPrc,
 			MAX(ORDB.ORD_STAT) AS ordStat,
