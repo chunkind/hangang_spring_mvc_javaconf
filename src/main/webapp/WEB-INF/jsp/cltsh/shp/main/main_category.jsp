@@ -66,7 +66,7 @@
 						</div>
 						<div class="text">
 							<h2>${obj.bulTitNm}</h2>
-							<p><fmt:formatNumber value="${obj.goodsPrc - obj.goodsSalePrc}" pattern="#,###" />원</p>
+							<p>${String.format("%,d", obj.goodsPrc - obj.goodsSalePrc)}원</p>
 						</div>
 						<div class="btn_area">
 							<c:if test="${not empty sessionScope.loginInfo }">

@@ -21,7 +21,7 @@
 			<span>주문자</span> <span>${ordList.ordrNm}</span>
 		</div>
 		<div>
-			<span>결제금액</span> <span>${ordList.payMny}원</span>
+			<span>결제금액</span> <span>${String.format("%,d", ordList.payMny)}원</span>
 		</div>
 		<div>
 			<span>적립포인트</span> <span>50원</span>
@@ -45,7 +45,7 @@
 			<div>
 				<div>${obj.bulTitNm}</div>
 			</div>
-			<div>${obj.goodsPrc - obj.goodsSalePrc}원</div>
+			<div>${String.format("%,d", obj.goodsPrc - obj.goodsSalePrc)}원</div>
 			<div>${obj.codeNm}</div>
 			<c:if test="${obj.saleBoardRpySeq eq 0}">
 				<input type="button" onclick="location.href='/cltsh/dress/dressRegister.do?ordDtlNo=${obj.ordDtlNo}'" value="드레스룸 등록" />
@@ -60,7 +60,7 @@
 		</div>
 		<div class="a">
 			<div>상품 금액</div>
-			<div>${searchSalesGoods.goodsPrc - searchSalesGoods.goodsSalePrc}원</div>
+			<div>${String.format("%,d", searchSalesGoods.goodsPrc - searchSalesGoods.goodsSalePrc)}원</div>
 		</div>
 		<div class="a">
 			<div>쿠폰 할인 금액</div>
@@ -72,11 +72,11 @@
 		</div>
 		<div class="a">
 			<div>배송비</div>
-			<div>${searchGoods.dlvPrc}원</div>
+			<div>${String.format("%,d", searchGoods.dlvPrc)}원</div>
 		</div>
 		<div class="a">
 			<div>총 주문금액</div>
-			<div>${ordList.payMny}원</div>
+			<div>${String.format("%,d", ordList.payMny)}원</div>
 		</div>
 	</div>
 	<h2>배송지 정보</h2>

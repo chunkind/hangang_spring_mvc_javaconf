@@ -7,7 +7,7 @@
 </section>
 <section class="item_list_area">
 <div class="header_data">
-    <div class="icon">
+	<div class="icon">
 		<span>
 			<i class="fa-solid fa-truck"></i>
 			<a href="/cltsh/mypage/mypage.do" class="a">주문/배송조회</a>
@@ -24,7 +24,7 @@
 			<i class="fa-solid fa-comments"></i>
 			<a href="/cltsh/mypage/mypageQna.do" class="d">Q&A</a>
 		</span>
-    </div>
+	</div>
 </div>
 <div class="data_list">
 	<table>
@@ -53,8 +53,8 @@
 			<tr>
 				<td>${obj.ordNo}</td>
 				<td><img src="${obj.imgPath}${obj.imgNm}"></td>
-				<td><a href="/cltsh/mypage/mypageDetail.do?ordNo=${obj.ordNo}">${obj.bulTitNm}</a></td>
-				<td>${obj.payMny}원</td>
+				<td><a href="/cltsh/mypage/mypageDetail.do?ordNo=${obj.ordNo}">${obj.bulTitNms}</a></td>
+				<td>${String.format("%,d", obj.payMny)}원</td>
 				<td>${obj.codeNm}</td>
 				<td>
 					<c:if test="${obj.saleBoardRpySeq eq 0}">
