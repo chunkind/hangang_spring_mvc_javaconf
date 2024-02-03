@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dev.ck.cltsh.cmm.util.FileUtil;
+import com.dev.ck.ackwd.utils.FileUtil;
 import com.dev.ck.cltsh.cmm.util.PagingUtil;
 import com.dev.ck.cltsh.shp.event.CltEventDto;
 import com.dev.ck.cltsh.shp.event.service.CltEventService;
