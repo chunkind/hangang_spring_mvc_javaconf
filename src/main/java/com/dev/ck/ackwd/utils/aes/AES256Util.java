@@ -1,4 +1,4 @@
-package com.dev.ck.cm.utils.aes;
+package com.dev.ck.ackwd.utils.aes;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;

@@ -1,4 +1,4 @@
-package com.dev.ck.cm.utils;
+package com.dev.ck.ackwd.utils;
 
 public class LanguageDetector {
 	public static void main(String[] args) {

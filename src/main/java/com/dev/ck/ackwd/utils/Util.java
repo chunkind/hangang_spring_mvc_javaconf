@@ -1,4 +1,4 @@
-package com.dev.ck.cm.utils;
+package com.dev.ck.ackwd.utils;
 
 
 import javax.servlet.http.HttpServletRequest;

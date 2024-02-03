@@ -1,4 +1,4 @@
-package com.dev.ck.cm.utils.aes;
+package com.dev.ck.ackwd.utils.aes;
 
 public class AES256 {
 	static final String decKey = "yournk.aa.aabb01";	//16자리

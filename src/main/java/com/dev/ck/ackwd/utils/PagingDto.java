@@ -1,4 +1,4 @@
-package com.dev.ck.cm.utils;
+package com.dev.ck.ackwd.utils;
 
 public class PagingDto {
 	private int page;

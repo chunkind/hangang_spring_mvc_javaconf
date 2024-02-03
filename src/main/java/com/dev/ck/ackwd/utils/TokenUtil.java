@@ -1,6 +1,6 @@
-package com.dev.ck.cm.utils;
+package com.dev.ck.ackwd.utils;
 
-import com.dev.ck.cm.utils.aes.AES256;
+import com.dev.ck.ackwd.utils.aes.AES256;
 
 public class TokenUtil {
 	public static String getTokken(){

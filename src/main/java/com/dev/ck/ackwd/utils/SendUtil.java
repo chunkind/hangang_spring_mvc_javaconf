@@ -1,4 +1,4 @@
-package com.dev.ck.cm.utils;
+package com.dev.ck.ackwd.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

@@ -1,4 +1,4 @@
-package com.dev.ck.cm.utils;
+package com.dev.ck.ackwd.utils;
 
 import java.security.SecureRandom;
 import java.text.ParseException;
@@ -20,8 +20,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import com.dev.ck.cm.IntVO;
 
 
 /**
@@ -844,6 +842,27 @@ public class StringUtil {
 		}
 
 		return StringUtils.rightPad(String.valueOf(cString), nLen - nAdd, ' ');
+	}
+	
+}
+
+class IntVO {
+	private int value;
+
+	public IntVO(int value) {
+		this.value = value;
+	}
+	
+	public void add(int value) {
+		this.value += value;
+	}
+	
+	public int get() {
+		return value;
+	}
+
+	public void set(int value) {
+		this.value = value;
 	}
 	
 }
