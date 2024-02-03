@@ -189,6 +189,10 @@ public class CltOrderService {
 			return dao.searchOrdNoList(pvo);
 		}
 		
+		public CltOrderDto searchOrdNoOne(CltOrderDto pvo) {
+			return dao.searchOrdNoOne(pvo);
+		}
+		
 		public List<CltOrderDto> searchOrdDtlGoods(CltOrderDto pvo){
 			return dao.searchOrdDtlGoods(pvo);
 		}

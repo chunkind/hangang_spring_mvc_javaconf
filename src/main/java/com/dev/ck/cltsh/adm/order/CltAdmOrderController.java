@@ -41,7 +41,7 @@ public class CltAdmOrderController{
 	//주문 관리 상세
 	@RequestMapping("/cltsh/adm/order/admOrderDetail.do")
 	public String admOrderDetail(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-		CltOrderDto ordVo = orderService.searchOrdNoList(pvo);
+		CltOrderDto ordVo = orderService.searchOrdNoOne(pvo);
 		
 		String ordStat = ordVo.getOrdStat();
 

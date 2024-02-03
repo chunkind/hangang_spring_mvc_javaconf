@@ -23,6 +23,7 @@ public interface CltOrderMapper {
 	int admOrdStateChange(CltOrderDto pvo); //주문 상태 변경
 	List<CltOrderDto> searchIdOrdList(CltOrderDto pvo);
 	List<CltOrderDto> searchOrdNoList(CltOrderDto pvo);
+	CltOrderDto searchOrdNoOne(CltOrderDto pvo);
 	List<CltOrderDto> searchOrdDtlGoods(CltOrderDto pvo);
 	List<CltOrderDto> selectOrdBaseList(CltOrderDto pvo); //매출관리 통계
 	int insertBasket(CltOrderDto pvo); //장바구니

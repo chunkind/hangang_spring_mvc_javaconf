@@ -483,6 +483,46 @@
 		AND BASE.ORD_NO = #{ordNo}
     </select>
     
+    <select id="searchOrdNoOne" resultType="cltOrderDto">
+		SELECT BASE.ORD_NO AS ordNo
+			, BASE.USR_ID AS usrId
+			, BASE.ENTR_NO AS entrNo
+			, BASE.ORD_STAT AS ordStat
+			, BASE.ORDR_ID AS ordrId
+			, BASE.ORDR_NM AS ordrNm
+			, BASE.ORDR_PHON AS ordrPhon
+			, BASE.ORDR_EMAIL AS ordrEmail
+			, BASE.ACQR_PHON AS acqrPhon
+			, BASE.ACQR_NM AS acqrNm
+			, BASE.ACQR_ADDR AS acqrAddr
+			, BASE.ACQR_ADDR_DTL AS acqrAddrDtl
+			, BASE.ACQR_EMAIL AS acqrEmail
+			, BASE.PRCL_WAY AS prclWay
+			, BASE.PACK_WAY AS packWay
+			, BASE.PAY_WAY AS payWay
+			, BASE.PAY_MNY AS payMny
+			, BASE.REQ_MEMO AS reqMemo
+			, BASE.ORD_DATE AS ordDate
+			, BASE.UPDT_DATE AS updtDate
+			, BASE.UPDT_ID AS updtId
+			, BASE.RGST_DATE AS rgstDate
+			, BASE.RGST_ID AS rgstId
+			, BASE.BILL_NUM AS billNum
+			, DTL.ORD_DTL_NO AS ordDtlNo
+			, DTL.GOODS_NM AS goodsNm
+			, DTL.GOODS_CD AS goodsCd
+			, DTL.GOODS_QTY AS goodsQty
+			, STD.CODE_NM AS codeNm
+			, SALERVW.RVW_TAG AS rvwTag
+		FROM CLT_ORD_BASE BASE
+		INNER JOIN CLT_ORD_DTL DTL ON BASE.USR_ID = DTL.USR_ID AND BASE.ORD_NO = DTL.ORD_NO
+		LEFT OUTER JOIN CLT_STD_CD_BASE STD ON BASE.ORD_STAT = STD.CODE_VAL
+		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SALERVW ON BASE.ORD_NO = SALERVW.ORD_NO
+		WHERE 1=1
+		AND STD.GRP_CD = 'STD004'
+		AND BASE.ORD_NO = #{ordNo}
+    </select>
+    
     <select id="searchOrdDtlGoods" resultType="cltOrderDto">
 		SELECT GOODS_NM AS goodsNm
 			, GOODS_CD AS goodsCd
