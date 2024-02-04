@@ -77,27 +77,27 @@
 	</select -->
 	<select id="selectMypgList" resultType="cltMypgDto">
 		SELECT
-			MAX(ORDB.ORD_NO) AS ordNo, -- ORD_NO가 같은 경우 하나만 출력되도록 MAX 함수 사용
-			MAX(ORDB.RGST_DATE) AS rgstDate,
-			MAX(ORDB.ORDR_ID) AS ordrId,
-			MAX(ORDB.ORDR_NM) AS ordrNm,
-			MAX(ORDB.ORDR_PHON) AS ordrPhon,
-			MAX(ORDB.PAY_MNY) AS payMny,
-			MAX(GOOD.IMG_PATH) AS imgPath,
-			MAX(GOOD.IMG_NM) AS imgNm,
-			GROUP_CONCAT(DISTINCT SALE.BUL_TIT_NM) AS bulTitNm, -- 여러 건으로 나오도록 GROUP_CONCAT 사용
-			MAX(ORDT.GOODS_QTY) AS goodsQty,
-			MAX(GOOD.GOODS_PRC) AS goodsPrc,
-			MAX(ORDB.ORD_STAT) AS ordStat,
-			MAX(STD004.CODE_NM) AS codeNm,
-			MAX(ORDB.PAY_WAY) AS payWay,
-			MAX(GOOD.DLV_PRC) AS dlvPrc,
-			MAX(ORDB.ACQR_NM) AS acqrNm,
-			MAX(ORDB.ACQR_PHON) AS acqrPhon,
-			MAX(ORDB.ACQR_ADDR) AS acqrAddr,
-			MAX(ORDB.ACQR_ADDR_DTL) AS acqrAddrDtl,
-			MAX(ORDB.REQ_MEMO) AS reqMemo,
-			MAX(SALERVW.SALE_BOARD_RPY_SEQ) AS saleBoardRpySeq
+			ORDB.ORD_NO AS ordNo,
+			ORDB.RGST_DATE AS rgstDate,
+			ORDB.ORDR_ID AS ordrId,
+			ORDB.ORDR_NM AS ordrNm,
+			ORDB.ORDR_PHON AS ordrPhon,
+			ORDB.PAY_MNY AS payMny,
+			GOOD.IMG_PATH AS imgPath,
+			GOOD.IMG_NM AS imgNm,
+			GROUP_CONCAT(SALE.BUL_TIT_NM) AS bulTitNm,
+			ORDT.GOODS_QTY AS goodsQty,
+			GOOD.GOODS_PRC AS goodsPrc,
+			ORDB.ORD_STAT AS ordStat,
+			STD004.CODE_NM AS codeNm,
+			ORDB.PAY_WAY AS payWay,
+			GOOD.DLV_PRC AS dlvPrc, 
+			ORDB.ACQR_NM AS acqrNm,
+			ORDB.ACQR_PHON AS acqrPhon, 
+			ORDB.ACQR_ADDR AS acqrAddr, 
+			ORDB.ACQR_ADDR_DTL AS acqrAddrDtl,
+			ORDB.REQ_MEMO AS reqMemo, 
+			SALERVW.SALE_BOARD_RPY_SEQ AS saleBoardRpySeq
 		FROM CLT_ORD_BASE ORDB
 		INNER JOIN CLT_ORD_DTL ORDT ON ORDB.ORD_NO = ORDT.ORD_NO
 		INNER JOIN CLT_GOODS_INFO GOOD ON ORDT.GOODS_CD = GOOD.GOODS_CD
