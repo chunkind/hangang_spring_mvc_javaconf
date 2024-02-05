@@ -56,11 +56,11 @@
 				<td><a href="/cltsh/mypage/mypageDetail.do?ordNo=${obj.ordNo}">${obj.bulTitNms}</a></td>
 				<td>${String.format("%,d", obj.payMny)}원</td>
 				<td>${obj.codeNm}</td>
-				<td>
+				<%-- <td>
 					<c:if test="${obj.saleBoardRpySeq eq 0}">
 						<input type="button" onclick="location.href='/cltsh/dress/dressRegister.do?ordNo=${obj.ordNo}'" value="드레스룸 등록" />
 					</c:if>
-				</td>
+				</td> --%>
 			</tr>
 		</c:forEach>
 	</table>
