@@ -40,7 +40,12 @@ h2{
 }
 .order_item .price{
     position: relative;
-    left: 255px;
+    left: 33px;
+}
+
+.order_item .state{
+	position: relative;
+    left: -200px;
 }
 
 .order_item2 img{

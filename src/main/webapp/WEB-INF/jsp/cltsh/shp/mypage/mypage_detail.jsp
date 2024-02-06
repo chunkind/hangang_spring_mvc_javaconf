@@ -34,7 +34,7 @@
 	<div class="order_item">
 		<div>상품 이미지</div>
 		<div class="price">주문금액</div>
-		<div>진행상황</div>
+		<div class="state">진행상황</div>
 	</div>
 	
 	<c:forEach items="${ordDtlList }" var="obj">
@@ -47,9 +47,11 @@
 			</div>
 			<div>${String.format("%,d", obj.goodsPrc - obj.goodsSalePrc)}원</div>
 			<div>${obj.codeNm}</div>
-			<c:if test="${obj.saleBoardRpySeq eq 0}">
-				<input type="button" onclick="location.href='/cltsh/dress/dressRegister.do?ordDtlNo=${obj.ordDtlNo}'" value="드레스룸 등록" />
-			</c:if>
+			<div>
+				<c:if test="${obj.saleBoardRpySeq eq 0}">
+					<input type="button" onclick="location.href='/cltsh/dress/dressRegister.do?ordDtlNo=${obj.ordDtlNo}'" value="드레스룸 등록" />
+				</c:if>
+			</div>
 		</div>
 	</c:forEach>
 	<h2>주문정보</h2>
