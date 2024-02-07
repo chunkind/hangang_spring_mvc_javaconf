@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.opts.service.CltOptsMapper">
+	<select id="selectOptsOne" resultType="cltOptsDto">
+		/* optsDao.selectOptsOne - 옵션 상세 */
+		SELECT
+			GOODS_OPTS_SEQ AS goodsOptsSeq	/* 상품 옵션 시퀀스 */
+			OPTS_CD AS optsCd		/* 옵션 코드 */
+			OPTS_NM AS optsNm		/* 옵션이름 */
+			OPTS_VAL AS optsVal		/* 옵션값 */
+			USE_YN AS useYn			/* 사용여부 */
+			RGST_ID AS rgstId		/* 등록아이디 */
+			RGST_DATE AS rgstDate	/* 등록일 */
+			UPDT_ID AS updtId		/* 수정아이디 */
+			UPDT_DATE AS updtDate	/* 수정일 */
+			GOODS_CD AS goodsCd		/* 상품코드 */
+		FROM CLT_GOODS_OPTS
+		WHERE 1=1
+		AND GOODS_OPTS_SEQ = #{goodsOptsSeq}
+	</select>
+
+	<select id="selectOptsList" resultType="cltOptsDto">
+		/* optsDao.selectOptsList - 옵션 리스트 */
+		SELECT
+			GOODS_OPTS_SEQ AS goodsOptsSeq	/* 상품 옵션 시퀀스 */
+			OPTS_CD AS optsCd		/* 옵션 코드 */
+			OPTS_NM AS optsNm		/* 옵션이름 */
+			OPTS_VAL AS optsVal		/* 옵션값 */
+			USE_YN AS useYn			/* 사용여부 */
+			RGST_ID AS rgstId		/* 등록아이디 */
+			RGST_DATE AS rgstDate	/* 등록일 */
+			UPDT_ID AS updtId		/* 수정아이디 */
+			UPDT_DATE AS updtDate	/* 수정일 */
+			GOODS_CD AS goodsCd		/* 상품코드 */
+		FROM CLT_GOODS_OPTS
+		WHERE 1=1
+	</select>
+
+	<insert id="insertOpts">
+		/* optsDao.insertOpts - 상품 등록 */
+		INSERT INTO CLT_GOODS_OPTS
+			( OPTS_CD AS optsCd		/* 옵션 코드 */
+			, OPTS_NM AS optsNm		/* 옵션이름 */
+			, OPTS_VAL AS optsVal	/* 옵션값 */
+			, USE_YN AS useYn		/* 사용여부 */
+			, RGST_ID AS rgstId		/* 등록아이디 */
+			, RGST_DATE AS rgstDate	/* 등록일 */
+			, UPDT_ID AS updtId		/* 수정아이디 */
+			, UPDT_DATE AS updtDate	/* 수정일 */
+			GOODS_CD AS goodsCd		/* 상품코드 */
+		) VALUES
+		( #{optsCd}
+		, #{optsNm}
+		, #{optsVal}
+		, #{useYn}
+		, #{rgstId}
+		, NOW()
+		, #{updtId}
+		, NOW()
+		, #{goodsCd} )
+	</insert>
+
+	<update id="updateOpts">
+		/* optsDao.updateOpts - 옵션 수정 */
+		UPDATE CLT_GOODS_OPTS 
+		SET OPTS_CD = #{optsCd} 		/* 옵션 코드 */
+			, OPTS_NM = #{optsNm} 		/* 옵션 이름 */
+			, OPTS_VAL = #{optsVal} 	/* 옵션값 */
+			, USE_YN = #{useYn} 		/* 사용여부 */
+			, UPDT_ID = #{updtId} 		/* 수정아이디 */
+			, UPDT_DATE = #{updtDate} 	/* 수정일 */
+			, GOODS_CD = #{goodsCd} 	/* 수정일 */
+		WHERE 1=1
+		AND GOODS_OPTS_SEQ = #{goodsOptsSeq} /* 옵션 시퀀스 */
+	</update>
+
+	<delete id="deleteOptsOne">
+		/* optsDao.deleteOptsOne - 상품 삭제 */
+		DELETE FROM CLT_GOODS_OPTS
+		WHERE 1=1
+		AND GOODS_OPTS_SEQ = #{goodsOptsSeq} /* 옵션 시퀀스 */
+	</delete>
+
+	<delete id="deleteOptsAll">
+		/* optsDao.deleteOptsAll - 모든 옵션 삭제 */
+		DELETE FROM CLT_GOODS_OPTS;
+	</delete>
+
+	<delete id="dropSeq">
+		/* optsDao.dropSeq - 시퀀스 드랍 */
+		DROP SEQUENCE SQ_GOODS_OPTS_SEQ
+	</delete>
+
+	<insert id="createSeq">
+		/* optsDao.createSeq - 시퀀스 생성 */
+		CREATE SEQUENCE SQ_GOODS_OPTS_SEQ
+	</insert>
+</mapper>
