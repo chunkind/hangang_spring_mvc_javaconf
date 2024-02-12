@@ -38,6 +38,7 @@ import com.dev.ck.cltsh.shp.event.CltEventDto;
 import com.dev.ck.cltsh.shp.goods.CltGoodsDto;
 import com.dev.ck.cltsh.shp.main.CltGoodsDetailDto;
 import com.dev.ck.cltsh.shp.mypage.CltMypgDto;
+import com.dev.ck.cltsh.shp.opts.CltOptsDto;
 import com.dev.ck.cltsh.shp.order.CltOrderDto;
 import com.dev.ck.cltsh.shp.point.CltPointDto;
 import com.dev.ck.cltsh.shp.prom.CltPromDto;
@@ -79,7 +80,7 @@ public class MybatisConfig {
 			/*cltsh*/
 			CltUserDto.class, CltSalesDto.class, CltQnaDto.class, CltPromDto.class, CltPointDto.class, CltOrderDto.class,
 			CltMypgDto.class, CltGoodsDetailDto.class, CltGoodsDto.class, CltEventDto.class, CltEntrDto.class, CltDressDto.class,
-			CltCpnDto.class, CltCodeDto.class, CltCateDto.class
+			CltCpnDto.class, CltCodeDto.class, CltCateDto.class, CltOptsDto.class
 		});
 		factory.setPlugins(interceptors());
 		factory.setTypedHandlerMap(typeHandlers());
