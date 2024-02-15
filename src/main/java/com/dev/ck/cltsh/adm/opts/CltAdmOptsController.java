@@ -21,7 +21,7 @@ public class CltAdmOptsController {
 	public String admOptsList(HttpServletRequest req, HttpServletResponse res, CltOptsDto pvo) {
 		List<CltOptsDto> optsList = optsService.selectOptsList(pvo);
 		req.setAttribute("optsList", optsList);
-		return "cltsh/adm/order/order_list";
+		return "cltsh/adm/opts/opts_list";
 	}
 
 }

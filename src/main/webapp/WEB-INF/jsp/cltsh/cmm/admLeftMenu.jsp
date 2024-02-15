@@ -9,6 +9,7 @@
        <li><a href="/cltsh/adm/entr/admEntrList.do">업체 관리</a></li>
        <li><a href="/cltsh/adm/code/admCodeList.do">공통코드 관리</a></li>
        <li><a href="/cltsh/adm/cate/admCateList.do">카테고리 관리</a></li>
+       <li><a href="/cltsh/adm/opts/admOptsList.do">상품 옵션 관리</a></li>
        <li><a href="/cltsh/adm/goods/admGoodsList.do">상품 관리</a></li>
        <!-- <li class="sub"><a href="/cltsh/DispatcherServlet?command=adm_goods_list">상품 목록</a></li> -->
        <!-- <li class="sub"><a href="/cltsh/DispatcherServlet?command=adm_goods_qna">상품 문의 관리</a></li> -->
