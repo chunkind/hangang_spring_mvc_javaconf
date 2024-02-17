@@ -16,4 +16,8 @@ public class CltOptsDto {
 	private String updtId;		/* 수정아이디 */
 	private String updtDate;	/* 수정일 */
 	private int goodsCd;		/* 상품코드 */
+	
+	private String[] optsCdArr;
+	private String[] optsNmArr;
+	private String[] optsValArr;
 }
