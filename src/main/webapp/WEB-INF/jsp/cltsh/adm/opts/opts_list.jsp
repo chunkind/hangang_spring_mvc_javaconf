@@ -77,6 +77,7 @@
 
 <h2>상품 옵션 관리</h2>
 <form method="post" action="/cltsh/adm/opts/admOptsRegisterAct.do" onsubmit="return fn_submitCheck()">
+<input type="hidden" id="addTextCnt" name="addTextCnt" value="0">
 <div class="items_header">
 	<span>옵션 번호</span>
 	<span>옵션 명</span>
@@ -113,7 +114,7 @@
 </form>
 
 <script>
-let upperTextCnt = 0;
+let addTextCnt = 0;
 let btnCnt = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -122,9 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	let items_area = document.querySelector('.items');
 	
 	opts_btn_add.addEventListener('click', ()=>{
-		btnCnt = upperTextCnt;
+		btnCnt = addTextCnt;
 		items_area.innerHTML += fn_getHtmlInput();
-		upperTextCnt++;
+		addTextCnt++;
 	});
 });
 
@@ -150,11 +151,8 @@ function fn_getHtmlInput(){
 
 function fn_submitCheck(){
 	/* debugger; */
-	let upperTextCnt_add = document.querySelector('#upperTxtCnt');
-	let underTextCnt_add = document.querySelector('#underTxtCnt');
-	
-	upperTextCnt_add.value = upperTextCnt;
-	underTextCnt_add.value = underTextCnt;
+	let addTextCnt_add = document.querySelector('#addTextCnt');
+	addTextCnt_add.value = addTextCnt;
 	
 	return true;
 }

@@ -54,7 +54,7 @@ public class CltAdmCateController{
 		List<CltCateDto> underList = cateService.selectCateUnList(pvo);
 		
 		if(req.getParameter("catgryCd") != null) {
-			req.setAttribute("underList", underList);			
+			req.setAttribute("underList", underList);
 		}
 		
 		req.setAttribute("upperListSize", list.size());
