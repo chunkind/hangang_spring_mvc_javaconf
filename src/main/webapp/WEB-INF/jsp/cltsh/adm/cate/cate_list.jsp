@@ -205,7 +205,7 @@ function fnDel(_this, goodsCataSeq , classLvlCd){
 			alert("하위 카테고리가 있습니다.");
 		}else if(confirm('상품을 정말 삭제 하시겠습니까?')){
 			_this.parentNode.parentNode.parentNode.remove();
-			location.href = '/adm/cate/admCateRemoveAct.do?goodsCataSeq='+goodsCataSeq;
+			location.href = '/cltsh/adm/cate/admCateRemoveAct.do?goodsCataSeq='+goodsCataSeq;
 		}
 	}
 }
