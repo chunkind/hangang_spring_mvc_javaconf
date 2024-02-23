@@ -47,7 +47,7 @@
 			, RGST_DATE AS rgstDate	/* 등록일 */
 			, UPDT_ID AS updtId		/* 수정아이디 */
 			, UPDT_DATE AS updtDate	/* 수정일 */
-			GOODS_CD AS goodsCd		/* 상품코드 */
+			, GOODS_CD AS goodsCd		/* 상품코드 */
 		) VALUES
 		( #{optsCd}
 		, #{optsNm}
