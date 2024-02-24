@@ -18,11 +18,18 @@ public class CltOptsDto {
 	private int goodsCd;		/* 상품코드 */
 	
 	private String optsType;
-	private String [] optsTypeArr;	
 	private int addTextCnt;
+	private String [] optsTypeArr;	
 	private String[] optsCdArr;
 	private String[] optsNmArr;
 	private String[] optsValArr;
 	private int[] goodsCdArr;
 	private String[] useYnArr;
+	
+	private String [] addOptsTypeArr;
+	private String[] addOptsCdArr;
+	private String[] addOptsNmArr;
+	private String[] addOptsValArr;
+	private int[] addGoodsCdArr;
+	private String[] addUseYnArr;
 }

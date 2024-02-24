@@ -17,11 +17,15 @@
 
 .items_header {
 	background-color: #e6e3fc;
-	padding: 20px;
 	font-weight: bold;
 	border-bottom: 1px solid black;
 	display: flex;
 	justify-content: space-around;
+}
+.items_header span {
+	padding: 42px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 .items div {
@@ -100,6 +104,7 @@
 			</li> --%>
 			<input type="hidden" name="goodsOptsSeq" value="${obj.goodsOptsSeq}"/></li>
 			<input type="hidden" name="goodsCd" value="${obj.goodsCd}"/></li>
+			<input type="hidden" name="optsType" value="update"/>
 			<li><input type="button" class="btn_del" value="취소" onclick="fnDel(this , '${obj.goodsOptsSeq}');" /></li>
 		</ul>
 	</c:forEach>
@@ -132,17 +137,18 @@ document.addEventListener("DOMContentLoaded", () => {
 function fn_getHtmlInput(){
 	let html = ''
 	+'<div><ul>'
-	+	'<li><input type="text" name="optsCd'+ btnCnt +'" placeholder="옵션코드"/></li>'
-	+	'<li><input type="text" name="optsNm'+ btnCnt +'" placeholder="옵션이름"/></li>'
-	+	'<li><input type="text" name="optsVal'+ btnCnt +'" placeholder="분류코드"/></li>'
+	+	'<li><input type="text" name="addOptsCd'+ btnCnt +'" placeholder="옵션코드"/></li>'
+	+	'<li><input type="text" name="addOptsNm'+ btnCnt +'" placeholder="옵션이름"/></li>'
+	+	'<li><input type="text" name="addOoptsVal'+ btnCnt +'" placeholder="분류코드"/></li>'
 	+	'<li>'
-	+		'<select name="useYn'+ btnCnt +'">'
+	+		'<select name="addUseYn'+ btnCnt +'">'
 	+			'<option value="Y">사용</option>'
 	+			'<option value="N">사용안함</option>'
 	+		'</select>'
 	+	'</li>'
-	+	'<input type="hidden" name="goodsOptsSeq'+ btnCnt +'"/></li>'
-	+	'<input type="hidden" name="goodsCd'+ btnCnt +'"/></li>'
+	+	'<input type="hidden" name="addGoodsOptsSeq'+ btnCnt +'"/></li>'
+	+	'<input type="hidden" name="addGoodsCd'+ btnCnt +'"/></li>'
+	+	'<input type="hidden" name="addOptsType'+ btnCnt +'" value="insert"/>'
 	+	'<li><input type="button" class="btn_del" value="취소" onclick="fnDel(this);" /></li>'
 	+'</ul></div>'
 	;
