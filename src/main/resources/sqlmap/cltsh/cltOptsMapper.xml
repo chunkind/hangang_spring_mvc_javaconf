@@ -39,15 +39,15 @@
 	<insert id="insertOpts">
 		/* optsDao.insertOpts - 상품 등록 */
 		INSERT INTO CLT_GOODS_OPTS
-			( OPTS_CD AS optsCd		/* 옵션 코드 */
-			, OPTS_NM AS optsNm		/* 옵션이름 */
-			, OPTS_VAL AS optsVal	/* 옵션값 */
-			, USE_YN AS useYn		/* 사용여부 */
-			, RGST_ID AS rgstId		/* 등록아이디 */
-			, RGST_DATE AS rgstDate	/* 등록일 */
-			, UPDT_ID AS updtId		/* 수정아이디 */
-			, UPDT_DATE AS updtDate	/* 수정일 */
-			, GOODS_CD AS goodsCd		/* 상품코드 */
+			( OPTS_CD 
+			, OPTS_NM /* 옵션이름 */
+			, OPTS_VAL /* 옵션값 */
+			, USE_YN /* 사용여부 */
+			, RGST_ID /* 등록아이디 */
+			, RGST_DATE /* 등록일 */
+			, UPDT_ID /* 수정아이디 */
+			, UPDT_DATE /* 수정일 */
+			, GOODS_CD /* 상품코드 */
 		) VALUES
 		( #{optsCd}
 		, #{optsNm}
@@ -57,7 +57,7 @@
 		, NOW()
 		, #{updtId}
 		, NOW()
-		, #{goodsCd} )
+		, #{goodsCd})
 	</insert>
 
 	<update id="updateOpts">
