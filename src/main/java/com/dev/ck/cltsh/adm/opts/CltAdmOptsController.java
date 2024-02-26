@@ -37,10 +37,12 @@ public class CltAdmOptsController {
 		CltUserDto loginInfo = (CltUserDto) session.getAttribute("loginInfo");
 		pvo.setRgstId(loginInfo.getUsrId());
 		
-//		int result = codeService.insertCode(pvo);
-		req.setAttribute("pvo", pvo);
+		pvo = optsService.parameterSetting(req);
 		
-		return "redirect:/cltsh/adm/code/admCodeList.do";
+		int result = optsService.saveOpts(pvo);
+		req.setAttribute("result", result);
+		
+		return "redirect:/cltsh/adm/opts/admOptsList.do";
 	}
 
 	// 카테고리 삭제 액션
