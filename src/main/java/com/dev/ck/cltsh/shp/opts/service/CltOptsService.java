@@ -112,13 +112,7 @@ public class CltOptsService {
 				pvo.setOptsCd(optsCdArr[i]);
 				pvo.setGoodsCd(goodsCdArr[i]);
 				pvo.setUseYn(useYnArr[i]);
-				
-				if(optsTypeArr[i].equals("insert")) {
-					optsDao.insertOpts(pvo);
-				}
-				else {
-					optsDao.updateOpts(pvo);
-				}
+				optsDao.updateOpts(pvo);
 			}
 			
 			for (int i = 0; i <= pvo.getAddOptsNmArr().length-1; i++) {
@@ -128,13 +122,7 @@ public class CltOptsService {
 				pvo.setOptsCd(addOptsCdArr[i]);
 				pvo.setGoodsCd(addGoodsCdArr[i]);
 				pvo.setUseYn(addUseYnArr[i]);
-				
-				if(optsTypeArr[i].equals("insert")) {
-					optsDao.insertOpts(pvo);
-				}
-				else {
-					optsDao.updateOpts(pvo);
-				}
+				optsDao.insertOpts(pvo);
 			}
 		} catch (Exception e) {
 			result = 0;
