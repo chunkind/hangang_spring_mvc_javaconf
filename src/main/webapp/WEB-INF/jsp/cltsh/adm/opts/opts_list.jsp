@@ -139,7 +139,7 @@ function fn_getHtmlInput(){
 	+'<div><ul>'
 	+	'<li><input type="text" name="addOptsCd'+ btnCnt +'" placeholder="옵션코드"/></li>'
 	+	'<li><input type="text" name="addOptsNm'+ btnCnt +'" placeholder="옵션이름"/></li>'
-	+	'<li><input type="text" name="addOoptsVal'+ btnCnt +'" placeholder="분류코드"/></li>'
+	+	'<li><input type="text" name="addOptsVal'+ btnCnt +'" placeholder="분류코드"/></li>'
 	+	'<li>'
 	+		'<select name="addUseYn'+ btnCnt +'">'
 	+			'<option value="Y">사용</option>'
