@@ -96,12 +96,12 @@
 			<li><input type="text" name="optsCd${countObj.index }" value="${obj.optsCd}" /></li>
 			<li><input type="text" name="optsNm${countObj.index }" value="${obj.optsNm}" /></li>
 			<li><input type="text" name="optsVal${countObj.index }" value="${obj.optsVal}" /></li>
-			<%-- <li>
+			<li>
 				<select name="upUseYn${countObj.index}">
 					<option value="Y" <c:if test="${obj.useYn eq 'Y'}">selected</c:if>>사용</option>
 					<option value="N" <c:if test="${obj.useYn eq 'N'}">selected</c:if>>사용안함</option>
 				</select>
-			</li> --%>
+			</li>
 			<input type="hidden" name="goodsOptsSeq" value="${obj.goodsOptsSeq}"/></li>
 			<input type="hidden" name="goodsCd" value="${obj.goodsCd}"/></li>
 			<input type="hidden" name="optsType" value="update"/>
