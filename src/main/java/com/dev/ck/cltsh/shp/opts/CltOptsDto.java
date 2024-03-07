@@ -19,6 +19,8 @@ public class CltOptsDto {
 	
 	private String optsType;
 	private int addTextCnt;
+	private int optsCnt; /* 기존 데이터 갯수 */
+	private int [] goodsOptsSeqArr;	
 	private String [] optsTypeArr;	
 	private String[] optsCdArr;
 	private String[] optsNmArr;
