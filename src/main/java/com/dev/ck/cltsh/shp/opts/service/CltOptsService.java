@@ -16,6 +16,7 @@ public class CltOptsService {
 	
 	public CltOptsDto parameterSetting(HttpServletRequest req) {
 		int addTxtCnt = req.getParameter("addTxtCnt") == null? 0 : Integer.parseInt(req.getParameter("addTxtCnt"));
+		int optsCnt = req.getParameter("optsCnt") == null? 0 : Integer.parseInt(req.getParameter("optsCnt"));
 		int goodsOptsSeq = Integer.parseInt(req.getParameter("goodsOptsSeq"));
 		String optsCd = req.getParameter("optsCd");
 		String optsNm = req.getParameter("optsNm");
@@ -28,12 +29,13 @@ public class CltOptsService {
 		int goodsCd = Integer.parseInt(req.getParameter("goodsCd"));
 		String optsType = req.getParameter("optsType");
 		
-		String[] optsNmArr = new String[addTxtCnt + 1];
-		String[] optsValArr = new String[addTxtCnt + 1];
-		String[] optsCdArr = new String[addTxtCnt + 1];
-		int[] goodsCdArr = new int[addTxtCnt + 1];
-		String[] useYnArr = new String[addTxtCnt + 1];
-		String[] optsTypeArr = new String[addTxtCnt + 1];
+		int[] goodsOptsSeqArr = new int[optsCnt + 1];
+		String[] optsNmArr = new String[optsCnt + 1];
+		String[] optsValArr = new String[optsCnt + 1];
+		String[] optsCdArr = new String[optsCnt + 1];
+		int[] goodsCdArr = new int[optsCnt + 1];
+		String[] useYnArr = new String[optsCnt + 1];
+		String[] optsTypeArr = new String[optsCnt + 1];
 		
 		String [] addOptsTypeArr = new String[addTxtCnt + 1];
 		String[] addOptsCdArr = new String[addTxtCnt + 1];
@@ -43,19 +45,23 @@ public class CltOptsService {
 		String[] addUseYnArr = new String[addTxtCnt + 1];
 		
 		for(int i = 0; i <= addTxtCnt; i++) {
-			optsTypeArr[i] = req.getParameter("optsType"+i);
-			optsCdArr[i] = req.getParameter("optsCd"+i);
-			optsNmArr[i] = req.getParameter("optsNm"+i);
-			optsValArr[i] = req.getParameter("optsVal"+i);
-//			goodsCdArr[i] = Integer.parseInt(req.getParameter("goodsCd"+i));
-			useYnArr[i] = req.getParameter("useYn"+i);
 			// 추가 하는 옵션 
+			goodsOptsSeqArr[i] = Integer.parseInt(req.getParameter("goodsOptsSeq"+i));
 			addOptsTypeArr[i] = req.getParameter("addOptsType"+i);
 			addOptsCdArr[i] = req.getParameter("addOptsCd"+i);
 			addOptsNmArr[i] = req.getParameter("addOptsNm"+i);
 			addOptsValArr[i] = req.getParameter("addOptsVal"+i);
 //			addGoodsCdArr[i] = Integer.parseInt(req.getParameter("addGoodsCd"+i));
 			addUseYnArr[i] = req.getParameter("addUseYn"+i);
+		}
+		
+		for(int i = 0; i <= optsCnt; i++) {
+			optsTypeArr[i] = req.getParameter("optsType"+i);
+			optsCdArr[i] = req.getParameter("optsCd"+i);
+			optsNmArr[i] = req.getParameter("optsNm"+i);
+			optsValArr[i] = req.getParameter("optsVal"+i);
+//			goodsCdArr[i] = Integer.parseInt(req.getParameter("goodsCd"+i));
+			useYnArr[i] = req.getParameter("useYn"+i);
 		}
 		
 		CltOptsDto pvo = new CltOptsDto();
@@ -71,6 +77,7 @@ public class CltOptsService {
 		pvo.setUpdtDate(updtDate);
 		pvo.setGoodsCd(goodsCd);
 		pvo.setOptsType(optsType);
+		pvo.setGoodsOptsSeqArr(goodsOptsSeqArr);
 		pvo.setOptsTypeArr(optsTypeArr);
 		pvo.setAddOptsTypeArr(addOptsTypeArr);
 		pvo.setOptsCdArr(optsCdArr);
@@ -89,6 +96,7 @@ public class CltOptsService {
 	public int saveOpts(CltOptsDto pvo) {
 		int result = 1;
 		
+		int[] goodsOptsSeqArr = pvo.getGoodsOptsSeqArr();
 		String[] optsTypeArr = pvo.getOptsTypeArr();
 		String[] optsNmArr = pvo.getOptsNmArr();
 		String[] optsValArr = pvo.getOptsValArr();
@@ -106,6 +114,7 @@ public class CltOptsService {
 		
 		try {
 			for (int i = 0; i <= pvo.getOptsNmArr().length-1; i++) {
+				pvo.setGoodsOptsSeq(goodsOptsSeqArr[i]);
 				pvo.setOptsType(optsTypeArr[i]);
 				pvo.setOptsNm(optsNmArr[i]);
 				pvo.setOptsVal(optsValArr[i]);
