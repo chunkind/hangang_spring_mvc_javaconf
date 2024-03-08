@@ -15,7 +15,7 @@ public class CltOptsService {
 	@Autowired private CltOptsMapper optsDao;
 	
 	public CltOptsDto parameterSetting(HttpServletRequest req) {
-		int addTxtCnt = req.getParameter("addTxtCnt") == null? 0 : Integer.parseInt(req.getParameter("addTxtCnt"));
+		int addTxtCnt = req.getParameter("addTextCnt") == null? 0 : Integer.parseInt(req.getParameter("addTextCnt"));
 		int optsCnt = req.getParameter("optsCnt") == null? 0 : Integer.parseInt(req.getParameter("optsCnt"));
 		int goodsOptsSeq = Integer.parseInt(req.getParameter("goodsOptsSeq"));
 		String optsCd = req.getParameter("optsCd");
@@ -46,7 +46,6 @@ public class CltOptsService {
 		
 		for(int i = 0; i <= addTxtCnt; i++) {
 			// 추가 하는 옵션 
-			goodsOptsSeqArr[i] = Integer.parseInt(req.getParameter("goodsOptsSeq"+i));
 			addOptsTypeArr[i] = req.getParameter("addOptsType"+i);
 			addOptsCdArr[i] = req.getParameter("addOptsCd"+i);
 			addOptsNmArr[i] = req.getParameter("addOptsNm"+i);
@@ -56,6 +55,7 @@ public class CltOptsService {
 		}
 		
 		for(int i = 0; i <= optsCnt; i++) {
+			goodsOptsSeqArr[i] = Integer.parseInt(req.getParameter("goodsOptsSeq"+i));
 			optsTypeArr[i] = req.getParameter("optsType"+i);
 			optsCdArr[i] = req.getParameter("optsCd"+i);
 			optsNmArr[i] = req.getParameter("optsNm"+i);
