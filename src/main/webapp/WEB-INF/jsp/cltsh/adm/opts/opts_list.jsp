@@ -82,6 +82,8 @@
 <h2>상품 옵션 관리</h2>
 <form method="post" action="/cltsh/adm/opts/admOptsRegisterAct.do" onsubmit="return fn_submitCheck()">
 <input type="hidden" id="addTextCnt" name="addTextCnt" value="0">
+<input type="hidden" id="optsCnt" name="optsCnt" value="0">
+
 <div class="items_header">
 	<span>옵션 번호</span>
 	<span>옵션 명</span>
@@ -92,12 +94,13 @@
 
 <div class="items">
 	<c:forEach items="${optsList }" var="obj" varStatus="countObj">
-		<ul class="optslist">
+			<input type="hidden" name="goodsOptsSeq${countObj.index }" value="${obj.goodsOptsSeq}" />
+		<ul class="optslist" data-index="${countObj.index}">
 			<li><input type="text" name="optsCd${countObj.index }" value="${obj.optsCd}" /></li>
 			<li><input type="text" name="optsNm${countObj.index }" value="${obj.optsNm}" /></li>
 			<li><input type="text" name="optsVal${countObj.index }" value="${obj.optsVal}" /></li>
 			<li>
-				<select name="upUseYn${countObj.index}">
+				<select name="useYn${countObj.index}">
 					<option value="Y" <c:if test="${obj.useYn eq 'Y'}">selected</c:if>>사용</option>
 					<option value="N" <c:if test="${obj.useYn eq 'N'}">selected</c:if>>사용안함</option>
 				</select>
@@ -121,6 +124,7 @@
 <script>
 let addTextCnt = 0;
 let btnCnt = 0;
+let optsCnt = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
 	let opts_btn_add = document.querySelector('#opts_btn_add');
@@ -156,11 +160,30 @@ function fn_getHtmlInput(){
 }
 
 function fn_submitCheck(){
-	/* debugger; */
 	let addTextCnt_add = document.querySelector('#addTextCnt');
 	addTextCnt_add.value = addTextCnt;
 	
-	return true;
+	// 모든 입력에 대해 값을 확인합니다.
+	let inputs = document.querySelectorAll('input[type="text"]');
+	for (let i = 0; i < inputs.length; i++) {
+		if (inputs[i].value.trim() === '') { // 값이 비어 있으면
+			alert('값을 모두 입력해 주세요.'); // 경고창을 표시합니다.
+			return false; // 제출을 중지합니다.
+		}
+	}
+	
+	 // data-index 값을 가져와서 사용합니다.
+	let items = document.querySelectorAll('[data-index]');
+	if (items.length > 0) {
+		let lastIndex = items.length - 1;
+		let lastItem = items[lastIndex];
+		let lastIndexValue = lastItem.getAttribute('data-index');
+		
+		let optsCntVal = document.querySelector('#optsCnt');
+		optsCntVal.value = lastIndexValue;
+	}
+	
+	return true; // 제출을 계속합니다.
 }
 function fnDel(_this, goodsOptsSeq){
 	if(goodsOptsSeq == null){
