@@ -29,6 +29,7 @@ public class CltOptsService {
 		int goodsCd = Integer.parseInt(req.getParameter("goodsCd"));
 		String optsType = req.getParameter("optsType");
 		
+		/* 기존 옵션 */
 		int[] goodsOptsSeqArr = new int[optsCnt + 1];
 		String[] optsNmArr = new String[optsCnt + 1];
 		String[] optsValArr = new String[optsCnt + 1];
@@ -37,6 +38,7 @@ public class CltOptsService {
 		String[] useYnArr = new String[optsCnt + 1];
 		String[] optsTypeArr = new String[optsCnt + 1];
 		
+		/* 추가 할 옵션 */
 		String [] addOptsTypeArr = new String[addTxtCnt + 1];
 		String[] addOptsCdArr = new String[addTxtCnt + 1];
 		String[] addOptsNmArr = new String[addTxtCnt + 1];
@@ -44,16 +46,7 @@ public class CltOptsService {
 		int[] addGoodsCdArr = new int[addTxtCnt + 1];
 		String[] addUseYnArr = new String[addTxtCnt + 1];
 		
-		for(int i = 0; i <= addTxtCnt; i++) {
-			// 추가 하는 옵션 
-			addOptsTypeArr[i] = req.getParameter("addOptsType"+i);
-			addOptsCdArr[i] = req.getParameter("addOptsCd"+i);
-			addOptsNmArr[i] = req.getParameter("addOptsNm"+i);
-			addOptsValArr[i] = req.getParameter("addOptsVal"+i);
-//			addGoodsCdArr[i] = Integer.parseInt(req.getParameter("addGoodsCd"+i));
-			addUseYnArr[i] = req.getParameter("addUseYn"+i);
-		}
-		
+		/* 기존 옵션 */
 		for(int i = 0; i <= optsCnt; i++) {
 			goodsOptsSeqArr[i] = Integer.parseInt(req.getParameter("goodsOptsSeq"+i));
 			optsTypeArr[i] = req.getParameter("optsType"+i);
@@ -62,6 +55,16 @@ public class CltOptsService {
 			optsValArr[i] = req.getParameter("optsVal"+i);
 //			goodsCdArr[i] = Integer.parseInt(req.getParameter("goodsCd"+i));
 			useYnArr[i] = req.getParameter("useYn"+i);
+		}
+		
+		/* 추가 할 옵션 */
+		for(int i = 0; i <= addTxtCnt; i++) {
+			addOptsTypeArr[i] = req.getParameter("addOptsType"+i);
+			addOptsCdArr[i] = req.getParameter("addOptsCd"+i);
+			addOptsNmArr[i] = req.getParameter("addOptsNm"+i);
+			addOptsValArr[i] = req.getParameter("addOptsVal"+i);
+//			addGoodsCdArr[i] = Integer.parseInt(req.getParameter("addGoodsCd"+i));
+			addUseYnArr[i] = req.getParameter("addUseYn"+i);
 		}
 		
 		CltOptsDto pvo = new CltOptsDto();
@@ -96,6 +99,7 @@ public class CltOptsService {
 	public int saveOpts(CltOptsDto pvo) {
 		int result = 1;
 		
+		/* 기존 옵션 */
 		int[] goodsOptsSeqArr = pvo.getGoodsOptsSeqArr();
 		String[] optsTypeArr = pvo.getOptsTypeArr();
 		String[] optsNmArr = pvo.getOptsNmArr();
@@ -104,7 +108,7 @@ public class CltOptsService {
 		int[] goodsCdArr = pvo.getGoodsCdArr();
 		String[] useYnArr = pvo.getUseYnArr();
 		
-		//insert할 옵션
+		/* 추가 할 옵션 */
 		String[] addOptsTypeArr = pvo.getAddOptsTypeArr();
 		String[] addOptsNmArr = pvo.getAddOptsNmArr();
 		String[] addOptsValArr = pvo.getAddOptsValArr();
