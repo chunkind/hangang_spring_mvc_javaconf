@@ -23,6 +23,8 @@ import com.dev.ck.cltsh.shp.entr.CltEntrDto;
 import com.dev.ck.cltsh.shp.entr.service.CltEntrService;
 import com.dev.ck.cltsh.shp.goods.CltGoodsDto;
 import com.dev.ck.cltsh.shp.goods.service.CltGoodsService;
+import com.dev.ck.cltsh.shp.opts.CltOptsDto;
+import com.dev.ck.cltsh.shp.opts.service.CltOptsService;
 import com.dev.ck.cltsh.shp.user.CltUserDto;
 
 @Controller
@@ -32,6 +34,7 @@ public class CltAdmGoodsController{
 	@Autowired private CltEntrService entrService;
 	@Autowired private CltCateService cateService;
 	@Autowired private CltCodeService codeService;
+	@Autowired private CltOptsService optsService;
 
 	// 상품 리스트 화면
 	@RequestMapping("/cltsh/adm/goods/admGoodsList.do")
@@ -130,6 +133,11 @@ public class CltAdmGoodsController{
 		codeVo.setRgstId(loginInfo.getUsrId());
 		List<CltCodeDto> codeList = codeService.selectSaleStatCdList(codeVo);
 		
+		//상품 옵션 리스트
+		CltOptsDto optsVo = new CltOptsDto();
+		List<CltOptsDto> optsList = optsService.selectOptsList(optsVo);
+		
+		req.setAttribute("optsList", optsList);
 		req.setAttribute("codeList", codeList);
 		req.setAttribute("entrList", entrList);
 		req.setAttribute("upperCodeList", upperCodeList);
