@@ -81,6 +81,7 @@
                     <option value="ivory">아이보리</option>
                 </select>
             </td>
+            <td><input type="button" value="상품 옵션 추가" onclick="location.href='/cltsh/adm/opts/admOptsList.do'"/></td>
         </tr>
         <tr>
             <th><div>사용여부</div></th>            
