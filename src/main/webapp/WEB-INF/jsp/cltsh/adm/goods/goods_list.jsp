@@ -43,6 +43,7 @@
 					<td>${obj.goodsCd}</td>
 					<td><img src="${obj.imgPath}${obj.imgNm }" height="200px" width="200px" /></td>
 					<td><a href="/cltsh/adm/goods/admGoodsEdit.do?goodsInfoSeq=${obj.goodsInfoSeq}">${obj.goodsNm}</a></td>
+					<td><input type="button" value="상품 옵션 추가" onclick="location.href='/cltsh/adm/opts/admOptsList.do?goodsCd=${obj.goodsCd}'"/></td>
 					<td>${obj.goodsPrc}</td>
 					<td>${obj.saleStatCd}</td>
 					<td>${obj.inyQty}</td>
