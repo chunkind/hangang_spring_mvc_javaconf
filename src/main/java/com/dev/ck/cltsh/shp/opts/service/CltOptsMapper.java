@@ -10,6 +10,7 @@ import com.dev.ck.cltsh.shp.opts.CltOptsDto;
 public interface CltOptsMapper {
 	CltOptsDto selectOptsOne(CltOptsDto pvo);
 	List<CltOptsDto> selectOptsList(CltOptsDto pvo);
+	List<CltOptsDto> selectAdmOptsList(CltOptsDto pvo);
 	int insertOpts(CltOptsDto pvo);
 	int updateOpts(CltOptsDto pvo);
 	int deleteOptsOne(CltOptsDto pvo);

@@ -17,7 +17,7 @@ public class CltOptsService {
 	public CltOptsDto parameterSetting(HttpServletRequest req) {
 		int addTxtCnt = req.getParameter("addTextCnt") == null? 0 : Integer.parseInt(req.getParameter("addTextCnt"));
 		int optsCnt = req.getParameter("optsCnt") == null? 0 : Integer.parseInt(req.getParameter("optsCnt"));
-		int goodsOptsSeq = Integer.parseInt(req.getParameter("goodsOptsSeq"));
+		int goodsOptsSeq = req.getParameter("goodsOptsSeq") == null? 0 :Integer.parseInt(req.getParameter("goodsOptsSeq"));
 		String optsCd = req.getParameter("optsCd");
 		String optsNm = req.getParameter("optsNm");
 		String optsVal = req.getParameter("optsVal");
@@ -150,6 +150,10 @@ public class CltOptsService {
 	
 	public List<CltOptsDto> selectOptsList(CltOptsDto pvo){
 		return optsDao.selectOptsList(pvo);
+	};
+
+	public List<CltOptsDto> selectAdmOptsList(CltOptsDto pvo){
+		return optsDao.selectAdmOptsList(pvo);
 	};
 	
 	public int insertOpts(CltOptsDto pvo) {

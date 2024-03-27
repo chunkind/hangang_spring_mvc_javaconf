@@ -23,9 +23,10 @@ public class CltAdmOptsController {
 	//옵션 관리
 	@RequestMapping("/cltsh/adm/opts/admOptsList.do")
 	public String admOptsList(HttpServletRequest req, HttpServletResponse res, CltOptsDto pvo) {
-		List<CltOptsDto> optsList = optsService.selectOptsList(pvo);
+		List<CltOptsDto> optsList = optsService.selectAdmOptsList(pvo);
 		req.setAttribute("optsListSize", optsList.size());
 		req.setAttribute("optsList", optsList);
+		req.setAttribute("goodsCd", req.getParameter("goodsCd"));
 		return "cltsh/adm/opts/opts_list";
 	}
 	
