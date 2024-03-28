@@ -35,6 +35,24 @@
 		FROM CLT_GOODS_OPTS
 		WHERE 1=1
 	</select>
+	
+	<select id="selectAdmOptsList" resultType="cltOptsDto">
+		/* optsDao.selectAdmOptsList - 옵션 리스트 */
+		SELECT
+			GOODS_OPTS_SEQ AS goodsOptsSeq	/* 상품 옵션 시퀀스 */
+			, OPTS_CD AS optsCd		/* 옵션 코드 */
+			, OPTS_NM AS optsNm		/* 옵션이름 */
+			, OPTS_VAL AS optsVal		/* 옵션값 */
+			, USE_YN AS useYn			/* 사용여부 */
+			, RGST_ID AS rgstId		/* 등록아이디 */
+			, RGST_DATE AS rgstDate	/* 등록일 */
+			, UPDT_ID AS updtId		/* 수정아이디 */
+			, UPDT_DATE AS updtDate	/* 수정일 */
+			, GOODS_CD AS goodsCd		/* 상품코드 */
+		FROM CLT_GOODS_OPTS
+		WHERE 1=1
+		AND GOODS_CD = #{goodsCd}
+	</select>
 
 	<insert id="insertOpts">
 		/* optsDao.insertOpts - 상품 등록 */
