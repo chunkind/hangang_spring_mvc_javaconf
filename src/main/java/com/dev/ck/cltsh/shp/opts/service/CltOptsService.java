@@ -48,12 +48,12 @@ public class CltOptsService {
 		
 		/* 기존 옵션 */
 		for(int i = 0; i <= optsCnt; i++) {
-			goodsOptsSeqArr[i] = Integer.parseInt(req.getParameter("goodsOptsSeq"+i));
+//			goodsOptsSeqArr[i] = Integer.parseInt(req.getParameter("goodsOptsSeq"+i));
 			optsTypeArr[i] = req.getParameter("optsType"+i);
 			optsCdArr[i] = req.getParameter("optsCd"+i);
 			optsNmArr[i] = req.getParameter("optsNm"+i);
 			optsValArr[i] = req.getParameter("optsVal"+i);
-//			goodsCdArr[i] = Integer.parseInt(req.getParameter("goodsCd"+i));
+			goodsCdArr[i] = Integer.parseInt(req.getParameter("goodsCd"));
 			useYnArr[i] = req.getParameter("useYn"+i);
 		}
 		
@@ -63,7 +63,7 @@ public class CltOptsService {
 			addOptsCdArr[i] = req.getParameter("addOptsCd"+i);
 			addOptsNmArr[i] = req.getParameter("addOptsNm"+i);
 			addOptsValArr[i] = req.getParameter("addOptsVal"+i);
-//			addGoodsCdArr[i] = Integer.parseInt(req.getParameter("addGoodsCd"+i));
+			addGoodsCdArr[i] = Integer.parseInt(req.getParameter("goodsCd"));
 			addUseYnArr[i] = req.getParameter("addUseYn"+i);
 		}
 		

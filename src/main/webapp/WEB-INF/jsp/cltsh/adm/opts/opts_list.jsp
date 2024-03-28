@@ -83,6 +83,7 @@
 <form method="post" action="/cltsh/adm/opts/admOptsRegisterAct.do" onsubmit="return fn_submitCheck()">
 <input type="hidden" id="addTextCnt" name="addTextCnt" value="0">
 <input type="hidden" id="optsCnt" name="optsCnt" value="0">
+<input type="hidden" name="goodsCd" value="${goodsCd}"/></li>
 
 <div class="items_header">
 	<span>옵션 번호</span>
@@ -106,7 +107,6 @@
 				</select>
 			</li>
 			<input type="hidden" name="goodsOptsSeq" value="${obj.goodsOptsSeq}"/></li>
-			<input type="hidden" name="goodsCd" value="${obj.goodsCd}"/></li>
 			<input type="hidden" name="optsType" value="update"/>
 			<li><input type="button" class="btn_del" value="취소" onclick="fnDel(this , '${obj.goodsOptsSeq}');" /></li>
 		</ul>
