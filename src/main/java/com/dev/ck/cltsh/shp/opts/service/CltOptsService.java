@@ -48,7 +48,7 @@ public class CltOptsService {
 		
 		/* 기존 옵션 */
 		for(int i = 0; i <= optsCnt; i++) {
-//			goodsOptsSeqArr[i] = Integer.parseInt(req.getParameter("goodsOptsSeq"+i));
+			goodsOptsSeqArr[i] = Integer.parseInt(req.getParameter("goodsOptsSeq"+i));
 			optsTypeArr[i] = req.getParameter("optsType"+i);
 			optsCdArr[i] = req.getParameter("optsCd"+i);
 			optsNmArr[i] = req.getParameter("optsNm"+i);
@@ -117,26 +117,31 @@ public class CltOptsService {
 		String[] addUseYnArr = pvo.getAddUseYnArr();
 		
 		try {
-			for (int i = 0; i <= pvo.getOptsNmArr().length-1; i++) {
-				pvo.setGoodsOptsSeq(goodsOptsSeqArr[i]);
-				pvo.setOptsType(optsTypeArr[i]);
-				pvo.setOptsNm(optsNmArr[i]);
-				pvo.setOptsVal(optsValArr[i]);
-				pvo.setOptsCd(optsCdArr[i]);
-				pvo.setGoodsCd(goodsCdArr[i]);
-				pvo.setUseYn(useYnArr[i]);
-				optsDao.updateOpts(pvo);
+			if(optsNmArr[0] != null) {
+				for (int i = 0; i <= pvo.getOptsNmArr().length-1; i++) {
+					pvo.setGoodsOptsSeq(goodsOptsSeqArr[i]);
+					pvo.setOptsType(optsTypeArr[i]);
+					pvo.setOptsNm(optsNmArr[i]);
+					pvo.setOptsVal(optsValArr[i]);
+					pvo.setOptsCd(optsCdArr[i]);
+					pvo.setGoodsCd(goodsCdArr[i]);
+					pvo.setUseYn(useYnArr[i]);
+					optsDao.updateOpts(pvo);
+				}
 			}
 			
-			for (int i = 0; i <= pvo.getAddOptsNmArr().length-1; i++) {
-				pvo.setOptsType(addOptsTypeArr[i]);
-				pvo.setOptsNm(addOptsNmArr[i]);
-				pvo.setOptsVal(addOptsValArr[i]);
-				pvo.setOptsCd(addOptsCdArr[i]);
-				pvo.setGoodsCd(addGoodsCdArr[i]);
-				pvo.setUseYn(addUseYnArr[i]);
-				optsDao.insertOpts(pvo);
+			if(addOptsValArr[0] != null) {
+				for (int i = 0; i <= pvo.getAddOptsNmArr().length-1; i++) {
+					pvo.setOptsType(addOptsTypeArr[i]);
+					pvo.setOptsNm(addOptsNmArr[i]);
+					pvo.setOptsVal(addOptsValArr[i]);
+					pvo.setOptsCd(addOptsCdArr[i]);
+					pvo.setGoodsCd(addGoodsCdArr[i]);
+					pvo.setUseYn(addUseYnArr[i]);
+					optsDao.insertOpts(pvo);
+				}
 			}
+			
 		} catch (Exception e) {
 			result = 0;
 		}
