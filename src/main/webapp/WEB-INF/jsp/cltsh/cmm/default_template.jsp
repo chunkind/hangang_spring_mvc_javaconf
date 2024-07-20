@@ -19,6 +19,7 @@
 	<tiles:insertAttribute name="header" />
 	<tiles:insertAttribute name="body" />
 	<tiles:insertAttribute name="footer" />
+	<script src="/js/cltsh/common.js"></script>
 	<!-- <script src="/assets/dist/js/bootstrap.bundle.min.js"></script> -->
 </body>
 </html>
