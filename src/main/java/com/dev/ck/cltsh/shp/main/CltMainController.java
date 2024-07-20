@@ -76,7 +76,7 @@ public class CltMainController{
 		
 		////////////////////////////////////////////////////////////////////////////////////////////
 		String requestURI = (String) req.getAttribute("requestURI"); //페이징
-		String page = req.getParameter("page");
+  		String page = req.getParameter("page");
 		int totalCnt = mainService.searchGoodsCnt(pvo);
 		
 		pvo.setPath(requestURI);
