@@ -35,7 +35,10 @@
 			<div>데이터가 없습니다.</div>
 		</c:otherwise>
 	</c:choose>
-	
+
+
+
+
 	</div>
 <hr class="featurette-divider">
 </div><!-- /.container -->
