@@ -30,3 +30,22 @@
 		</div>
 	</nav>
 </header>
+
+<script>
+function fn_user_edit(usrBaseSeq){
+	const form = document.createElement('form');
+	form.method = 'post';
+	form.action = '/cltsh/user/userEdit.do';
+
+	const hiddenField = document.createElement('input');
+	hiddenField.type = 'hidden';
+	hiddenField.name = 'usrBaseSeq';
+	hiddenField.value = usrBaseSeq;
+	
+	form.appendChild(hiddenField);
+	
+	document.body.appendChild(form);
+	
+	form.submit();
+}
+</script>

@@ -10,32 +10,187 @@
 <header id="header">
 	<div class="logo"><a href="/cltsh/main/mainCataList.do"><img src="/img/cltsh/logo_01.png" /></a></div>
 </header>
+	
+<div class="row g-5">
+	<div class="col-md-7 col-lg-8">
+		<h4 class="mb-3">회원 정보 수정</h4>
+		<form class="needs-validation" name="frm" action="/cltsh/user/userEditAct.do" method="post" onsubmit="return fn_user_edit()" novalidate>
+			<input type="hidden" name="usrBaseSeq" value="${sessionScope.loginInfo.usrBaseSeq }">
+			<div class="row g-3">
+				<div class="col-sm-6">
+					<label for="firstName" class="form-label">아이디</label>
+					<input type="text" class="form-control" value="${sessionScope.loginInfo.usrId }" name="usrId" readonly="readonly" required>
+					<div class="invalid-feedback">Valid first name is required.</div>
+				</div>
+				
+				<div class="col-6">
+					<label for="email" class="form-label">이름</label>
+					<input type="text" class="form-control" name="usrNm" value="${sessionScope.loginInfo.usrNm }" placeholder="이름 입력 ">
+					<div class="invalid-feedback">Please enter a valid email address for shipping updates.</div>
+				</div>
+				
+				<div class="col-sm-6">
+					<label for="lastName" class="form-label">비밀번호</label>
+					<input type="password" class="form-control" name="passWd" placeholder="비밀번호 입력 " value="${pvo.passWd }" placeholder="" required>
+					<div class="invalid-feedback">Valid last name is required.</div>
+				</div>
+				
+				<div class="col-sm-6">
+					<label for="lastName" class="form-label">비밀번호 확인</label>
+					<input type="password" class="form-control" name="passWd" placeholder="비밀번호 재입력 " value="${pvo.passWd }" placeholder="" required>
+					<div class="invalid-feedback">Valid last name is required.</div>
+				</div>
+				
+				<div class="col-12">
+					<label for="username" class="form-label">이메일</label>
+					<div class="input-group has-validation">	
+						<span class="input-group-text">@</span>
+						<input type="email" class="form-control" name="emailAddr" placeholder="이메일 입력 " value="${pvo.emailAddr }">
+						<div class="invalid-feedback">Your username is required.</div>
+					</div>
+				</div>
 
-<section id="section" class="section">
-	<div class="input_area">
-		<h1>회원 정보 수정</h1>
-		<div class="top">
-		<form name="frm" action="/cltsh/user/userEditAct.do" method="post" onsubmit="return fn_user_edit()">		
-		<input type="hidden" name="usrBaseSeq" value="${sessionScope.loginInfo.usrBaseSeq }">
-		<input type="text" class="id" value="${sessionScope.loginInfo.usrId }" name="usrId" readonly="readonly">
-		<input type="text" name="usrNm" value="${sessionScope.loginInfo.usrNm }" placeholder="이름 입력 ">
-		<input type="email" name="emailAddr" placeholder="이메일 입력 " value="${pvo.emailAddr }">
-		<input type="password" name="passWd" placeholder="비밀번호 입력 " value="${pvo.passWd }">
-		<input type="password" placeholder="비밀번호 재입력 " value="${pvo.passWd }">
-		<input type="tel" name="cellNo" placeholder="01012341234" value="${pvo.cellNo }">
-		<button id="c_btn">인증요청</button>
-		<input class="landAddrBase" type="landAddrBase" value="${pvo.landAddrBase }" name="landAddrBase">
-		<input class="landAddrDtl" type="landAddrDtl" value="${pvo.landAddrDtl }" name="landAddrDtl">
-		<input class="landPostNo" type="landPostNo" value="${pvo.landPostNo }" name="landPostNo">
-		<input class="loadAddrBase" type="loadAddrBase" value="${pvo.loadAddrBase }" name="loadAddrBase" placeholder="도로명주소">
-		<input class="loadAddrDtl" type="loadAddrDtl" value="${pvo.loadAddrDtl }" name="loadAddrDtl" placeholder="도로명주소 상세">
-		<label>생년월일</label>
-		<input type="date" name="usrBirth" placeholder="생년월일" value="${pvo.usrBirth }">
-		<input type="submit" value="수정하기" />
+				<div class="col-10">
+					<label for="address" class="form-label">핸드폰 번호</label>
+					<input type="tel" class="form-control" name="cellNo" placeholder="01012341234" value="${pvo.cellNo }">
+					<button id="c_btn">인증요청</button>
+					<div class="invalid-feedback">Please enter your shipping address.</div>
+				</div>
+				
+				<div class="col-12">
+					<label for="address" class="form-label">주소</label>
+					<input type="text" class="form-control" name="landAddrBase" value="${pvo.landAddrBase }" required>
+					<div class="invalid-feedback">Please enter your shipping address.</div>
+				</div>
+				
+				<div class="col-6">
+					<label for="address2" class="form-label">상세 주소</label>
+					<input type="text" class="form-control" name="landAddrDtl" value="${pvo.landAddrDtl }" >
+				</div>
+				
+				<div class="col-6">
+					<label for="address2" class="form-label">우편 번호</label>
+					<input type="text" class="form-control" name="landPostNo" value="${pvo.landPostNo }" >
+				</div>
+				
+				<div class="col-12">
+					<label for="address" class="form-label">도로명 주소</label>
+					<input type="text" class="form-control" name="loadAddrBase" value="${pvo.loadAddrBase }" placeholder="도로명주소">
+					<div class="invalid-feedback">Please enter your shipping address.</div>
+				</div>
+				
+				<div class="col-12">
+					<label for="address2" class="form-label">상세 주소</label>
+					<input type="text" class="form-control" name="loadAddrDtl" value="${pvo.loadAddrDtl }" placeholder="도로명주소 상세">
+				</div>
+				
+				<div class="col-12">
+					<label for="address2" class="form-label">생년월일</label>
+					<input type="date" class="form-control" name="usrBirth" value="${pvo.usrBirth }" placeholder="생년월일">
+				</div>
+				
+				<div class="col-md-5">
+					<label for="country" class="form-label">Country</label> <select
+						class="form-select" id="country" required>
+						<option value="">Choose...</option>
+						<option>United States</option>
+					</select>
+					<div class="invalid-feedback">Please select a valid country.
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<label for="state" class="form-label">State</label> <select
+						class="form-select" id="state" required>
+						<option value="">Choose...</option>
+						<option>California</option>
+					</select>
+					<div class="invalid-feedback">Please provide a valid state.
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<label for="zip" class="form-label">Zip</label> <input type="text"
+						class="form-control" id="zip" placeholder="" required>
+					<div class="invalid-feedback">Zip code required.</div>
+				</div>
+			</div>
+
+			<hr class="my-4">
+
+			<div class="form-check">
+				<input type="checkbox" class="form-check-input" id="same-address">
+				<label class="form-check-label" for="same-address">Shipping
+					address is the same as my billing address</label>
+			</div>
+
+			<div class="form-check">
+				<input type="checkbox" class="form-check-input" id="save-info">
+				<label class="form-check-label" for="save-info">Save this
+					information for next time</label>
+			</div>
+
+			<hr class="my-4">
+
+			<h4 class="mb-3">Payment</h4>
+
+			<div class="my-3">
+				<div class="form-check">
+					<input id="credit" name="paymentMethod" type="radio"
+						class="form-check-input" checked required> <label
+						class="form-check-label" for="credit">Credit card</label>
+				</div>
+				<div class="form-check">
+					<input id="debit" name="paymentMethod" type="radio"
+						class="form-check-input" required> <label
+						class="form-check-label" for="debit">Debit card</label>
+				</div>
+				<div class="form-check">
+					<input id="paypal" name="paymentMethod" type="radio"
+						class="form-check-input" required> <label
+						class="form-check-label" for="paypal">PayPal</label>
+				</div>
+			</div>
+
+			<div class="row gy-3">
+				<div class="col-md-6">
+					<label for="cc-name" class="form-label">Name on card</label> <input
+						type="text" class="form-control" id="cc-name" placeholder=""
+						required> <small class="text-body-secondary">Full
+						name as displayed on card</small>
+					<div class="invalid-feedback">Name on card is required</div>
+				</div>
+
+				<div class="col-md-6">
+					<label for="cc-number" class="form-label">Credit card
+						number</label> <input type="text" class="form-control" id="cc-number"
+						placeholder="" required>
+					<div class="invalid-feedback">Credit card number is required
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<label for="cc-expiration" class="form-label">Expiration</label> <input
+						type="text" class="form-control" id="cc-expiration"
+						placeholder="" required>
+					<div class="invalid-feedback">Expiration date required</div>
+				</div>
+
+				<div class="col-md-3">
+					<label for="cc-cvv" class="form-label">CVV</label> <input
+						type="text" class="form-control" id="cc-cvv" placeholder=""
+						required>
+					<div class="invalid-feedback">Security code required</div>
+				</div>
+			</div>
+
+			<hr class="my-4">
+			<button class="w-100 btn btn-primary btn-lg" type="submit">수정하기</button>
 		</form>
-		</div>
 	</div>
-</section>
+</div>
+
+
 <script>
 //상품수정
 function fn_user_edit(){
