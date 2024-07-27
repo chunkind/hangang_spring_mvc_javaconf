@@ -1,51 +1,104 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <style>
 #frm{
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 }
 </style>
 
-<%-- <c:if test="${sessionScope.message ne ''}"> 아래와 같다--%>
 <c:if test="${not empty sessionScope.message}">
 	<script type="text/javascript">alert("${sessionScope.message}");</script>
-	<%-- <c:out scope="session" var="message" value="메세지가 들어갑니다."/> jsp에서 메세지 추가하고 싶을 떄 사용 --%>
 	<c:remove var="message" scope="session"/>
 </c:if>
+
 <c:if test="${not empty requestScope.message}">
 	<script type="text/javascript">alert("${requestScope.message}");</script>
 	<c:remove var="message" scope="session"/>
 </c:if>
 
 <header id="header">
-	<div class="logo"><a href="/cltsh/main.do"><img src="/img/cltsh/logo_01.png" /></a></div>
+	<div class="logo"><a href="/cltsh/main/mainCataList.do"><img src="/img/cltsh/logo_01.png" /></a></div>
 </header>
-<section id="section" class="section">
-	<div class="input_area">
-	   <h1>회원가입</h1>
-	   <div class="top">
-		<form name="frm" id="frm" action="/cltsh/user/userJoinInsert.do" method="post" onsubmit="return checkForm()">
-			<input type="text" name="usrId" placeholder="아이디 입력 ">
-			<input type="button" id="ajaxBtn" value="중복 확인" />
-			<input type="text" name="usrNm" placeholder="이름 입력 ">
-			<input type="email" name="emailAddr" placeholder="이메일 입력 ">
-			<input type="password" name="passWd" placeholder="비밀번호 입력 ">
-			<input type="password" placeholder="비밀번호 재입력 ">
-			<input type="tel" name="cellNo" placeholder="01012341234">
-			<button id="c_btn">인증요청</button>
-			<input type="text" name="landAddrBase" placeholder="지번 주소">
-			<input type="text" name="landAddrDtl" placeholder="도로명 상세 주소">
-			<input type="text" name="landPostNo" placeholder="우편주소">
-			<input type="text" name="loadAddrBase" placeholder="도로명 주소">
-			<input type="text" name="loadAddrDtl" placeholder="도로명 상세 주소">
-			<label>생년월일</label>
-			<input type="date" name="usrBirth" placeholder="생년월일">
-			<input type="submit" value="가입하기"/>
+	
+<div class="row g-5">
+	<div class="col-md-7 col-lg-8">
+		<h4 class="mb-3">회원가입</h4>
+		<form class="needs-validation" name="frm" action="/cltsh/user/userJoinInsert.do" method="post" onsubmit="return checkForm()" novalidate>
+			<input type="hidden" name="usrBaseSeq" value="${sessionScope.loginInfo.usrBaseSeq }">
+			<div class="row g-3">
+				<div class="col-sm-6">
+					<label for="firstName" class="form-label">아이디</label>
+					<input type="text" class="form-control" name="usrId" placeholder="아이디 입력 ">
+					<input type="button" id="ajaxBtn" value="중복 확인" />
+				</div>
+				
+				<div class="col-6">
+					<label for="email" class="form-label">이름</label>
+					<input type="text" class="form-control" name="usrNm" placeholder="이름 입력 ">
+				</div>
+				
+				<div class="col-sm-6">
+					<label for="lastName" class="form-label">비밀번호</label>
+					<input type="password" class="form-control" name="passWd" placeholder="비밀번호 입력 ">
+				</div>
+				
+				<div class="col-sm-6">
+					<label for="lastName" class="form-label">비밀번호 확인</label>
+					<input type="password" class="form-control" placeholder="비밀번호 재입력 ">
+				</div>
+				
+				<div class="col-6">
+					<label for="username" class="form-label">이메일</label>
+					<div class="input-group has-validation">	
+						<span class="input-group-text">@</span>
+						<input type="email" class="form-control" name="emailAddr" placeholder="이메일 입력 ">
+					</div>
+				</div>
+
+				<div class="col-6">
+					<label for="address" class="form-label">핸드폰 번호</label>
+					<input type="tel" class="form-control" name="cellNo" placeholder="ex) 01012341234">
+					<button id="c_btn">인증요청</button>
+					<div class="invalid-feedback">Please enter your shipping address.</div>
+				</div>
+				
+				<div class="col-5">
+					<label for="address" class="form-label">주소</label>
+					<input type="text" class="form-control" name="landAddrBase" placeholder="지번 주소">
+				</div>
+				
+				<div class="col-5">
+					<label for="address2" class="form-label">상세 주소</label>
+					<input type="text" class="form-control" name="landAddrDtl" placeholder="도로명 상세 주소">
+				</div>
+				
+				<div class="col-2">
+					<label for="address2" class="form-label">우편 번호</label>
+					<input type="text" class="form-control" name="landPostNo" placeholder="우편주소">
+				</div>
+				
+				<div class="col-6">
+					<label for="address" class="form-label">도로명 주소</label>
+					<input type="text" class="form-control" name="loadAddrBase" placeholder="도로명 주소">
+				</div>
+				
+				<div class="col-6">
+					<label for="address2" class="form-label">상세 주소</label>
+					<input type="text" class="form-control" name="loadAddrDtl" placeholder="도로명 상세 주소">
+				</div>
+				
+				<div class="col-2">
+					<label for="address2" class="form-label">생년월일</label>
+					<input type="date" class="form-control" name="usrBirth" placeholder="생년월일">
+				</div>
+			<hr class="my-4">
+			<button class="w-100 btn btn-primary btn-lg" type="submit">회원가입</button>
 		</form>
-		</div>
 	</div>
-</section>
+</div>
+
 <script>
 (function(){document.getElementById("ajaxBtn").addEventListener('click', makeRequest);
 	function makeRequest() {
