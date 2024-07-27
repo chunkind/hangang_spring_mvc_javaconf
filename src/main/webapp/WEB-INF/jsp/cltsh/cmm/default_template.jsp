@@ -23,4 +23,16 @@
 	<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="/js/cltsh/common.js"></script>
 </body>
+<c:if test="${not empty sessionScope.message}">
+  <script type="text/javascript">
+    alert("${sessionScope.message}");
+  </script>
+  <c:remove var="message" scope="session" />
+</c:if>
+<c:if test="${not empty requestScope.message}">
+  <script type="text/javascript">
+    alert("${requestScope.message}");
+  </script>
+  <c:remove var="message" scope="session" />
+</c:if>
 </html>
