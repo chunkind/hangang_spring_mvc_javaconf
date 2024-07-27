@@ -19,7 +19,7 @@
 </c:if>
 
 <header id="header">
-	<div class="logo"><a href="/cltsh/main/mainCataList.do"><img src="/img/cltsh/logo_01.png" /></a></div>
+	<div class="logo"><a href="/cltsh/main.do"><img src="/img/cltsh/logo_01.png" /></a></div>
 </header>
 	
 <div class="row g-5">
