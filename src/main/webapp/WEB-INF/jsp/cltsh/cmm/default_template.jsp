@@ -19,6 +19,7 @@
 	<tiles:insertAttribute name="header" />
 	<tiles:insertAttribute name="body" />
 	<tiles:insertAttribute name="footer" />
+	<script type="text/javascript" src="https://kit.fontawesome.com/c505bb0d5d.js" crossorigin="anonymous"></script>
 	<script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="/js/cltsh/common.js"></script>
 </body>
