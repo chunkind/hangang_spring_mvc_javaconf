@@ -10,9 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CltGoodsDetailDto extends PagingVO{
-	private int page; //페이징
-	private int pagePerRow; //페이징
-	
 	private String ntcSctCd;
 	private String bulYn;
 	private Date bulStrtDt;

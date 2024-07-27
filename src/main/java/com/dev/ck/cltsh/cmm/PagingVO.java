@@ -9,8 +9,8 @@ public class PagingVO {
 	private int minPage;
 	private int page;
 	private int totalCnt;
-	private int pagePerRows;
-	private int startIdx;
+	private int pagePerRows = 10;
+	private int startIdx = 1;
 	private String html;
 	private String path;
 	private String paramPage;

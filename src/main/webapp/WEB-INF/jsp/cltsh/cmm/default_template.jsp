@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 	<link rel="stylesheet" href="/assets/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/carousel.css">
+	<link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
 	<tiles:insertAttribute name="header" />
