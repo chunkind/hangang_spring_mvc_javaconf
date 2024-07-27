@@ -3,8 +3,9 @@
 <style>
 #frm{
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 }
+
 </style>
 
 <header id="header">

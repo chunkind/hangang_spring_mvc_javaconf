@@ -120,9 +120,9 @@
 		</div>
 
 		<div class="form-check text-start my-3">
-			<input class="form-check-input" type="checkbox" value="remember-me"
-				id="flexCheckDefault"> <label class="form-check-label"
-				for="flexCheckDefault"> 아이디 저장 </label>
+			<input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+			<label class="form-check-label" for="flexCheckDefault"> 아이디 저장 </label>
+			<a href="/cltsh/user/userJoin.do"> 회원가입</a>
 		</div>
 		<button class="btn btn-primary w-100 py-2" type="submit">로그인</button>
 	</form>
