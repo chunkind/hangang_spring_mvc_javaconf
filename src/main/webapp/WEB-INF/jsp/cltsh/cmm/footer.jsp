@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+<<<<<<< HEAD
+<nav class="navbar fixed-bottom navbar-expand-sm navbar-light bg-light">
 	<div class="container-fluid">
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="/cltsh/main/mainDrssList.do">리뷰</a></li>
+				<li class="nav-item">
+					<a class="nav-link" href="/cltsh/main/mainDrssList.do">리뷰</a>
+				</li>
 				<li class="nav-item dropup"><a class="nav-link dropdown-toggle" href="/cltsh/main/mainCataList.do" data-bs-toggle="dropdown" aria-expanded="false">카테고리</a>
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" href="/cltsh/main/mainCataList.do?searchType=all">전체</a></li>
