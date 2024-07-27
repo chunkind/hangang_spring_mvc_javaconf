@@ -33,7 +33,12 @@ public class CltMypgController{
 	@Autowired private CltSalesService salesService;
 	
 	@RequestMapping("/cltsh/mypage/mypage.do")
-	public String mypage(HttpServletRequest req, HttpServletResponse res, CltMypgDto mypgVO) {
+	public String mypage() {
+		return "cltsh/shp/mypage/mypage";
+	}
+	
+	@RequestMapping("/cltsh/mypage/mypageOrder.do")
+	public String mypageOrder(HttpServletRequest req, HttpServletResponse res, CltMypgDto mypgVO) {
 		CltUserDto loginVo = commonCode(req);
 		
 		mypgVO.setUsrId(loginVo.getUsrId());
@@ -57,7 +62,7 @@ public class CltMypgController{
 		}
 		
 		req.setAttribute("mypgList", mypgList);
-		return "cltsh/shp/mypage/mypage";
+		return "cltsh/shp/mypage/mypage_order";
 	}
 	
 	@RequestMapping("/cltsh/mypage/mypageCoupon.do")

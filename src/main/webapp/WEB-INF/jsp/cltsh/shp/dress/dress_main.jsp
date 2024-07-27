@@ -1,130 +1,138 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/jsp/cltsh/cmm/nomalMenu.jsp" %>
+
 <style>
-.wrap_center{
-    width: 100%;
-    height: 100%;
+.wrap_center {
+	width: 100%;
+	height: 100%;
 }
-.container{
-    margin: 0 auto;
-    width: 50%;
-    height: 450px;
-    overflow: hidden;
+
+.container {
+	margin: 0 auto;
+	width: 50%;
+	height: 450px;
+	overflow: hidden;
 }
-.img_wrap{
-    width: 50%;
-    height: 450px;
-    position: absolute;
-    overflow: hidden;
+
+.img_wrap {
+	width: 50%;
+	height: 450px;
+	position: absolute;
+	overflow: hidden;
 }
 
 /* 롤링 이미지 UL */
 .rollimgs {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
-.rollimgs li{
-    position: absolute;
-    width: 100%;
-    height: 450px;
-    left: 3000px;
-}
-.rollimgs li img{
-    width: 100%;
-    height: 100%;
-}
-.rollimgs li.currentroll{
-    left: 0;
-    transition: left .5s ease-in-out, right .5s ease-in-out;
-}
-.rollimgs li.prevroll{
-    left: -3000px;
-    transition: left .5s ease-in-out, right .5s ease-in-out;
-}
-.rollimgs.reverse li.prevroll{
-    transition: none;
-}
-.rollimgs li.nextroll{
-    left: 3000px;
-    display: block;
-    transition: none;
-}
-.rollimgs.reverse li.nextroll{
-    transition: left .5s ease-in-out, right .5s ease-in-out;
+.rollimgs li {
+	position: absolute;
+	width: 100%;
+	height: 450px;
+	left: 3000px;
 }
 
-.img_wrap .btnmove{
-    position: absolute;
-    top: 190px;
-    width: 30px;
-    height: 30px;
-    z-index: 1;
-    font-size: 1.4em;
-    opacity: 0.5;
-    background-color: #444435;
-    text-align: center;
-    border-radius: 50%;
-}
-.img_wrap .btnmove.prev{
-    cursor: pointer;
-    left: 10px;
-}
-.img_wrap .btnmove.next{
-    cursor: pointer;
-    right: 10px;
-}
-.img_wrap i{
-    color: #fff;
+.rollimgs li img {
+	width: 100%;
+	height: 100%;
 }
 
-.wrap_center{
-    padding-top: 10px;
-}
-.wrap_center, .best_dresser_list, #dressroom_create_btn{
-    background-color: #ffffff;
+.rollimgs li.currentroll {
+	left: 0;
+	transition: left .5s ease-in-out, right .5s ease-in-out;
 }
 
-.best_dresser_list{
-    display: flex;
-    padding-top: 20px;
-    justify-content: center;
+.rollimgs li.prevroll {
+	left: -3000px;
+	transition: left .5s ease-in-out, right .5s ease-in-out;
 }
 
-.best_dresser_list .item{
-    padding: 10px;
+.rollimgs.reverse li.prevroll {
+	transition: none;
 }
 
-.best_dresser_list img{
-    width: 100px;
-    height: 100px;
+.rollimgs li.nextroll {
+	left: 3000px;
+	display: block;
+	transition: none;
 }
 
-.item_list_area .list_area .list_search{
-    width: 100%;
-    text-align: right;
-    padding: 10px;
-    margin-right: 10px;
+.rollimgs.reverse li.nextroll {
+	transition: left .5s ease-in-out, right .5s ease-in-out;
 }
 
-.item_list_area .list_area .data_list{
-    display: flex;
-    padding: 10px;
+.img_wrap .btnmove {
+	position: absolute;
+	top: 190px;
+	width: 30px;
+	height: 30px;
+	z-index: 1;
+	font-size: 1.4em;
+	opacity: 0.5;
+	background-color: #444435;
+	text-align: center;
+	border-radius: 50%;
 }
 
-.item_list_area .list_area .data_list .item{
-    padding: 10px;
-}
-
-/* .item_list_area .list_area .data_list .item a{
+.img_wrap .btnmove.prev {
 	cursor: pointer;
-} */
+	left: 10px;
+}
 
-.item_list_area .list_area .data_list .item img{
-    width: 100px;
-    height: 100px;
+.img_wrap .btnmove.next {
+	cursor: pointer;
+	right: 10px;
+}
+
+.img_wrap i {
+	color: #fff;
+}
+
+.wrap_center {
+	padding-top: 10px;
+}
+
+.wrap_center, .best_dresser_list, #dressroom_create_btn {
+	background-color: #ffffff;
+}
+
+.best_dresser_list {
+	display: flex;
+	padding-top: 20px;
+	justify-content: center;
+}
+
+.best_dresser_list .item {
+	padding: 10px;
+}
+
+.best_dresser_list img {
+	width: 100px;
+	height: 100px;
+}
+
+.item_list_area .list_area .list_search {
+	width: 100%;
+	text-align: right;
+	padding: 10px;
+	margin-right: 10px;
+}
+
+.item_list_area .list_area .data_list {
+	display: flex;
+	padding: 10px;
+}
+
+.item_list_area .list_area .data_list .item {
+	padding: 10px;
+}
+.item_list_area .list_area .data_list .item img {
+	width: 100px;
+	height: 100px;
 }
 </style>
 
