@@ -8,7 +8,8 @@
 				<div class="card">
 					<div class="row g-0">
 						<div class="col-md-4">
-							<img class="bd-placeholder-img card-img-top" width="100%" height="100%" src="${obj.imgPath}${obj.imgNm}" onclick="location.href='/cltsh/mypage/mypageDetail.do?ordNo=${obj.ordNo}'" style="cursor: pointer;">
+							<img class="bd-placeholder-img card-img-top" width="100%" height="100%" src="${obj.imgPath}${obj.imgNm}"
+								onclick="location.href='/cltsh/mypage/mypageDetail.do?ordNo=${obj.ordNo}'" style="cursor: pointer;">
 						</div>
 						<div class="col-md-8">
 							<div class="card-body">
@@ -18,10 +19,12 @@
 								<c:if test="${obj.saleBoardRpySeq eq 0}">
 									<div class="d-flex justify-content-center align-items-center mt-2">
 										<input type="button" class="btn btn-primary" style="background-color: white; color: black; border: 1px solid black;"
-										onclick="location.href='/cltsh/dress/dressRegister.do?ordNo=${obj.ordNo}'" value="리뷰 쓰기" />
+											onclick="location.href='/cltsh/dress/dressRegister.do?ordNo=${obj.ordNo}'" value="리뷰 쓰기" />
 									</div>
 								</c:if>
-								<p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+								<a class="card-text" href="/cltsh/mypage/mypageDetail.do?ordNo=${obj.ordNo}" style="color: #22c55e; display: block;">
+									<small class="text-body-secondary">결제 상세</small>
+								</a>
 							</div>
 						</div>
 					</div>
