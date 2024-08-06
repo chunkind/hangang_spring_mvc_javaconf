@@ -1,227 +1,188 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/nomalMenu.jsp" %>
-<style>
-	.item_list_area{
-		text-align: left;
-	}
-</style>
-<section class="title_area">
-	<h3 class="title">1:1문의 > 작성하기</h3>
-</section>
-<section class="item_list_area">
-	<form name="frm" action="/cltsh/qna/qnaInsertAct.do" method="post">
-	<table>
-		<colgroup>
-			<col width="10%" />
-			<col width="40%" />
-			<col width="10%" />
-			<col width="40%" />
-		</colgroup>
-		<tr>
-			<th>제목</th>
-			<td><input type="text" name="titNm"></td>
-			<th>비밀글</th>
-			<td>
-			    <label>
-			        <input type="radio" name="passYn" value="Y"> 사용
-			    </label>
-			    <label>
-			        <input type="radio" name="passYn" value="N" checked> 미사용
-			    </label>
-			</td>
-		</tr>
-		<!--  <tr>
-			<th>비밀글</th>
-			<td>
-				<select name="passYn" id="passYn">
-					<option value="Y">사용</option>
-					<option value="N" selected="selected">미사용</option>
-				</select>
-			</td>
-			<th>비밀글 비밀번호</th>
-			<td><input type="password" name="passWd" id="passWd"></td>
-		</tr>-->
-		<tr>
-			<th>문의유형</th>
-			<td>
-				<select name="qnaTp" id="qnaTp">
-					<option value="일반문의">일반문의</option>
-					<option value="상품문의">상품문의</option>
-				</select>
-			</td>
-			<th>답변 상태</th>
-			<td>
-				<div>답변미완료</div>
-				<input type="hidden" name="ansrStat" value="답변미완료">
-			</td>
-		</tr>
-		<tr class="cate">
-			<th>상위 카테고리</th>
-			<td>
-				<select name="oneDepthCateList" id="oneDepthCateList">
-					<option value="">선택</option>
-					<c:forEach items="${oneDepthCateList }" var="obj">
-						<option value="${obj.catgryCd}">${obj.catgryNm}</option>
-					</c:forEach>
-				</select>
-			</td>
-			<th>하위 카테고리</th>
-			<td>
-				<select name="twoDepthCateList" id="twoDepthCateList">
-					<option value="">선택</option>
-				</select>
-			</td>
-		</tr>
-		<tr class="cate">
-			<th>상품</th>
-			<td>
-				<select name="goodsCd" id="searchGoodsList">
-					<option value="0">선택</option>
-				</select>
-			</td>
-			<th>이미지</th>
-			<td>
-				<img id="goodsImg"/>
-			</td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td colspan="3">
-				<textarea rows="20" cols="100" name="cont"></textarea>
-			</td>
-		</tr>
-	</table>
-	<div class="btn_area">
-		<input type="submit" value="작성하기" />
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<div class="container mt-4">
+	<div class="card">
+		<div class="card-header bg-primary text-white">
+			<h5 class="mb-0">1:1 문의 > 작성하기</h5>
+		</div>
+		<div class="card-body">
+			<form name="frm" action="/cltsh/qna/qnaInsertAct.do" method="post">
+				<div class="form-group row">
+					<label for="titNm" class="col-sm-2 col-form-label">제목</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="titNm" name="titNm">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">비밀글</label>
+					<div class="col-sm-10">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="passYn"
+								value="Y" id="passYnY"> <label class="form-check-label"
+								for="passYnY"> 사용 </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="passYn"
+								value="N" id="passYnN" checked> <label
+								class="form-check-label" for="passYnN"> 미사용 </label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="qnaTp" class="col-sm-2 col-form-label">문의유형</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="qnaTp" name="qnaTp">
+							<option value="일반문의">일반문의</option>
+							<option value="상품문의">상품문의</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">답변 상태</label>
+					<div class="col-sm-10">
+						<div>답변미완료</div>
+						<input type="hidden" name="ansrStat" value="답변미완료">
+					</div>
+				</div>
+				<div class="form-group row cate" style="display: none;">
+					<label for="oneDepthCateList" class="col-sm-2 col-form-label">상위
+						카테고리</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="oneDepthCateList"
+							name="oneDepthCateList">
+							<option value="">선택</option>
+							<c:forEach items="${oneDepthCateList }" var="obj">
+								<option value="${obj.catgryCd}">${obj.catgryNm}</option>
+							</c:forEach>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row cate" style="display: none;">
+					<label for="twoDepthCateList" class="col-sm-2 col-form-label">하위
+						카테고리</label>
+					<div class="col-sm-10">
+						<select class="form-control" id="twoDepthCateList"
+							name="twoDepthCateList">
+							<option value="">선택</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="searchGoodsList" class="col-sm-2 col-form-label">상품</label>
+					<div class="col-sm-8">
+						<select class="form-control" id="searchGoodsList" name="goodsCd">
+							<option value="0">선택</option>
+						</select>
+					</div>
+					<div class="col-sm-2">
+						<img id="goodsImg" class="img-fluid" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="cont" class="col-sm-2 col-form-label">내용</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" id="cont" rows="10" name="cont"></textarea>
+					</div>
+				</div>
+				<div class="text-right">
+					<button type="submit" class="btn btn-primary">작성하기</button>
+				</div>
+			</form>
+		</div>
 	</div>
-	</form>
-</section>
+</div>
+
 <script>
+// 문의유형 변경 시 카테고리 표시 제어
 document.addEventListener("DOMContentLoaded", () => {
-	/* let sel_passYn = document.querySelector('#passYn');
-	sel_passYn.addEventListener('change', (e)=>{
-		let selectedVal = e.target.value;
-		
-		if(selectedVal == 'N'){
-			document.getElementById("passWd").style.display = "none";
-		}else{
-			document.getElementById("passWd").style.display = "table-row";
-		}
-		
-	});
-	document.getElementById("passWd").style.display = "none"; */
-	
-	let sel_qnaTp = document.querySelector('#qnaTp');
-	sel_qnaTp.addEventListener('change', (e)=>{
-		let selectedVal = e.target.value;
-		
-		if(selectedVal == '일반문의'){
-			/* document.getElementsByClassName("cate").style.display = "none"; */
-			document.getElementsByClassName("cate")[0].style.display = "none";
-			document.getElementsByClassName("cate")[1].style.display = "none";
-		}else{
-		document.getElementsByClassName("cate")[0].style.display = "table-row";
-		document.getElementsByClassName("cate")[1].style.display = "table-row";
-		}
-		
-	});
-	document.getElementsByClassName("cate")[0].style.display = "none";
-	document.getElementsByClassName("cate")[1].style.display = "none";
+    let sel_qnaTp = document.querySelector('#qnaTp');
+    sel_qnaTp.addEventListener('change', (e) => {
+        let selectedVal = e.target.value;
+        let cateRows = document.querySelectorAll('.cate');
+        
+        if (selectedVal == '일반문의') {
+            cateRows.forEach(row => row.style.display = 'none');
+        } else {
+            cateRows.forEach(row => row.style.display = 'table-row');
+        }
+    });
+    // 초기 상태 설정
+    let initial_qnaTp = document.querySelector('#qnaTp').value;
+    if (initial_qnaTp == '일반문의') {
+        document.querySelectorAll('.cate').forEach(row => row.style.display = 'none');
+    } else {
+        document.querySelectorAll('.cate').forEach(row => row.style.display = 'table-row');
+    }
 });
 
-document.getElementById("oneDepthCateList").addEventListener('change', ()=>{
-	let oneDepthCateList = document.querySelector('#oneDepthCateList').value;
-	fn_ajax({
-		url: '/dress/DressCateAjax.do?oneDepthCateList='+encodeURIComponent(oneDepthCateList),
-		method: 'get',
-		success: function(data){
-			console.log(data);
-			var rtnJson = data;
-			if(rtnJson.result == 'success'){
-				let sel_twoDepthCateList = document.querySelector('#twoDepthCateList');
-				let sel_twoDepthCateList_options = document.querySelectorAll('#twoDepthCateList option');
-				for(let i=0; i<sel_twoDepthCateList_options.length; i++){
-					sel_twoDepthCateList_options[i].remove();
-				}
-				//추가
-				let option = document.createElement('option');
-				option.value = '';
-				option.innerHTML = '선택';
-				sel_twoDepthCateList.append(option);
-					
-				for(let i=0; i<rtnJson.dataList.length; i++){
-					let objValue = rtnJson.dataList[i];
-					let option = document.createElement('option');
-					let catgryCd = objValue['catgryCd'];
-					let catgryNm = objValue['catgryNm'];
-					option.value = catgryCd;
-					option.innerHTML = catgryNm;
-					sel_twoDepthCateList.append(option);
-				}
-			}else{
-				alert("에러 발생.");
-			}
-		}
-	});
+// 카테고리 및 상품 데이터 로딩
+document.getElementById("oneDepthCateList").addEventListener('change', () => {
+    let oneDepthCateList = document.querySelector('#oneDepthCateList').value;
+    fn_ajax({
+        url: '/dress/DressCateAjax.do?oneDepthCateList=' + encodeURIComponent(oneDepthCateList),
+        method: 'get',
+        success: function (data) {
+            var rtnJson = data;
+            if (rtnJson.result == 'success') {
+                let sel_twoDepthCateList = document.querySelector('#twoDepthCateList');
+                sel_twoDepthCateList.innerHTML = '<option value="">선택</option>'; // 초기화
+                rtnJson.dataList.forEach(objValue => {
+                    let option = document.createElement('option');
+                    option.value = objValue['catgryCd'];
+                    option.innerHTML = objValue['catgryNm'];
+                    sel_twoDepthCateList.append(option);
+                });
+            } else {
+                alert("에러 발생.");
+            }
+        }
+    });
 });
 
-document.getElementById("twoDepthCateList").addEventListener('change', ()=>{
-	let oneDepthCateList = document.querySelector('#oneDepthCateList').value;
-	let twoDepthCateList = document.querySelector('#twoDepthCateList').value;
-	fn_ajax({
-		url: '/dress/DressCateAjax2.do?oneDepthCateList='+encodeURIComponent(oneDepthCateList)+'&twoDepthCateList='+encodeURIComponent(twoDepthCateList),
-		method: 'get',
-		success: function(data){
-			console.log(data);
-			var rtnJson = data;
-			if(rtnJson.result == 'success'){
-				let sel_searchGoodsList = document.querySelector('#searchGoodsList');
-				let sel_searchGoodsList_options = document.querySelectorAll('#searchGoodsList option');
-				for(let i=0; i<sel_searchGoodsList_options.length; i++){
-					sel_searchGoodsList_options[i].remove();
-				}
-				//추가
-				let option = document.createElement('option');
-				option.value = '';
-				option.innerHTML = '선택';
-				sel_searchGoodsList.append(option);
-				
-				for(let i=0; i<rtnJson.dataList.length; i++){
-					let objValue = rtnJson.dataList[i];
-					let option = document.createElement('option');
-					let goodsCd = objValue['goodsCd'];
-					let goodsNm = objValue['goodsNm'];
-					option.value = goodsCd;
-					option.innerHTML = goodsNm;
-					sel_searchGoodsList.append(option);
-				}
-			}else{
-				alert("에러 발생.");
-			}
-		}
-	});
+document.getElementById("twoDepthCateList").addEventListener('change', () => {
+    let oneDepthCateList = document.querySelector('#oneDepthCateList').value;
+    let twoDepthCateList = document.querySelector('#twoDepthCateList').value;
+    fn_ajax({
+        url: '/dress/DressCateAjax2.do?oneDepthCateList=' + encodeURIComponent(oneDepthCateList) + '&twoDepthCateList=' + encodeURIComponent(twoDepthCateList),
+        method: 'get',
+        success: function (data) {
+            var rtnJson = data;
+            if (rtnJson.result == 'success') {
+                let sel_searchGoodsList = document.querySelector('#searchGoodsList');
+                sel_searchGoodsList.innerHTML = '<option value="0">선택</option>'; // 초기화
+                rtnJson.dataList.forEach(objValue => {
+                    let option = document.createElement('option');
+                    option.value = objValue['goodsCd'];
+                    option.innerHTML = objValue['goodsNm'];
+                    sel_searchGoodsList.append(option);
+                });
+            } else {
+                alert("에러 발생.");
+            }
+        }
+    });
 });
 
-document.getElementById("searchGoodsList").addEventListener('change', ()=>{
-	let searchGoodsList = document.querySelector('#searchGoodsList').value;
-	fn_ajax({
-		url: '/dress/DressCateAjax3.do?searchGoodsList='+encodeURIComponent(searchGoodsList),
-		method: 'get',
-		success: function(data){
-			console.log(data);
-			var rtnJson = data;
-			if(rtnJson.result == 'success'){
-				let objValue = rtnJson.dataList[0];
-				let imgPath = objValue['imgPath'];
-				let imgNm = objValue['imgNm'];
-				document.getElementById("goodsImg").src = imgPath + imgNm;
-				document.getElementById("goodsImg").width = 120;
-				document.getElementById("goodsImg").height = 120;
-			}else{
-				alert("에러 발생.");
-			}
-		}
-	});
+document.getElementById("searchGoodsList").addEventListener('change', () => {
+    let searchGoodsList = document.querySelector('#searchGoodsList').value;
+    fn_ajax({
+        url: '/dress/DressCateAjax3.do?searchGoodsList=' + encodeURIComponent(searchGoodsList),
+        method: 'get',
+        success: function (data) {
+            var rtnJson = data;
+            if (rtnJson.result == 'success') {
+                let objValue = rtnJson.dataList[0];
+                let imgPath = objValue['imgPath'];
+                let imgNm = objValue['imgNm'];
+                document.getElementById("goodsImg").src = imgPath + imgNm;
+                document.getElementById("goodsImg").style.width = '120px';
+                document.getElementById("goodsImg").style.height = '120px';
+            } else {
+                alert("에러 발생.");
+            }
+        }
+    });
 });
 </script>
