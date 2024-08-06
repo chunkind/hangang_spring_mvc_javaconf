@@ -1,72 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/nomalMenu.jsp" %>
-<style>
-.item_list_area{
-	padding-top:10px;
-	text-align: center;
-}
-.rslt_rea{
-	text-align: center;
-	font-size: 34px;
-}
-.btn_area button{
-	padding: 20px;
-	font-size: 16px;
-	font-weight: bold;
-}
-.no_data{
-	padding: 24px;
-	font-size: 16px;
-	font-weight: bold;
-}
-</style>
-<section class="title_area">
-	<h3 class="title">장바구니 담긴 상품</h3>
-</section>
 
-<section class="item_list_area">
-<form id="frm">
-	<input type="hidden" id="gubun" name="gubun" />
-	<input type="hidden" id="checkedList" name="checkedList" class="checkedList" />
-	<input type="hidden" id="command" name="command" class="checkedList"/>
-	
-	<table class="table">
-		<colgroup>
-			<col width="5%">
-			<col width="15%">
-			<col width="*">
-			<col width="15%">
-			<col width="15%">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="row">
-					<label>
-						<input type="checkbox" class="checkbox" id="ordBasketAll">
-						<span></span>
-					</label>
-				</th>
-				<th scope="row">이미지</th>
-				<th scope="row">상품명</th>
-				<th scope="row">수량</th>
-				<th scope="row">판매가격</th>
-			</tr>	
-		</thead>
-		<tbody id="basketList"></tbody>
-	</table>
-	<hr width="100%"/>
-	<div class="rslt_rea">
-		<h4 id="rsltArea"></h4>
+<div class="container py-4">
+	<div class="text-center mb-4">
+		<h3 class="display-6">장바구니 담긴 상품</h3>
 	</div>
-	<div class="btn_area">
-		<button type="button" id="allOrdBasket">전체상품 주문</button>
-		<button type="button" id="someOrdBasket">선택상품 주문</button>
-		<button type="button" id="allDeleteBasket">전체 장바구니 비우기</button>
-		<button type="button" id="someDeleteBasket">선택 장바구니 비우기</button>
-	</div>
-</form>
-</section>
+	<form id="frm">
+		<input type="hidden" id="gubun" name="gubun" />
+		<input type="hidden" id="checkedList" name="checkedList" class="checkedList" />
+		<input type="hidden" id="command" name="command" class="checkedList" />
+
+		<div class="table-responsive">
+			<table class="table table-bordered align-middle text-center">
+				<colgroup>
+					<col style="width: 5%;">
+					<col style="width: 15%;">
+					<col style="width: *;">
+					<col style="width: 15%;">
+					<col style="width: 15%;">
+				</colgroup>
+				<thead class="table-light">
+					<tr>
+						<th scope="col"><input type="checkbox" class="form-check-input" id="ordBasketAll"></th>
+						<th scope="col">이미지</th>
+						<th scope="col">상품명</th>
+						<th scope="col">수량</th>
+						<th scope="col">판매가격</th>
+					</tr>
+				</thead>
+				<tbody id="basketList"></tbody>
+			</table>
+		</div>
+		<hr class="my-4" />
+		<div class="d-flex justify-content-between align-items-center">
+			<h4 id="rsltArea" class="mb-0"></h4>
+			<div class="btn-group">
+				<button type="button" class="btn btn-light" id="allOrdBasket">전체상품 주문</button>
+				<button type="button" class="btn btn-light" id="someOrdBasket">선택상품 주문</button>
+				<button type="button" class="btn btn-light" id="allDeleteBasket">전체 장바구니 비우기</button>
+				<button type="button" class="btn btn-light" id="someDeleteBasket">선택 장바구니 비우기</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+
 <script>
 var basketList = null;
 document.addEventListener("DOMContentLoaded", () => {
@@ -84,10 +62,10 @@ document.querySelector('#ordBasketAll').addEventListener('click', ()=>{
 	let btn_all = document.querySelector('#ordBasketAll'); 
 	let items = document.querySelectorAll('.ordBasketSn');
 	for (let name of items) {
-	    if(btn_all.checked){
+		if(btn_all.checked){
 			name.checked = true;
 		}else{
-	    	name.checked = false;
+			name.checked = false;
 		}
 	}
 });
@@ -113,23 +91,23 @@ function fn_order_seq_check(type){
 	let strSeq = "";
 	
 	/* 어떤 상품이 선택되었는지 확인 */
-    let isAnyItemSelected = false;
+	let isAnyItemSelected = false;
 	
-    for (let name of items) {
-        if (type == 'some' && name.checked) {
-            strSeq += name.value + ",";
-            isAnyItemSelected = true;
-        }
-        if (type == 'all') {
-            strSeq += name.value + ",";
-            isAnyItemSelected = true;
-        }
-    }
+	for (let name of items) {
+		if (type == 'some' && name.checked) {
+			strSeq += name.value + ",";
+			isAnyItemSelected = true;
+		}
+		if (type == 'all') {
+			strSeq += name.value + ",";
+			isAnyItemSelected = true;
+		}
+}
 	
 	if (!isAnyItemSelected) {
-        alert('상품이 선택되지 않았습니다.');
-        return;
-    }
+		alert('상품이 선택되지 않았습니다.');
+		return;
+	}
 	
 	document.querySelector('#gubun').value = type;
 	document.querySelector('#checkedList').value = strSeq;
@@ -148,8 +126,8 @@ function fn_delete_order_seq_check(type){
 	
 	for (let name of items) {
 		if(type == 'some' && name.checked){
-	    	strSeq += name.value + ",";
-	    	isAnyItemSelected = true;
+			strSeq += name.value + ",";
+			isAnyItemSelected = true;
 		}
 		if(type == 'all'){
 			strSeq += name.value + ",";
@@ -158,9 +136,9 @@ function fn_delete_order_seq_check(type){
 	}
 	
 	if (!isAnyItemSelected) {
-        alert('삭제할 상품이 선택되지 않았습니다.');
-        return;
-    }
+		alert('삭제할 상품이 선택되지 않았습니다.');
+		return;
+	}
 	
 	fn_ajax({
 		url: '/cltsh/order/orderCartDeleteAjax.do?checkedList='+strSeq,
@@ -175,7 +153,7 @@ function createBasketList(){
 	var html = "";
 	for(var i=0; i<basketList.length; i++){
 		// goodsPrc에서 goodsSalePrc를 뺀 가격 계산
-        let discountedPrice = basketList[i].goodsPrc - basketList[i].goodsSalePrc;
+		let discountedPrice = basketList[i].goodsPrc - basketList[i].goodsSalePrc;
 
 		html += '<tr>';
 		html += '	<td>';
@@ -183,7 +161,7 @@ function createBasketList(){
 		html += '			<input type="checkbox" class="checkbox ordBasketSn" id="ordBasketSn'+i+'" name="ordBasketSn" value="'+basketList[i].ordBasketSeq+'">';
 		html += '			<span></span>';
 		html += '		</label>';
-	    html += '   </td>';
+		html += '   </td>';
 		html += '	<td>';
 		html += '		<img src="'+basketList[i].imgPath + basketList[i].imgNm+'" width="100px"/>';
 		html += '	</td>';
