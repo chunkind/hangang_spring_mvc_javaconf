@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/nomalMenu.jsp" %>
 
 <style>
 .wrap_center {
@@ -191,7 +190,6 @@
         <a class="dressroom_create_btn_detail" href="/cltsh/dress/dressRegister.do">드레스룸 만들기</a>
     </div>
 </section>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/auth.jsp" %>
 <script>
 let listSize = '${listSize}'
 document.addEventListener('DOMContentLoaded', function(){
