@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="container mt-4">
@@ -97,92 +96,92 @@
 <script>
 // 문의유형 변경 시 카테고리 표시 제어
 document.addEventListener("DOMContentLoaded", () => {
-    let sel_qnaTp = document.querySelector('#qnaTp');
-    sel_qnaTp.addEventListener('change', (e) => {
-        let selectedVal = e.target.value;
-        let cateRows = document.querySelectorAll('.cate');
-        
-        if (selectedVal == '일반문의') {
-            cateRows.forEach(row => row.style.display = 'none');
-        } else {
-            cateRows.forEach(row => row.style.display = 'table-row');
-        }
-    });
-    // 초기 상태 설정
-    let initial_qnaTp = document.querySelector('#qnaTp').value;
-    if (initial_qnaTp == '일반문의') {
-        document.querySelectorAll('.cate').forEach(row => row.style.display = 'none');
-    } else {
-        document.querySelectorAll('.cate').forEach(row => row.style.display = 'table-row');
-    }
+	let sel_qnaTp = document.querySelector('#qnaTp');
+	sel_qnaTp.addEventListener('change', (e) => {
+		let selectedVal = e.target.value;
+		let cateRows = document.querySelectorAll('.cate');
+		
+		if (selectedVal == '일반문의') {
+			cateRows.forEach(row => row.style.display = 'none');
+		} else {
+			cateRows.forEach(row => row.style.display = 'table-row');
+		}
+	});
+	// 초기 상태 설정
+	let initial_qnaTp = document.querySelector('#qnaTp').value;
+	if (initial_qnaTp == '일반문의') {
+		document.querySelectorAll('.cate').forEach(row => row.style.display = 'none');
+	} else {
+		document.querySelectorAll('.cate').forEach(row => row.style.display = 'table-row');
+	}
 });
 
 // 카테고리 및 상품 데이터 로딩
 document.getElementById("oneDepthCateList").addEventListener('change', () => {
-    let oneDepthCateList = document.querySelector('#oneDepthCateList').value;
-    fn_ajax({
-        url: '/dress/DressCateAjax.do?oneDepthCateList=' + encodeURIComponent(oneDepthCateList),
-        method: 'get',
-        success: function (data) {
-            var rtnJson = data;
-            if (rtnJson.result == 'success') {
-                let sel_twoDepthCateList = document.querySelector('#twoDepthCateList');
-                sel_twoDepthCateList.innerHTML = '<option value="">선택</option>'; // 초기화
-                rtnJson.dataList.forEach(objValue => {
-                    let option = document.createElement('option');
-                    option.value = objValue['catgryCd'];
-                    option.innerHTML = objValue['catgryNm'];
-                    sel_twoDepthCateList.append(option);
-                });
-            } else {
-                alert("에러 발생.");
-            }
-        }
-    });
+	let oneDepthCateList = document.querySelector('#oneDepthCateList').value;
+	fn_ajax({
+		url: '/dress/DressCateAjax.do?oneDepthCateList=' + encodeURIComponent(oneDepthCateList),
+		method: 'get',
+		success: function (data) {
+			var rtnJson = data;
+			if (rtnJson.result == 'success') {
+				let sel_twoDepthCateList = document.querySelector('#twoDepthCateList');
+				sel_twoDepthCateList.innerHTML = '<option value="">선택</option>'; // 초기화
+				rtnJson.dataList.forEach(objValue => {
+					let option = document.createElement('option');
+					option.value = objValue['catgryCd'];
+					option.innerHTML = objValue['catgryNm'];
+					sel_twoDepthCateList.append(option);
+				});
+			} else {
+				alert("에러 발생.");
+			}
+		}
+	});
 });
 
 document.getElementById("twoDepthCateList").addEventListener('change', () => {
-    let oneDepthCateList = document.querySelector('#oneDepthCateList').value;
-    let twoDepthCateList = document.querySelector('#twoDepthCateList').value;
-    fn_ajax({
-        url: '/dress/DressCateAjax2.do?oneDepthCateList=' + encodeURIComponent(oneDepthCateList) + '&twoDepthCateList=' + encodeURIComponent(twoDepthCateList),
-        method: 'get',
-        success: function (data) {
-            var rtnJson = data;
-            if (rtnJson.result == 'success') {
-                let sel_searchGoodsList = document.querySelector('#searchGoodsList');
-                sel_searchGoodsList.innerHTML = '<option value="0">선택</option>'; // 초기화
-                rtnJson.dataList.forEach(objValue => {
-                    let option = document.createElement('option');
-                    option.value = objValue['goodsCd'];
-                    option.innerHTML = objValue['goodsNm'];
-                    sel_searchGoodsList.append(option);
-                });
-            } else {
-                alert("에러 발생.");
-            }
-        }
-    });
+	let oneDepthCateList = document.querySelector('#oneDepthCateList').value;
+	let twoDepthCateList = document.querySelector('#twoDepthCateList').value;
+	fn_ajax({
+		url: '/dress/DressCateAjax2.do?oneDepthCateList=' + encodeURIComponent(oneDepthCateList) + '&twoDepthCateList=' + encodeURIComponent(twoDepthCateList),
+		method: 'get',
+		success: function (data) {
+			var rtnJson = data;
+			if (rtnJson.result == 'success') {
+				let sel_searchGoodsList = document.querySelector('#searchGoodsList');
+				sel_searchGoodsList.innerHTML = '<option value="0">선택</option>'; // 초기화
+				rtnJson.dataList.forEach(objValue => {
+					let option = document.createElement('option');
+					option.value = objValue['goodsCd'];
+					option.innerHTML = objValue['goodsNm'];
+					sel_searchGoodsList.append(option);
+				});
+			} else {
+				alert("에러 발생.");
+			}
+		}
+	});
 });
 
 document.getElementById("searchGoodsList").addEventListener('change', () => {
-    let searchGoodsList = document.querySelector('#searchGoodsList').value;
-    fn_ajax({
-        url: '/dress/DressCateAjax3.do?searchGoodsList=' + encodeURIComponent(searchGoodsList),
-        method: 'get',
-        success: function (data) {
-            var rtnJson = data;
-            if (rtnJson.result == 'success') {
-                let objValue = rtnJson.dataList[0];
-                let imgPath = objValue['imgPath'];
-                let imgNm = objValue['imgNm'];
-                document.getElementById("goodsImg").src = imgPath + imgNm;
-                document.getElementById("goodsImg").style.width = '120px';
-                document.getElementById("goodsImg").style.height = '120px';
-            } else {
-                alert("에러 발생.");
-            }
-        }
-    });
+	let searchGoodsList = document.querySelector('#searchGoodsList').value;
+	fn_ajax({
+		url: '/dress/DressCateAjax3.do?searchGoodsList=' + encodeURIComponent(searchGoodsList),
+		method: 'get',
+		success: function (data) {
+			var rtnJson = data;
+			if (rtnJson.result == 'success') {
+				let objValue = rtnJson.dataList[0];
+				let imgPath = objValue['imgPath'];
+				let imgNm = objValue['imgNm'];
+				document.getElementById("goodsImg").src = imgPath + imgNm;
+				document.getElementById("goodsImg").style.width = '120px';
+				document.getElementById("goodsImg").style.height = '120px';
+			} else {
+				alert("에러 발생.");
+			}
+		}
+	});
 });
 </script>
