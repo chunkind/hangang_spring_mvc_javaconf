@@ -22,10 +22,6 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/"><i class="fa-solid fa-house" style="font-size: 35px; margin: 5px;"></i></a>
 				</li>
-
-				<li class="nav-item">
-					<a href="/cltsh/order/orderCartList.do"><i class="fa-solid fa-cart-shopping"></i></a>
-				</li>
 				<li class="nav-item dropup"><a class="nav-link dropdown-toggle" href="/cltsh/main/mainCataList.do" data-bs-toggle="dropdown" aria-expanded="false">카테고리</a>
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" href="/cltsh/main/mainCataList.do?searchType=all">전체</a> </li>
