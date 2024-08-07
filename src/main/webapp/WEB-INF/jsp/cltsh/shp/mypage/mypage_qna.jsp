@@ -1,51 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/nomalMenu.jsp" %>
-<link href="/css/cltsh/mypage.css" rel="stylesheet">
-<section class="title_area">
-	<h3 class="title">마이 페이지 > Q&A</h3>
-</section>
-<section class="item_list_area">
-<div class="header_data">
-    <div class="icon">
-		<span>
-			<i class="fa-solid fa-truck"></i>
-			<a href="/cltsh/mypage/mypage.do" class="a">주문/배송조회</a>
-		</span>
-		<span>
-			<i class="fa-solid fa-p"></i>
-			<a href="/cltsh/mypage/mypagePoint.do" class="b">포인트</a>
-		</span>
-		<span>
-			<i class="fa-solid fa-money-check-dollar"></i>
-			<a href="/cltsh/mypage/mypageCoupon.do" class="c">쿠폰</a>
-		</span>
-		<span>
-			<i class="fa-solid fa-comments"></i>
-			<a href="/cltsh/mypage/mypageQna.do" class="d">Q&A</a>
-		</span>
-    </div>
+
+<div class="container item_list_area mb-4">
+	<div class="text-center my-4">
+		<h1 class="display-4">문의</h1>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-striped table-hover">
+			<thead class="thead-light">
+				<tr>
+					<th scope="col">번호</th>
+					<th scope="col">구분</th>
+					<th scope="col">제목</th>
+					<th scope="col">상태</th>
+					<th scope="col">등록일</th>
+					<th scope="col">작성자</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:if test="${empty qnaList}">
+					<tr>
+						<td class="nodata" colspan="6">데이터가 없습니다.</td>
+					</tr>
+				</c:if>
+				<c:forEach items="${qnaList}" var="obj">
+					<c:choose>
+						<c:when test="${obj.passYn eq 'Y'}">
+							<tr>
+								<td>${obj.qnaBoardSeq}</td>
+								<td>${obj.qnaTp}</td>
+								<td>
+									<c:choose>
+										<c:when test="${obj.rgstId eq loginInfo.usrId}">
+											<i class="fas fa-lock"></i>
+											<a href="/cltsh/qna/qnaDetail.do?qnaBoardSeq=${obj.qnaBoardSeq}" class="text-decoration-none">${obj.titNm}</a>
+										</c:when>
+										<c:otherwise>
+											<i class="fas fa-lock"></i>
+											<a href="javascript:void(0);" onclick="showAlert();" class="text-decoration-none">${obj.titNm}</a>
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td>${obj.ansrStat}</td>
+								<td>${obj.rgstDate}</td>
+								<td>${obj.rgstId}</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td>${obj.qnaBoardSeq}</td>
+								<td>${obj.qnaTp}</td>
+								<td><a href="/cltsh/qna/qnaDetail.do?qnaBoardSeq=${obj.qnaBoardSeq}" class="text-decoration-none">${obj.titNm}</a></td>
+								<td>${obj.ansrStat}</td>
+								<td>${obj.rgstDate}</td>
+								<td>${obj.rgstId}</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+	${paging}
 </div>
-<div class="data_list">
-	<table>
-		<thead>
-			<tr><th>번호</th><th>구분</th><th>제목</th><th>등록일</th><th>작성자</th><th>상태</th></tr>
-		</thead>
-		<tbody>
-		<c:if test="${empty qnaList }">
-			<tr><td class="nodata" colspan="6">데이터가 없습니다.</td></tr>
-		</c:if>
-		<c:forEach items="${qnaList }" var="obj">
-			<tr>
-				<td>${obj.qnaBoardSeq}</td>
-				<td>${obj.qnaTp}</td>
-				<td><a href="/cltsh/qna/qnaDetail.do?qnaBoardSeq=${obj.qnaBoardSeq}">${obj.titNm}</a></td>
-				<td>${obj.rgstDate}</td>
-				<td>${obj.rgstId}</td> <!-- <td>처리일</td> -->
-				<td>${obj.ansrStat}</td>
-			</tr>
-		</c:forEach>
-		</tbody>
-	</table>
-</div>
-</section>

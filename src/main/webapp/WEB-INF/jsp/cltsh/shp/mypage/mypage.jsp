@@ -1,25 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<link href="/css/cltsh/mypage.css" rel="stylesheet">
-
-<section class="title_area">
-	<h3 class="title">마이 페이지</h3>
+<section class="bg-light py-4">
+	<div class="container text-center">
+		<h3 class="display-6">마이 페이지</h3>
+	</div>
 </section>
 
-<div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-	<div class="list-group list-group-checkable d-grid gap-2 border-0">
-		<label class="list-group-item rounded-3 py-3" for="listGroupCheckableRadios2">
-			<span class="d-block small opacity-50"><a href="/cltsh/mypage/mypageOrder.do">주문/배송조회</a></span>
-		</label>
-		<label class="list-group-item rounded-3 py-3" for="listGroupCheckableRadios1">
-			<span class="d-block small opacity-50"><a href="/cltsh/mypage/mypagePoint.do">포인트</a></span>
-		</label>
-		<label class="list-group-item rounded-3 py-3" for="listGroupCheckableRadios3">
-			<span class="d-block small opacity-50"><a href="/cltsh/mypage/mypageCoupon.do">쿠폰</a></span>
-		</label>
-		<label class="list-group-item rounded-3 py-3"vfor="listGroupCheckableRadios4">
-			<span class="d-block small opacity-50"><a href="/cltsh/mypage/mypageQna.do">Q&A</a></span>
-		</label>
+<div class="container mt-4">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="list-group">
+				<a href="/cltsh/mypage/mypageOrder.do" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+			 		주문/배송조회
+					<span class="badge bg-primary rounded-pill">&rarr;</span>
+				</a>
+				<a href="/cltsh/mypage/mypagePoint.do" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+					포인트
+					<span class="badge bg-primary rounded-pill">&rarr;</span>
+				</a>
+				<a href="/cltsh/mypage/mypageCoupon.do" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+					쿠폰
+					<span class="badge bg-primary rounded-pill">&rarr;</span>
+				</a>
+				<a href="/cltsh/main/mainQnaList.do" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+					Q&A
+					<span class="badge bg-primary rounded-pill">&rarr;</span>
+				</a>
+				<a href="/cltsh/mypage/mypageQna.do" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+					내 문의
+					<span class="badge bg-primary rounded-pill">&rarr;</span>
+				</a>
+			</div>
+		</div>
 	</div>
 </div>
