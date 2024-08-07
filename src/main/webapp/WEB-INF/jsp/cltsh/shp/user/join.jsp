@@ -1,13 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<style>
-#frm{
-	display: flex;
-	flex-direction: column;
-}
-</style>
-
 <c:if test="${not empty sessionScope.message}">
 	<script type="text/javascript">alert("${sessionScope.message}");</script>
 	<c:remove var="message" scope="session"/>
@@ -17,13 +10,9 @@
 	<script type="text/javascript">alert("${requestScope.message}");</script>
 	<c:remove var="message" scope="session"/>
 </c:if>
-
-<header id="header">
-	<div class="logo"><a href="/cltsh/main.do"><img src="/img/cltsh/logo_01.png" /></a></div>
-</header>
 	
 <div class="row g-5">
-	<div class="col-md-7 col-lg-8">
+	<div class="col-md-7 col-lg-8 mx-auto">
 		<h4 class="mb-3">회원가입</h4>
 		<form class="needs-validation" name="frm" action="/cltsh/user/userJoinInsert.do" method="post" onsubmit="return checkForm()" novalidate>
 			<input type="hidden" name="usrBaseSeq" value="${sessionScope.loginInfo.usrBaseSeq }">
