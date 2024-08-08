@@ -7,6 +7,23 @@
 	</div>
 </section>
 
+<div class="container text-center">
+	<c:choose>
+		<c:when test="${not empty sessionScope.loginInfo }">
+			<span>${sessionScope.loginInfo.usrId }님 환영합니다.</span>
+			<input type="button" class="w70" id="btn_edit" onclick="fn_user_edit('${sessionScope.loginInfo.usrBaseSeq}')" value="수정">
+			<input type="button" class="w70" id="logout_btn" onclick="location.href='/cltsh/user/userLogout.do'" value="로그아웃">
+			<a href="/cltsh/order/orderCartList.do"><i class="fa-solid fa-cart-shopping"></i></a>
+			<a href="/cltsh/mypage/mypage.do"><i class="fa-solid fa-user-large"></i></a>
+		</c:when>
+		<c:otherwise>
+			<div>
+				<input type="button" class="w70" onclick="location.href='/cltsh/user/userLogin.do'" value="로그인" />
+			</div>
+		</c:otherwise>
+	</c:choose>
+</div>
+
 <div class="container mt-4">
 	<div class="row justify-content-center">
 		<div class="col-md-6">
