@@ -18,20 +18,20 @@
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
-					<th><input type="checkbox" id="selectAll"></th>
-					<th>순번</th>
-					<th>거래처명</th>
-					<th>대표자명</th>
-					<th>대표자번호</th>
-					<th>담당자명</th>
-					<th>담당자번호</th>
-					<th>평점</th>
-					<th>개점일</th>
-					<th>폐점일</th>
-					<th>오픈여부</th>
-					<th>사용여부</th>
-					<th>등록 아이디</th>
-					<th>수정 아이디</th>
+					<th class="text-center"><input type="checkbox" id="selectAll"></th>
+					<th class="text-center">순번</th>
+					<th class="text-center">거래처명</th>
+					<th class="text-center">대표자명</th>
+					<th class="text-center">대표자번호</th>
+					<th class="text-center">담당자명</th>
+					<th class="text-center">담당자번호</th>
+					<th class="text-center">평점</th>
+					<th class="text-center">개점일</th>
+					<th class="text-center">폐점일</th>
+					<th class="text-center">오픈여부</th>
+					<th class="text-center">사용여부</th>
+					<th class="text-center">등록 아이디</th>
+					<th class="text-center">수정 아이디</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -42,20 +42,20 @@
 				</c:if>
 				<c:forEach items="${entrList}" var="obj" varStatus="cnt">
 					<tr>
-						<td><input type="checkbox" class="form-check-input" id="cb_${cnt.count}"></td>
-						<td>${cnt.count}</td>
-						<td><a href="/cltsh/adm/entr/admEntrEdit.do?entrNo=${obj.entrNo}" class="text-decoration-none">${obj.entrNm}</a></td>
-						<td>${obj.presNm}</td>
-						<td>${obj.presTell}</td>
-						<td>${obj.aempNm}</td>
-						<td>${obj.aempTell}</td>
-						<td>${obj.score}</td>
-						<td>${obj.opnDate}</td>
-						<td>${obj.closeDate}</td>
-						<td>${obj.opnYn}</td>
-						<td>${obj.useYn}</td>
-						<td>${obj.rgstId}</td>
-						<td>${obj.updtId}</td>
+						<td class="text-center"><input type="checkbox" class="form-check-input" id="cb_${cnt.count}"></td>
+						<td class="text-center">${cnt.count}</td>
+						<td class="text-center"><a href="/cltsh/adm/entr/admEntrEdit.do?entrNo=${obj.entrNo}" class="text-decoration-none">${obj.entrNm}</a></td>
+						<td class="text-center">${obj.presNm}</td>
+						<td class="text-center">${obj.presTell}</td>
+						<td class="text-center">${obj.aempNm}</td>
+						<td class="text-center">${obj.aempTell}</td>
+						<td class="text-center">${obj.score}</td>
+						<td class="text-center">${obj.opnDate}</td>
+						<td class="text-center">${obj.closeDate}</td>
+						<td class="text-center">${obj.opnYn}</td>
+						<td class="text-center">${obj.useYn}</td>
+						<td class="text-center">${obj.rgstId}</td>
+						<td class="text-center">${obj.updtId}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

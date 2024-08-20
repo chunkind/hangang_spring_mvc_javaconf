@@ -7,28 +7,28 @@
 		<table class="table table-striped table-hover" style="border-top: 1px solid black;">
 			<thead>
 				<tr>
-					<th>선택</th>
-					<th>쿠폰 코드</th>
-					<th>쿠폰 이름</th>
-					<th>쿠폰 할인율</th>
-					<th>쿠폰 등록 날짜</th>
-					<th>쿠폰 만료 날짜</th>
-					<th>쿠폰 개수</th>
+					<th class="text-center">선택</th>
+					<th class="text-center">쿠폰 코드</th>
+					<th class="text-center">쿠폰 이름</th>
+					<th class="text-center">쿠폰 할인율</th>
+					<th class="text-center">쿠폰 등록 날짜</th>
+					<th class="text-center">쿠폰 만료 날짜</th>
+					<th class="text-center">쿠폰 개수</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:if test="${empty list }">
-					<tr><td colspan="7">데이터가 없습니다.</td></tr>
+					<tr><td colspan="7" class="text-center">데이터가 없습니다.</td></tr>
 				</c:if>
 				<c:forEach items="${list }" var="obj" varStatus="cnt">
 					<tr>
-						<td><input type="checkbox" id="cb"></td>
-						<td>${obj.couNum}</td>
-						<td><a href="/cltsh/adm/cpn/admCpnEdit.do?couInfoSeq=${obj.couInfoSeq}">${obj.couName}</a></td>
-						<td>${obj.couDiscount}%</td>
-						<td>${obj.couRegistDate}</td>
-						<td>${obj.couEndDate}</td>
-						<td>${obj.couCount}개</td> 
+						<td class="text-center"><input type="checkbox" id="cb"></td>
+						<td class="text-center">${obj.couNum}</td>
+						<td class="text-center"><a href="/cltsh/adm/cpn/admCpnEdit.do?couInfoSeq=${obj.couInfoSeq}">${obj.couName}</a></td>
+						<td class="text-center">${obj.couDiscount}%</td>
+						<td class="text-center">${obj.couRegistDate}</td>
+						<td class="text-center">${obj.couEndDate}</td>
+						<td class="text-center">${obj.couCount}개</td> 
 					</tr>
 				</c:forEach>
 			</tbody>

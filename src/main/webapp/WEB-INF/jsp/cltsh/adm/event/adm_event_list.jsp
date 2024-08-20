@@ -7,11 +7,11 @@
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
-					<th class="text-center">선택</th>
-					<th class="text-center">이벤트 코드</th>
-					<th class="text-center">이벤트 이름</th>
-					<th class="text-center">이벤트 등록 날짜</th>
-					<th class="text-center">이벤트 만료 날짜</th>
+					<th class="text-center col-1">선택</th>
+					<th class="text-center col-2">이벤트 코드</th>
+					<th class="text-center col-4">이벤트 이름</th>
+					<th class="text-center col-2">이벤트 등록 날짜</th>
+					<th class="text-center col-2">이벤트 만료 날짜</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -20,11 +20,11 @@
 				</c:if>
 				<c:forEach items="${list }" var="obj" varStatus="cnt">
 					<tr>
-						<td class="text-center"><input type="checkbox" id="cb"></td>
-						<td class="text-center">${obj.eventNum}</td>
-						<td class="text-center"><a href="/cltsh/adm/event/admEventEdit.do?eventInfoSeq=${obj.eventInfoSeq}">${obj.eventName}</a></td>
-						<td class="text-center">${obj.eventRegistDate}</td>
-						<td class="text-center">${obj.eventEndDate}</td>
+						<td class="text-center col-1"><input type="checkbox" id="cb"></td>
+						<td class="text-center col-2">${obj.eventNum}</td>
+						<td class="text-center col-4"><a href="/cltsh/adm/event/admEventEdit.do?eventInfoSeq=${obj.eventInfoSeq}">${obj.eventName}</a></td>
+						<td class="text-center col-2">${obj.eventRegistDate}</td>
+						<td class="text-center col-2">${obj.eventEndDate}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

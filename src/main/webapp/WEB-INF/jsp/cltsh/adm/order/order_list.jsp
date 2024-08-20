@@ -75,21 +75,21 @@
 			<tbody>
 				<c:forEach items="${orderList}" var="obj">
 					<tr>
-						<td class="text-center"><input type="checkbox"></td>
-						<td class="text-center"><a href="/cltsh/adm/order/admOrderDetail.do?ordNo=${obj.ordNo}">${obj.ordNo}</td>
-						<td class="text-center">${obj.ordDate}</td>
-						<td class="text-center">${obj.goodsNm}</td>
-						<td class="text-center">${obj.usrId}<br>${obj.ordrNm}</td>
-						<td class="text-center">${obj.payMny}원<br>${obj.payWay}</td>
+						<td class="text-center align-middle"><input type="checkbox"></td>
+						<td class="text-center align-middle"><a href="/cltsh/adm/order/admOrderDetail.do?ordNo=${obj.ordNo}">${obj.ordNo}</td>
+						<td class="text-center align-middle">${obj.ordDate}</td>
+						<td class="text-center align-middle">${obj.goodsNm}</td>
+						<td class="text-center align-middle">${obj.usrId}<br>${obj.ordrNm}</td>
+						<td class="text-center align-middle">${obj.payMny}원<br>${obj.payWay}</td>
 						<c:choose>
 							<c:when test="${obj.billNum == 0}">
-								<td class="text-center">배송 준비 중</td>
+								<td class="text-center align-middle">배송 준비 중</td>
 							</c:when>
 							<c:otherwise>
-								<td class="text-center">${obj.billNum }</td>
+								<td class="text-center align-middle">${obj.billNum }</td>
 							</c:otherwise>
 						</c:choose>
-						<td class="text-center">${obj.codeNm }</td>
+						<td class="text-center align-middle">${obj.codeNm }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
