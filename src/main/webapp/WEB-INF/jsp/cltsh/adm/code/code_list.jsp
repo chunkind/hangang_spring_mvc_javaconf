@@ -37,7 +37,7 @@
 			<div>${paging}</div>
 			<div>
 				<!-- <input type="button" value="작성하기" onclick="location.href='/adm/code/admCodeRegister.do'" /> -->
-				<a href="/adm/code/admCodeRegister.do" class="btn btn-primary">작성하기</a>
+				<a href="/cltsh/adm/code/admCodeRegister.do" class="btn btn-primary">작성하기</a>
 			</div>
 		</div>
 	</div>
