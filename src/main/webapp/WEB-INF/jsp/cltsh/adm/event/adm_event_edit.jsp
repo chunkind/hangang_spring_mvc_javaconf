@@ -1,45 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/admHeader.jsp" %>
-<h2>이벤트 배너 목록 > 이벤트 배너 수정</h2>
-<form action="/cltsh/adm/event/admEventEditAct.do" method="post" enctype="multipart/form-data" onsubmit="return fn_event_edit()">
-<input type="hidden" name="eventInfoSeq" value="${pvo.eventInfoSeq }" />
-<div class="data_list">
-    <table>
-    	<colgroup>
-    		<col width="20%" />
-    		<col width="30%" />
-    		<col width="20%" />
-    		<col width="30%" />
-    	</colgroup>
-    	<tr>
-    		<th><div>이벤트 이름</div></th>
-            <td><input type="text" name="eventName" value="${pvo.eventName }"></td>
-            <th><div>이벤트 만료 날짜</div></th>
-            <td><input type="Date" name="eventEndDate" value="${pvo.eventEndDate }"></td>
-            <th><div>이미지</div></th>
-            <td>
-            	<input type="file" name="file1" onchange="previewImg(event);">
-            </td>
-        </tr>
-        <tr>
-    		<th><div>이미지 미리보기</div></th>
-            <td colspan="5">
-            	<div id="imgPreView">
-            		<img alt="" src="${pvo.imgPath}${pvo.imgNm}">
-            		<input type="hidden" name="imgPath" value="${pvo.imgPath}" />
-            		<input type="hidden" name="imgNm" value="${pvo.imgNm}" />
-            	</div>
-            </td>
-        </tr>
-    </table>
+
+<div class="container mt-4">
+	<h2 class="text-center mb-5">이벤트 배너 목록 > 이벤트 배너 수정</h2>
+	<form action="/cltsh/adm/event/admEventEditAct.do" method="post" enctype="multipart/form-data" onsubmit="return fn_event_edit()">
+		<input type="hidden" name="eventInfoSeq" value="${pvo.eventInfoSeq }" />
+		
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<label for="eventName" class="form-label">이벤트 이름</label>
+				<input type="text" id="eventName" name="eventName" class="form-control" maxlength="20" value="${pvo.eventName }">
+			</div>
+			<div class="col-md-4">
+				<label for="eventEndDate" class="form-label">이벤트 만료 날짜</label>
+				<input type="Date" id="eventEndDate" name="eventEndDate" class="form-control" maxlength="20" value="${pvo.eventEndDate }">
+			</div>
+			<div class="col-md-4">
+				<label for="useYn" class="form-label">이미지</label>
+				<input type="file" name="file1" onchange="previewImg(event);">
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<label for="eventName" class="form-label">이미지 미리보기</label>
+				<img alt="" src="${pvo.imgPath}${pvo.imgNm}">
+				<input type="hidden" name="imgPath" value="${pvo.imgPath}" />
+				<input type="hidden" name="imgNm" value="${pvo.imgNm}" />
+			</div>
+		</div>
+		<div class="text-center mt-4">
+			<button type="button" class="btn btn-light me-2" onclick="location.href='/cltsh/adm/event/admEventList.do'">목록</button>
+			<button type="submit" class="btn btn-light me-2">수정</button>
+			<button type="button" class="btn btn-danger" onclick="fn_event_remove('${pvo.eventInfoSeq}')">삭제</button>
+		</div>
+	</form>
 </div>
-<div class="btn_area">
-    <input type="button" value="목록" onclick="location.href='/cltsh/adm/event/admEventList.do'"/>
-    <input type="button" value="삭제" onclick="fn_event_remove('${pvo.eventInfoSeq}')"/>
-    <input type="submit" value="수정"/>
-</div>
-</form>
+
 <script>
 //상품수정
 function fn_event_edit(){
@@ -72,4 +68,3 @@ function previewImg(e){
 	reader.readAsDataURL(event.target.files[0]);
 }
 </script>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/admFooter.jsp" %>
