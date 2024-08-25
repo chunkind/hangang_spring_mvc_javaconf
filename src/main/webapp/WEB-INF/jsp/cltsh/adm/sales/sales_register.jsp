@@ -1,104 +1,131 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/admHeader.jsp" %>
-<h2>상품 판매 게시글 관리 > 상품 판매 게시글 관리 리스트 > 상품 판매 게시글 등록</h2>
-<form action="/cltsh/adm/sales/admSalesRegisterAct.do" method="post" enctype="multipart/form-data">
-<div class="data_list">
-    <table>
-    	<colgroup>
-    		<col width="20%" />
-    		<col width="30%" />
-    		<col width="20%" />
-    		<col width="30%" />
-    	</colgroup>
-    	<tr>
-    		<th><div>판매처</div></th>
-    		<td>
-                <select id="entrNo" name="entrNo">
-                    <c:forEach items="${entrList}" var="obj">
-                        <option value="${obj.entrNo}" <c:if test="${searchEntrNo eq obj.entrNo}">selected</c:if> >${obj.entrNm}(${obj.entrNo})</option>
-                    </c:forEach>
-                </select>
-    		</td>
-    		<th><div>판매상품</div></th>
-    		<td>
-                <select id="goodsCd" name="goodsCd">
-                    <c:forEach items="${goodsList}" var="obj">
-                        <option value="${obj.goodsCd}">${obj.goodsNm}(${obj.goodsCd})</option>
-                    </c:forEach>
-                </select>
-    		</td>
-    	</tr>
-        <tr>
-    		<th><div>판매상태</div></th>
-            <td>
-                <select name="saleStatCd">
-                	<c:forEach items="${saleCodeList}" var="obj">
-                        <option value="${obj.codeVal}">${obj.codeNm}</option>
-                    </c:forEach>
-                </select>
-            </td>
-            <th><div>게시글제목</div></th>
-            <td><input type="text" name="bulTitNm"></td>
-        </tr>
-        <tr>
-            <th><div>게시시작일자</div></th>
-            <td>
-                <input type="date" name="bulStrtDt">
-            </td>
-            <th><div>게시종료일자</div></th>
-            <td>
-                <input type="date" name="bulEndDt">
-            </td>
-        </tr>
-        <tr>
-            <th><div>게시여부</div></th>
-            <td>
-            	<label>Y<input type="radio" name="bulYn" value="Y" checked="checked"></label>
-            	<label>N<input type="radio" name="bulYn" value="N"></label>
-            </td>
-            <th><div>공지구분코드</div></th>
-            <td>
-                <select name="ntcSctCd">
-                    <option value="01">일반</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th><div>상품가격</div></th>
-            <td>
-                <input type="number" name="goodsPrc">
-            </td>
-            <th><div>할인가격</div></th>
-            <td>
-                <input type="number" name="goodsSalePrc">
-            </td>
-        </tr>
-        <tr>
-            <th><div>배송방법</div></th>
-            <td>
-                <select name="prclWay">
-                    <option value="01">일반</option>
-                </select>
-            </td>
-            <th><div>판매수량</div></th>
-            <td>
-                <input type="number" name="saleCnt">
-            </td>
-        </tr>
-        <tr>
-            <th><div>내용</div></th>
-            <td colspan="3">
-                <textarea name="bulCont" rows="30" cols="80"></textarea>
-            </td>
-        </tr>
-    </table>
+
+<div class="container mt-4">
+	<h2 class="text-center mb-5">상품 판매 게시글 관리 > 상품 판매 게시글 리스트 > 상품 판매 게시글 등록</h2>
+	<form action="/cltsh/adm/sales/admSalesRegisterAct.do" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="saleBoardSeq" value="${detail.saleBoardSeq}">
+		
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="entrNo" class="form-label">판매처</label>
+					<select id="entrNo" name="entrNo" class="form-select">
+						<c:forEach items="${entrList}" var="obj">
+							<option value="${obj.entrNo}"
+								<c:if test="${searchEntrNo eq obj.entrNo}">selected</c:if> >${obj.entrNm}(${obj.entrNo})
+							</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="goodsCd" class="form-label">판매상품</label>
+					<select id="goodsCd" name="goodsCd" class="form-select">
+						<c:forEach items="${goodsList}" var="obj">
+							<option value="${obj.goodsCd}">${obj.goodsNm}(${obj.goodsCd})</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="saleStatCd" class="form-label">판매상태</label>
+					<select id="saleStatCd" name="saleStatCd" class="form-select">
+						<c:forEach items="${saleCodeList}" var="obj">
+							<option value="${obj.codeVal}">${obj.codeNm}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="bulTitNm" class="form-label">게시글제목</label>
+					<input type="text" id="bulTitNm" name="bulTitNm" class="form-control" maxlength="20">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="bulStrtDt" class="form-label">게시시작일자</label>
+					<input type="date" id="bulStrtDt" name="bulStrtDt" class="form-control" maxlength="20">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="bulEndDt" class="form-label">게시종료일자</label>
+					<input type="date" id="bulEndDt" name="bulEndDt" class="form-control" maxlength="20">
+				</div>
+			</div>
+		</div>
+		
+
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="bulYn" class="form-label">게시여부</label>
+					<label>Y<input type="radio" name="bulYn" value="Y" checked="checked"></label>
+					<label>N<input type="radio" name="bulYn" value="N"></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="ntcSctCd" class="form-label">공지구분코드</label>
+					<select name="ntcSctCd" class="form-select">
+						<option value="01">일반</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="goodsPrc" class="form-label">상품가격</label>
+					<input type="number" id="goodsPrc" name="goodsPrc" class="form-control" maxlength="20">
+				</div>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="goodsSalePrc" class="form-label">할인가격</label>
+					<input type="number" id="goodsSalePrc" name="goodsSalePrc" class="form-control" maxlength="20">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="prclWay" class="form-label">배송방법</label>
+					<select id="prclWay" name="prclWay" class="form-select">
+						<option value="01">일반</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="saleCnt" class="form-label">판매수량</label>
+					<input type="number" id="saleCnt"name="saleCnt" class="form-control" maxlength="20">
+				</div>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="bulCont" class="form-label">내용</label>
+					<textarea id="bulCont" name="bulCont" rows="30" cols="80"></textarea>
+				</div>
+			</div>
+		</div>
+		
+		<div class="text-center mt-4">
+			<button type="button" class="btn btn-light me-2" onclick="location.href='/cltsh/adm/sales/admSalesList.do'">목록</button>
+			<button type="submit" class="btn btn-light">등록하기</button>
+		</div>
+	</form>
 </div>
-<div class="btn_area">
-    <input type="button" value="목록" onclick="location.href='/cltsh/adm/sales/admSalesList.do'"/>
-    <input type="submit" value="등록" />
-</div>
-</form>
+
 <script>
 (function(){
 	document.getElementById("entrNo").addEventListener('change', makeRequest);
