@@ -1,37 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/admHeader.jsp" %>
-<h2>쿠폰 목록 > 쿠폰 수정</h2>
-<form action="/cltsh/adm/cpn/admCpnEditAct.do" method="post" enctype="multipart/form-data" onsubmit="return fn_cpn_edit()">
-<input type="hidden" name="couInfoSeq" value="${pvo.couInfoSeq }" />
-<div class="data_list">
-    <table>
-    	<colgroup>
-    		<col width="20%" />
-    		<col width="30%" />
-    		<col width="20%" />
-    		<col width="30%" />
-    	</colgroup>
-    	<tr>
-    		<th><div>쿠폰 이름</div></th>
-            <td><input type="text" name="couName" value="${pvo.couName }"></td>
-            <th><div>쿠폰 할인율</div></th>
-            <td><input type="number" name="couDiscount" value="${pvo.couDiscount }"></td>
-        </tr>
-        <tr>
-    		<th><div>쿠폰 만료 날짜</div></th>
-            <td><input type="Date" name="couEndDate" value="${pvo.couEndDate }"></td>
-            <th><div>쿠폰 개수</div></th>
-            <td><input type="number" name="couCount" value="${pvo.couCount }"></td>
-        </tr>
-    </table>
+
+<div class="container mt-4">
+	<h2 class="text-center mb-5">쿠폰 목록 > 쿠폰 수정</h2>
+	<form action="/cltsh/adm/cpn/admCpnEditAct.do" method="post" enctype="multipart/form-data" onsubmit="return fn_cpn_edit()">
+		<input type="hidden" name="couInfoSeq" value="${pvo.couInfoSeq }" />
+		<div class="row mb-3">
+			<div class="col-md-3">
+				<label for="couName" class="form-label">쿠폰 이름</label>
+				<input type="text" id="couName" name="couName" class="form-control" value="${pvo.couName }" maxlength="20">
+			</div>
+			<div class="col-md-3">
+				<label for="couDiscount" class="form-label">쿠폰 할인율</label>
+				<input type="number" id="couDiscount" name="couDiscount" class="form-control" value="${pvo.couDiscount }" maxlength="20">
+			</div>
+			<div class="col-md-3">
+				<label for="couEndDate" class="form-label">쿠폰 만료 날짜</label>
+				<input type="Date" id="couEndDate" name="couEndDate" class="form-control" value="${pvo.couEndDate }" maxlength="20">
+			</div>
+			<div class="col-md-3">
+				<label for="couCount" class="form-label">쿠폰 개수</label>
+				<input type="number" id="couCount" name="couCount" class="form-control" value="${pvo.couCount }" maxlength="20">
+			</div>
+		</div>
+		
+		<div class="text-center mt-4">
+			<button type="button" class="btn btn-light me-2" onclick="location.href='/cltsh/adm/cpn/admCpnList.do'">목록</button>
+			<button type="submit" class="btn btn-light me-2">수정</button>
+			<button type="button" class="btn btn-danger" onclick="fn_cpn_remove('${pvo.couInfoSeq}')">삭제</button>
+		</div>
+	</form>
 </div>
-<div class="btn_area">
-    <input type="button" value="목록" onclick="location.href='/adm/cpn/admCpnList.do'"/>
-    <input type="button" value="삭제" onclick="fn_cpn_remove('${pvo.couInfoSeq}')"/>
-    <input type="submit" value="수정"/>
-</div>
-</form>
+
 <script>
 //상품수정
 function fn_cpn_edit(){
@@ -49,4 +49,3 @@ function fn_cpn_remove(couInfoSeq){
 	}
 }
 </script>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/admFooter.jsp" %>
