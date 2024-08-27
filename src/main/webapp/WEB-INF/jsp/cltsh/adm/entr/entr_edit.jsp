@@ -4,7 +4,7 @@
 <div class="container mt-4">
 	<h2 class="text-center mb-5">업체 관리 > 업체 목록 > 업체 수정</h2>
 	<form action="/cltsh/adm/entr/admEntrEditAct.do" method="post" enctype="multipart/form-data" onsubmit="return fn_edit()">
-	<input type="hidden" name="entrNo" value="${evo.entrNo}" />
+		<input type="hidden" name="entrNo" value="${evo.entrNo}" />
 
 	<div class="row mb-3">
 		<div class="col-md-4">
