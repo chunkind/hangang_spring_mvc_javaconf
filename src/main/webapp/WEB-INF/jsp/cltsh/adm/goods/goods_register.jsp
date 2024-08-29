@@ -1,119 +1,151 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/admHeader.jsp" %>
-<h2>상품 관리 > 상품 목록 > 상품 등록</h2>
-<form action="/cltsh/adm/goods/admGoodsRegisterAct.do" method="post" enctype="multipart/form-data">
-<div class="data_list">
-    <table>
-    	<colgroup>
-    		<col width="20%" />
-    		<col width="30%" />
-    		<col width="20%" />
-    		<col width="30%" />
-    	</colgroup>
-    	<tr>
-    		<th><div>판매처</div></th>
-    		<td>
-    			<select name="entrNo">
-					<c:forEach items="${entrList}" var="obj">
-						<option value="${obj.entrNo}">${obj.entrNm}(${obj.entrNo})</option>
-					</c:forEach>
-				</select>
-    		</td>
-    		<th><div>판매상태</div></th>
-    		<td>
-    			<select name="saleStatCd">
-    				<c:forEach items="${codeList}" var="obj">
-						<option value="${obj.codeNm}">${obj.codeNm}</option>
-					</c:forEach>
-    			</select>
-    		</td>
-    	</tr>
-        <tr>
-    		<th><div>상품명</div></th>
-            <td><input type="text" name="goodsNm"></td>
-            <th><div>상품가격</div></th>
-            <td><input type="number" name="goodsPrc"></td>
-        </tr>
-        <tr>
-			<th><div>대분류</div></th>
-            <td>
-                <select name="catgryCd" id="catgryCd">
-                    <option value="">선택</option>
-                    <c:forEach items="${upperCodeList}" var="obj">
-                    	<option value="${obj.catgryCd}">${obj.catgryNm}</option>
-                    </c:forEach>
-                </select>
-            </td>
-            <th><div>소분류</div></th>
-            <td>
-				<select name="catgryCd2" id="catgryCd2">
-					<option value="">선택</option>
-				</select>
-            </td>            
-        </tr>
-        <tr>
-            <th><div>상품수량</div></th>
-            <td><input type="number" name="inyQty" value="1"></td>
-            <th><div>배송비</div></th>
-            <td><input type="number" name="dlvPrc" value="2000"></td>
-        </tr>
-        <tr>
-        	<th><div>사이즈</div></th>
-            <td>
-                <select name="goodsSize">
-                    <option value="XS">S</option>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                    <option value="XL">XL</option>
-                    <option value="XXL">XXL</option>
-                    <option value="XXXL">XXXL</option>
-                    <option value="FREE">FREE</option>
-                </select>
-            </td>
-            <th><div>컬러</div></th>
-            <td>
-                <select name="goodsClr">
-                    <option value="black">블랙</option>
-                    <option value="white">화이트</option>
-                    <option value="naivy">네이비</option>
-                    <option value="ivory">아이보리</option>
-                </select>
-            </td>
-            <td><input type="button" value="상품 옵션 추가" onclick="location.href='/cltsh/adm/opts/admOptsList.do'"/></td>
-        </tr>
-        <tr>
-            <th><div>사용여부</div></th>            
-            <td>
-            	<select name="useYn">
-            		<option value="Y">사용</option>
-            		<option value="N">미사용</option>
-            	</select>
-            </td>
-			<th><div>이미지</div></th>
-            <td>
-            	<input type="file" name="file1" onchange="previewImg(event);">
-            	<input type="hidden" name="imgPath" id="imgPath" />
-            	<input type="hidden" name="imgNm" id="imgNm" />
-            </td>
-        </tr>
-        <tr>
-            <th><div>상품소개</div></th>
-            <td colspan="2">
-            	<textarea rows="20" cols="70" name="goodsIntr"></textarea>
-            </td>
-            <td>
-            	<div id="imgPreView"></div>
-            </td>
-        </tr>
-    </table>
+
+<div class="container mt-4">
+	<h2 class="text-center mb-5">상품 관리 > 상품 목록 > 상품 등록</h2>
+	<form action="/cltsh/adm/goods/admGoodsRegisterAct.do" method="post" enctype="multipart/form-data">
+
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="entrNo" class="form-label">판매처</label>
+					<select id="entrNo" name="entrNo" class="form-select">
+						<c:forEach items="${entrList}" var="obj">
+							<option value="${obj.entrNo}">${obj.entrNm}(${obj.entrNo})</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="saleStatCd" class="form-label">판매상태</label>
+					<select id="saleStatCd" name="saleStatCd" class="form-select">
+						<c:forEach items="${codeList}" var="obj">
+							<option value="${obj.codeNm}">${obj.codeNm}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="goodsNm" class="form-label">상품명</label>
+					<input type="text" id="goodsNm" name="goodsNm" class="form-control" maxlength="20">
+				</div>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="goodsPrc" class="form-label">상품가격</label>
+					<input type="number" id="goodsPrc" name="goodsPrc" class="form-control" maxlength="20">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="catgryCd" class="form-label">대분류</label>
+					<select id="catgryCd" name="catgryCd" class="form-select">
+						<option value="">선택</option>
+						<c:forEach items="${upperCodeList}" var="obj">
+							<option value="${obj.catgryCd}">${obj.catgryNm}</option>
+						</c:forEach>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="catgryCd2" class="form-label">소분류</label>
+					<select id="catgryCd2" name="catgryCd2" class="form-select">
+						<option value="">선택</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="inyQty" class="form-label">상품수량</label>
+					<input type="number" id="inyQty" name="inyQty" value="1" class="form-control" maxlength="20">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="dlvPrc" class="form-label">배송비</label>
+					<input type="number" id="dlvPrc" name="dlvPrc" value="2000" class="form-control" maxlength="20">
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="goodsSize" class="form-label">사이즈</label>
+					<select id="goodsSize" name="goodsSize" class="form-select">
+						<option value="XS">XS</option>
+						<option value="S">S</option>
+						<option value="M">M</option>
+						<option value="L">L</option>
+						<option value="XL">XL</option>
+						<option value="XXL">XXL</option>
+						<option value="XXXL">XXXL</option>
+						<option value="FREE">FREE</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="goodsClr" class="form-label">컬러</label>
+					<select id="goodsClr" name="goodsClr" class="form-select">
+						<option value="black">블랙</option>
+						<option value="white">화이트</option>
+						<option value="naivy">네이비</option>
+						<option value="ivory">아이보리</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="useYn" class="form-label">사용여부</label>
+					<select id="useYn" name="useYn" class="form-select">
+						<option value="Y">사용</option>
+						<option value="N">미사용</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="file1" class="form-label">이미지</label>
+					<input type="file" id="file1" name="file1" class="form-control" onchange="previewImg(event);">
+					<input type="hidden" id="imgPath" name="imgPath" />
+					<input type="hidden" id="imgNm" name="imgNm" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="goodsIntr" class="form-label">상품소개</label>
+					<textarea rows="4" id="goodsIntr" name="goodsIntr" class="form-control"></textarea>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div id="imgPreView" class="mt-2"></div>
+			</div>
+			<div class="col-md-4 d-flex align-items-center">
+				<button type="button" class="btn btn-secondary me-2 w-100" onclick="location.href='/cltsh/adm/opts/admOptsList.do'">상품 옵션 추가</button>
+			</div>
+		</div>
+
+		<div class="text-center mt-4">
+			<button type="button" class="btn btn-secondary me-2" onclick="location.href='/cltsh/adm/goods/admGoodsList.do'">목록</button>
+			<button type="submit" class="btn btn-primary">등록</button>
+		</div>
+	</form>
 </div>
-<div class="btn_area">
-    <input type="button" value="목록" onclick="location.href='/cltsh/adm/goods/admGoodsList.do'"/>
-    <input type="submit" value="등록" />
-</div>
-</form>
+
+
 <script>
 document.getElementById("catgryCd").addEventListener('change', ()=>{
 	let catgryCd = document.querySelector('#catgryCd').value;
@@ -167,4 +199,3 @@ function previewImg(e){
 	reader.readAsDataURL(event.target.files[0]);
 }
 </script>
-<%@ include file="/WEB-INF/jsp/cltsh/cmm/admFooter.jsp" %>
