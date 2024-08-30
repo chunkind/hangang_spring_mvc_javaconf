@@ -48,17 +48,18 @@
     </select>
  -->
 	<insert id="insertCpn">
+		<selectKey keyProperty="couNum" resultType="long" order="BEFORE">
+			SELECT IFNULL(MAX(COU_NUM), 0) + 1 FROM CLT_COUPON_TBL
+		</selectKey>
 		INSERT INTO CLT_COUPON_TBL
-		( COU_INFO_SEQ 				/*쿠폰 시퀀스*/
-		, COU_NUM 					/*쿠폰 코드*/
+		( COU_NUM 					/*쿠폰 코드*/
 		, COU_NAME 					/*쿠폰 이름*/
 		, COU_DISCOUNT 				/*쿠폰 할인율*/
 		, COU_REGIST_DATE 			/*쿠폰 등록 날짜*/
 		, COU_END_DATE 				/*쿠폰 만료 날짜*/
 		, COU_COUNT 				/*쿠폰 개수*/
 		) VALUES
-		( SQ_COU_INFO_SEQ.NEXTVAL 	/*쿠폰 시퀀스*/
-		, (SELECT NVL(MAX(COU_NUM),0)+1 FROM CLT_COUPON_TBL) /*쿠폰 코드*/
+		( #{couNum} 				/*쿠폰 코드*/
 		, #{couName} 				/*쿠폰 이름*/
 		, #{couDiscount} 			/*쿠폰 할인율*/
 		, NOW() 					/*쿠폰 등록 날짜*/
