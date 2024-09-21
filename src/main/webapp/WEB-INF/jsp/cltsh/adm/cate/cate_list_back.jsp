@@ -6,15 +6,15 @@
 <input type="hidden" id="upperTxtCnt" name="upperTxtCnt" value="0">
 <input type="hidden" id="underTxtCnt" name="underTxtCnt" value="0">
 <div class="data_list">
-    <div class="upper_lvl">
-    	<div class="items_header">
-    		<span>분류 코드</span>
-    		<span>분류 명</span>
-    		<span>비고 내용</span>
-    		<span>사용 여부</span>
-    		<span>삭제</span>
-    	</div>
-    	<div class="items">
+	<div class="upper_lvl">
+		<div class="items_header">
+			<span>분류 코드</span>
+			<span>분류 명</span>
+			<span>비고 내용</span>
+			<span>사용 여부</span>
+			<span>삭제</span>
+		</div>
+		<div class="items">
 			<c:forEach items="${list }" var="obj" varStatus="countObj">
 				<c:if test="${obj.classLvlCd eq '1'}">
 					<div onclick="fn_a('${obj.catgryCd}')">
@@ -31,22 +31,22 @@
 							<li><input type="button" class="btn_del" value="취소" onclick="fnDel(this , '${obj.goodsCataSeq}' , '${obj.classLvlCd}');" /></li>
 						</ul>
 					</div>
-			    </c:if>
+				</c:if>
 			</c:forEach>
-    	</div>
-    	<div class="items">
-    		<span class="plus" id="upper_btn_add">+</span>
-    	</div>
-    </div>
-    <div class="under_lvl">
-    	<div class="items_header">
-    		<span>분류 코드</span>
-    		<span>분류 명</span>
-    		<span>비고 내용</span>
-    		<span>사용 여부</span>
-    		<span>삭제</span>
-    	</div>
-    	<div class="items">
+		</div>
+		<div class="items">
+			<span class="plus" id="upper_btn_add">+</span>
+		</div>
+	</div>
+	<div class="under_lvl">
+		<div class="items_header">
+			<span>분류 코드</span>
+			<span>분류 명</span>
+			<span>비고 내용</span>
+			<span>사용 여부</span>
+			<span>삭제</span>
+		</div>
+		<div class="items">
 			<c:forEach items="${underList }" var="obj" varStatus="countObj">
 				<c:if test="${obj.classLvlCd eq '2'}">
 					<div>
@@ -63,13 +63,13 @@
 							<li><input type="button" class="btn_del" value="취소" onclick="fnDel(this , '${obj.goodsCataSeq}', '${obj.classLvlCd}');" /></li>
 						</ul>
 					</div>
-			    </c:if>
+				</c:if>
 			</c:forEach>
-    	</div>
-    	<div class="items">
-    		<span class="plus" id="under_btn_add">+</span>
-    	</div>
-    </div>
+		</div>
+		<div class="items">
+			<span class="plus" id="under_btn_add">+</span>
+		</div>
+	</div>
 </div>
 <div>
 	<input type="submit" value="저장"/>
