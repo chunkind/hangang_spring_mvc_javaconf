@@ -1,9 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">카테고리 관리</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group me-2">
+      <button type="button" id="btn_save" class="btn btn-sm btn-outline-secondary">저장</button>
+      <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Export</button> -->
+    </div>
+    <!-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
+      <svg class="bi"><use xlink:href="#calendar3"/></svg>
+      This week
+    </button> -->
+  </div>
+</div>
 
-<h2 class="my-4 text-center">카테고리 관리</h2>
-<form method="post" action="/cltsh/adm/cate/admCateRegisterAct.do" onsubmit="return fn_submitCheck()">
+<form id="frm" method="post" action="/cltsh/adm/cate/admCateRegisterAct.do" onsubmit="return fn_submitCheck()">
 	<input type="hidden" id="upperTxtCnt" name="upperTxtCnt" value="0">
 	<input type="hidden" id="underTxtCnt" name="underTxtCnt" value="0">
 	<div class="container">
@@ -82,11 +94,6 @@
 				<button type="button" class="btn btn-primary btn-sm w-100" id="under_btn_add">하위 카테고리 추가</button>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col text-center">
-				<button type="submit" class="btn btn-success">저장</button>
-			</div>
-		</div>
 	</div>
 </form>
 
@@ -99,6 +106,11 @@ let btnCnt = 0;
 let nmAdd = '';
 let classCd = '';
 let underCnt = 0;
+
+
+document.querySelector('#btn_save').addEventListener("click", () => {
+	document.querySelector('#frm').submit();
+});
 
 document.addEventListener("DOMContentLoaded", () => {
 	let upper_btn_add = document.querySelector('#upper_btn_add');

@@ -1,20 +1,50 @@
 package com.dev.ck.cltsh.cmm.interceptor;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.dev.ck.ackwd.utils.StringUtil;
+import com.dev.ck.cltsh.cmm.util.StringUtils;
+import com.dev.ck.cltsh.shp.user.CltUserDto;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CltCommonInterceptor extends HandlerInterceptorAdapter {
+	public static final String[] EXCEPT_URI = {
+		"Ajax.do", ".js", ".css", ".html",
+		"Detail.do", "List.do",
+		"/cltsh/main.do",
+		"/cltsh/user/userLogin.do",
+		"/cltsh/user/userLoginAct.do",
+	};
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		// String requestURI = request.getRequestURI();
 
 		System.out.println("=interceptor start ========================================================================================");
+		
+		// 세션 체크
+		HttpSession session = request.getSession();
+		CltUserDto loginInfo = (CltUserDto) session.getAttribute("loginInfo");
+		
+		// 예외처리 url
+		/*if(isCheckUrl(request.getRequestURI()) && null == loginInfo) {
+			session.setAttribute("message", "로그인 해주세요...");
+			//response.sendRedirect("/cltsh/main.do");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/cltsh/main.do");
+	        dispatcher.forward(request, response);
+		}*/
+		
+		// 필수로 체크해야하는 url
+		
+		
 		
 //		String queryStr = request.getQueryString();
 //		
@@ -35,6 +65,22 @@ public class CltCommonInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("=interceptor end ==========================================================================================");
 		
 		return true; // false 진행X
+	}
+
+	private boolean isCheckUrl(String requestURI) {
+		// true면 url 체크 대상이 된다..
+		boolean result = true;
+		if(StringUtil.isEmpty(requestURI))
+			return false;
+		
+		for(String str : EXCEPT_URI) {
+			if(requestURI.contains(str)) {
+				result = false;
+				break;
+			}
+		}
+		
+		return result;
 	}
 
 	@Override
