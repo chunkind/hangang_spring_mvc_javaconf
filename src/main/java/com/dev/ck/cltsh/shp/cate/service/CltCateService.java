@@ -117,10 +117,9 @@ public class CltCateService {
 				pvo.setClassLvlCd(upClassLvlCd[i]);
 				pvo.setUprClassCd(upCatgryCd[i]);
 				pvo.setGoodsCataSeq(upGoodsCataSeq[i]);
-				if(upCateType[i].equals("cateInsert")) {
+				if (upCateType != null && upCateType.length > i && "cateInsert".equals(upCateType[i])) {
 					dao.insertCate(pvo);
-				}
-				else {
+				}else {
 					dao.updateCate(pvo);
 				}
 			}
@@ -130,10 +129,12 @@ public class CltCateService {
 				pvo.setNoteCont(unNoteCont[i]);
 				pvo.setUseYn(unUseYn[i]);
 				pvo.setClassLvlCd(unClassLvlCd[i]);
-				pvo.setUprClassCd(unCatgryCd[i].substring(0, 4));
+				if (unCatgryCd != null && unCatgryCd.length > i && unCatgryCd[i] != null) {
+					pvo.setUprClassCd(unCatgryCd[i].substring(0, 4));
+				}
 				pvo.setGoodsCataSeq(unGoodsCataSeq[i]);
-				dao.updateCate(pvo);
-				if(unCateType[i].equals("cateInsert")) {
+//				dao.updateCate(pvo);
+				if (unCateType != null && unCateType.length > i && "cateInsert".equals(unCateType[i])) {
 					dao.insertCate(pvo);
 				}else{
 					dao.updateCate(pvo);
@@ -141,6 +142,7 @@ public class CltCateService {
 			}
 		} catch (Exception e) {
 			result = 0;
+			 e.printStackTrace();
 		}
 		
 		return result;

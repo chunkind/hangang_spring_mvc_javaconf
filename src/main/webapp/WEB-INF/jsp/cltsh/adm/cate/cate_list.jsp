@@ -16,8 +16,8 @@
 </div>
 
 <form id="frm" method="post" action="/cltsh/adm/cate/admCateRegisterAct.do" onsubmit="return fn_submitCheck()">
-	<input type="hidden" id="upperTxtCnt" name="upperTxtCnt" value="0">
-	<input type="hidden" id="underTxtCnt" name="underTxtCnt" value="0">
+	<input type="hidden" id="upperTxtCnt1" name="upperTxtCnt" value="0">
+	<input type="hidden" id="underTxtCnt1" name="underTxtCnt" value="0">
 	<div class="container">
 		<div class="row">
 			<!-- 상위 카테고리 -->
@@ -34,11 +34,12 @@
 								<th class="text-center col-1">삭제</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="upper_items_area">
 							<c:forEach items="${list}" var="obj" varStatus="countObj">
 								<c:if test="${obj.classLvlCd eq '1'}">
 									<tr>
-										<td><input type="text" class="form-control form-control-sm" name="upCatgryCd${countObj.index}" value="${obj.catgryCd}" /></td>
+										<input type="hidden" name="upGoodsCataSeq${countObj.index}" value="${obj.goodsCataSeq}" />
+										<td onclick="fn_a('${obj.catgryCd}')"><input type="text" class="form-control form-control-sm" name="upCatgryCd${countObj.index}" value="${obj.catgryCd}" /></td>
 										<td><input type="text" class="form-control form-control-sm" name="upCatgryNm${countObj.index}" value="${obj.catgryNm}" /></td>
 										<td><input type="text" class="form-control form-control-sm" name="upNoteCont${countObj.index}" value="${obj.noteCont}" /></td>
 										<td>
@@ -47,7 +48,7 @@
 												<option value="N" <c:if test="${obj.useYn eq 'N'}" >selected</c:if>>사용안함</option>
 											</select>
 										</td>
-										<td><button type="button" class="btn btn-info btn-sm" onclick="fnDel(this, '${obj.goodsCataSeq}', '${obj.classLvlCd}');">삭제</button></td>
+										<td><button type="button" class="btn btn-danger btn-sm" onclick="fnDel(this, '${obj.goodsCataSeq}', '${obj.classLvlCd}');">삭제</button></td>
 									</tr>
 								</c:if>
 							</c:forEach>
@@ -71,10 +72,11 @@
 								<th class="text-center col-1">삭제</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="under_items_area">
 							<c:forEach items="${underList}" var="obj" varStatus="countObj">
 								<c:if test="${obj.classLvlCd eq '2'}">
 									<tr>
+										<input type="hidden" name="unGoodsCataSeq${countObj.index}" value="${obj.goodsCataSeq}" />
 										<td><input type="text" class="form-control form-control-sm" name="unCatgryCd${countObj.index}" value="${obj.catgryCd}" /></td>
 										<td><input type="text" class="form-control form-control-sm" name="unCatgryNm${countObj.index}" value="${obj.catgryNm}" /></td>
 										<td><input type="text" class="form-control form-control-sm" name="unNoteCont${countObj.index}" value="${obj.noteCont}" /></td>
@@ -108,55 +110,53 @@ let classCd = '';
 let underCnt = 0;
 
 
+
+
 document.querySelector('#btn_save').addEventListener("click", () => {
-	document.querySelector('#frm').submit();
+    // fn_submitCheck() 호출
+    if (fn_submitCheck()) {
+        document.querySelector('#frm').submit(); // 조건이 만족될 경우 폼 제출
+    }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
 	let upper_btn_add = document.querySelector('#upper_btn_add');
 	let under_btn_add = document.querySelector('#under_btn_add');
-	let upper_items_area = document.querySelector('.upper_lvl .items');
-	let under_items_area = document.querySelector('.under_lvl .items');
-	let htmlInput = fn_getHtmlInput();
-	
-	upper_btn_add.addEventListener('click', ()=>{
-		btnCnt = upperTextCnt;
-		nmAdd = 'up';
+	let upper_items_area = document.querySelector('#upper_items_area');
+	let under_items_area = document.querySelector('#under_items_area');
+
+		upper_btn_add.addEventListener('click', () => {
 		classCd = '1';
-		upper_items_area.innerHTML += fn_getHtmlInput();
+		upper_items_area.insertAdjacentHTML('beforeend', fn_getHtmlInput('up', upperTextCnt, classCd));
 		upperTextCnt++;
 	});
 	
-	under_btn_add.addEventListener('click', ()=>{
-		btnCnt = underTextCnt;
-		nmAdd = 'un';
+	under_btn_add.addEventListener('click', () => {
 		classCd = '2';
-		under_items_area.innerHTML += fn_getHtmlInput();
+		under_items_area.insertAdjacentHTML('beforeend', fn_getHtmlInput('un', underTextCnt, classCd));
 		underTextCnt++;
 	});
 });
-function fn_getHtmlInput(){
-	let html = ''
-	+'<div><ul>'
-	+	'<li><input type="text" id="'+nmAdd+'CatgryCd'+btnCnt+'" name="'+nmAdd+'CatgryCd'+btnCnt+'" placeholder="분류코드"/></li>'
-	+	'<li><input type="text" name="'+nmAdd+'CatgryNm'+btnCnt+'" placeholder="분류명"/></li>'
-	+	'<li><input type="text" name="'+nmAdd+'NoteCont'+btnCnt+'" placeholder="비고내용"/></li>'
-	+	'<input type="hidden" name="'+nmAdd+'ClassLvlCd'+btnCnt+'" value="'+classCd+'"/>'
-	+	'<input type="hidden" name="'+nmAdd+'CateType'+btnCnt+'" value="cateInsert"/>'
-	+	'<li>'
-	+		'<select name="'+nmAdd+'UseYn'+btnCnt+'">'
-	+			'<option value="Y">사용</option>'
-	+			'<option value="N">사용안함</option>'
-	+		'</select>'
-	+	'</li>'
-	+	'<li><input type="button" class="btn_del" value="취소" onclick="fnDel(this);" /></li>'
-	+'</ul></div>'
-	;
+
+function fn_getHtmlInput(type, index, classCd) {
+	let html = `
+	<tr>
+		<input type="hidden" name="` + type + `ClassLvlCd` + index + `" value="` + classCd + `"/>
+		<input type="hidden" name="` + type + `CateType` + index + `" value="cateInsert"/>
+		<td><input type="text" class="form-control form-control-sm" name="` + type + `CatgryCd` + index + `" placeholder="분류코드"/></td>
+		<td><input type="text" class="form-control form-control-sm" name="` + type + `CatgryNm` + index + `" placeholder="분류명"/></td>
+		<td><input type="text" class="form-control form-control-sm" name="` + type + `NoteCont` + index + `" placeholder="비고내용"/></td>
+		<td>
+			<select class="form-select form-select-sm" name="` + type + `UseYn` + index + `">
+				<option value="Y">사용</option>
+				<option value="N">사용안함</option>
+			</select>
+		</td>
+		<td><button type="button" class="btn btn-danger btn-sm" onclick="fnDel(this);">취소</button></td>
+	</tr>`;
 	return html;
 }
-function fn_a(catgryCd){
-	location.href = '/cltsh/adm/cate/admCateList.do?catgryCd='+catgryCd;
-}
+
 function fnDel(_this, goodsCataSeq , classLvlCd){
 	if(goodsCataSeq == null){
 		_this.parentNode.parentNode.parentNode.remove();
@@ -169,14 +169,30 @@ function fnDel(_this, goodsCataSeq , classLvlCd){
 		}
 	}
 }
-function fn_submitCheck(){
-	/* debugger; */
-	let upperTextCnt_add = document.querySelector('#upperTxtCnt');
-	let underTextCnt_add = document.querySelector('#underTxtCnt');
-	
-	upperTextCnt_add.value = upperTextCnt;
-	underTextCnt_add.value = underTextCnt;
-	
-	return true;
+
+function fn_a(catgryCd){
+	location.href = '/cltsh/adm/cate/admCateList.do?catgryCd='+catgryCd;
+}
+
+function fn_submitCheck() {
+    let upperTextCnt_add = document.querySelector('#upperTxtCnt1');
+    let underTextCnt_add = document.querySelector('#underTxtCnt1');
+
+    console.log("Before Update - Upper Count:", upperTextCnt_add.value);
+    console.log("Before Update - Under Count:", underTextCnt_add.value);
+    
+    upperTextCnt_add.value = upperTextCnt;
+    underTextCnt_add.value = underTextCnt;
+
+    console.log("After Update - Upper Count:", upperTextCnt_add.value);
+    console.log("After Update - Under Count:", underTextCnt_add.value);
+
+    // 최종 값 확인 후 반환
+    console.log("Submitting form with values: ", {
+        upperTextCnt: upperTextCnt_add.value,
+        underTextCnt: underTextCnt_add.value
+    });
+
+    return true; 
 }
 </script>
