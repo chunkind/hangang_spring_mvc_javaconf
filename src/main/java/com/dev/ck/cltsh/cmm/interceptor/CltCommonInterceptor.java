@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CltCommonInterceptor extends HandlerInterceptorAdapter {
 	public static final String[] EXCEPT_URI = {
 		"Ajax.do", ".js", ".css", ".html",
-		"Detail.do", "List.do",
+		"Detail.do", "List.do","Act.do",
 		"/cltsh/main.do",
 		"/cltsh/user/userLogin.do",
 		"/cltsh/user/userLoginAct.do",
