@@ -4,8 +4,6 @@
 <div class="container mt-4">
 	<h2 class="text-center mb-5">상품 판매 게시글 관리 > 상품 판매 게시글 리스트 > 상품 판매 게시글 등록</h2>
 	<form action="/cltsh/adm/sales/admSalesRegisterAct.do" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="saleBoardSeq" value="${detail.saleBoardSeq}">
-		
 		<div class="row mb-3">
 			<div class="col-md-4">
 				<div class="form-group">
