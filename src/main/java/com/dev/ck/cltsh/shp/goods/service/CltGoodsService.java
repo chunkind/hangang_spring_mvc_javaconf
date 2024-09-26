@@ -108,8 +108,8 @@ public class CltGoodsService {
 		return goodsDao.updateGoods(pvo);
 	}
 	
-	public int deleteGoods(CltGoodsDto pvo) {
-		return goodsDao.deleteGoods(pvo);
+	public int deleteGoodsOne(CltGoodsDto pvo) {
+		return goodsDao.deleteGoodsOne(pvo);
 	}
 	
 	public int deleteGoodsAll() {

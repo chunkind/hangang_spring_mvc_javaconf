@@ -225,7 +225,7 @@ public class CltAdmGoodsController{
 	// 상품 삭제 액션
 	@RequestMapping("/cltsh/adm/goods/admGoodsRemoveAct.do")
 	public String admGoodsRemoveAct(HttpServletRequest req, HttpServletResponse res, CltGoodsDto pvo) {
-		int result = goodsService.deleteGoods(pvo);
+		int result = goodsService.deleteGoodsOne(pvo);
 		
 		return "redirect:/cltsh/adm/goods/admGoodsList.do";
 	}

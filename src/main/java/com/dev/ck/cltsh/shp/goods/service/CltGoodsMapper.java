@@ -17,7 +17,7 @@ public interface CltGoodsMapper {
 	CltGoodsDto selectGoodsDetail(String seq);
 	List<CltGoodsDto> selectGoodsList(CltGoodsDto pvo);
 	int updateGoods(CltGoodsDto pvo);
-	int deleteGoods(CltGoodsDto pvo);
+	int deleteGoodsOne(CltGoodsDto pvo);
 	int deleteGoodsAll();
 	int dropSeq();
 	int createSeq();
