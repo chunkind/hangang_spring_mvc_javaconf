@@ -150,7 +150,7 @@
 document.getElementById("catgryCd").addEventListener('change', ()=>{
 	let catgryCd = document.querySelector('#catgryCd').value;
 	fn_ajax({
-		url: '/adm/cate/admCateListAjax.do?uprClassCd='+encodeURIComponent(catgryCd),
+		url: '/cltsh/adm/cate/admCateListAjax.do?uprClassCd='+encodeURIComponent(catgryCd),
 		method: 'get',
 		success: function(data){
 			console.log(data);
