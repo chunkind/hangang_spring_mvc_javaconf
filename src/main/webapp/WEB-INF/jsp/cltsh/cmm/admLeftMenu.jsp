@@ -14,6 +14,11 @@
 			<ul class="nav flex-column">
 				<li class="nav-item"><a
 					class="nav-link d-flex align-items-center gap-2 active"
+					aria-current="page" href="/cltsh/adm/main.do"> <svg class="bi">
+						<use xlink:href="#house-fill" /></svg> 메인화면
+				</a></li>
+				<li class="nav-item"><a
+					class="nav-link d-flex align-items-center gap-2 active"
 					aria-current="page" href="/cltsh/adm/entr/admEntrList.do"> <svg class="bi">
 						<use xlink:href="#house-fill" /></svg> 업체 관리
 				</a></li>
