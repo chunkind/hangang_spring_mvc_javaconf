@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dev.ck.cltsh.cmm.util.OrdUtil;
 import com.dev.ck.cltsh.shp.order.CltOrderDto;
 import com.dev.ck.cltsh.shp.sales.service.CltSalesService;
+import com.dev.ck.cltsh.shp.user.CltUserDto;
 
 @Service
 public class CltOrderService {
@@ -17,6 +19,9 @@ public class CltOrderService {
 	public CltOrderDto parameterSetting(HttpServletRequest req) {
 		// 주문 기본
 		String ordNo = req.getParameter("ordNo");
+		String ordClmNo = req.getParameter("ordClmNo");
+		String clmSctCd = req.getParameter("clmSctCd");
+		String clmStatCd = req.getParameter("clmStatCd");
 		String usrId = req.getParameter("usrId");
 		long entrNo = req.getParameter("entrNo") == null ? 0L : Long.parseLong(req.getParameter("entrNo"));
 		String ordStat = req.getParameter("ordStat");
@@ -42,17 +47,21 @@ public class CltOrderService {
 		long billNum = req.getParameter("billNum") == null ? 0L : Long.parseLong(req.getParameter("billNum"));
 
 		// 주문 상세
-		long ordDtlNo = req.getParameter("ordDtlNo") == null ? 0L : Long.parseLong(req.getParameter("ordDtlNo"));
+//		long ordDtlNo = req.getParameter("ordDtlNo") == null ? 0L : Long.parseLong(req.getParameter("ordDtlNo"));
+		String ordClmDtlSn = req.getParameter("ordClmDtlSn");
 		String goodsNm = req.getParameter("goodsNm");
 		int goodsCd = req.getParameter("goodsCd") == null ? 0 : Integer.parseInt(req.getParameter("goodsCd"));
 		int goodsQty = req.getParameter("goodsQty") == null ? 0 : Integer.parseInt(req.getParameter("goodsQty"));
+		String codeNm = req.getParameter("codeNm");
 
+		//주문 이력
+		String ordHistSeq = req.getParameter("ordHistSeq");
+		String histMemo = req.getParameter("histMemo");
+		
 		// 장바구니
-		Long ordBasketSeq = req.getParameter("ordBasketSeq") == null ? 0L
-				: Long.parseLong(req.getParameter("ordBasketSeq"));
+		Long ordBasketSeq = req.getParameter("ordBasketSeq") == null ? 0L : Long.parseLong(req.getParameter("ordBasketSeq"));
 		String useYn = req.getParameter("useYn");
-		Long saleBoardSeq = req.getParameter("saleBoardSeq") == null ? 0L
-				: Long.parseLong(req.getParameter("saleBoardSeq"));
+		Long saleBoardSeq = req.getParameter("saleBoardSeq") == null ? 0L : Long.parseLong(req.getParameter("saleBoardSeq"));
 		String searchSaleBoardSeq = req.getParameter("searchSaleBoardSeq");
 		String checkedList = req.getParameter("checkedList");
 
@@ -88,6 +97,9 @@ public class CltOrderService {
 		pvo.setOrdNo(ordNo);
 		pvo.setUsrId(usrId);
 		pvo.setEntrNo(entrNo);
+		pvo.setOrdClmNo(ordClmNo);
+		pvo.setClmSctCd(clmSctCd);
+		pvo.setClmStatCd(clmStatCd);
 		pvo.setOrdStat(ordStat);
 		pvo.setOrdrId(ordrId);
 		pvo.setOrdrNm(ordrNm);
@@ -109,10 +121,14 @@ public class CltOrderService {
 		pvo.setRgstDate(rgstDate);
 		pvo.setRgstId(rgstId);
 		pvo.setBillNum(billNum);
-		pvo.setOrdDtlNo(ordDtlNo);
+//		pvo.setOrdDtlNo(ordDtlNo);
+		pvo.setOrdClmDtlSn(ordClmDtlSn);
 		pvo.setGoodsNm(goodsNm);
 		pvo.setGoodsCd(goodsCd);
 		pvo.setGoodsQty(goodsQty);
+		pvo.setCodeNm(codeNm);
+		pvo.setOrdHistSeq(ordHistSeq);
+		pvo.setHistMemo(histMemo);
 		pvo.setOrdBasketSeq(ordBasketSeq);
 		pvo.setUseYn(useYn);
 		pvo.setSaleBoardSeq(saleBoardSeq);
@@ -128,104 +144,123 @@ public class CltOrderService {
 		return pvo;
 	}
 	
-		public int ordCnt() {
-			return dao.ordCnt();
-		}
+	public int ordCnt() {
+		return dao.ordCnt();
+	}
 	//주문 기본
-		public int insertOrd(CltOrderDto pvo) {
-			return dao.insertOrd(pvo);
-		}
+	public int insertOrd(CltOrderDto pvo) {
+		return dao.insertOrd(pvo);
+	}
+	
+	public void createOrder(CltOrderDto pvo, CltUserDto loginVo) {
+		// 비즈니스 로직 처리
+		pvo.setOrdStat("02"); // 주문 상태 - 결제 완료
+		pvo.setOrdNo(OrdUtil.getPinNo());
+		pvo.setOrdClmNo(OrdUtil.getPinNo());
+		pvo.setOrdClmDtlSn(OrdUtil.getPinNo());
+		pvo.setUsrId(loginVo.getUsrId());
+		pvo.setRgstId(loginVo.getUsrId());
+		pvo.setUpdtId(loginVo.getUsrId());
+		pvo.setOrdrId(loginVo.getUsrId());
+		pvo.setPrclWay("");  // 포장 방식 - 공란 처리
+		pvo.setPackWay("");  // 배송 방식 - 공란 처리
+		pvo.setBillNum((long) 0);  // 기본 값 설정
 		
-		public CltOrderDto selectOrdOne(CltOrderDto pvo) {
-			return dao.selectOrdOne(pvo);
-		}
-		
-		public List<CltOrderDto> selectOrdList(CltOrderDto pvo){
-			return dao.selectOrdList(pvo);
-		}
-		
-		public int updateOrd(CltOrderDto pvo) {
-			return dao.updateOrd(pvo);
-		}
-		
-		public int deleteOrd(CltOrderDto pvo) {
-			return dao.deleteOrd(pvo);
-		}
-		
-		//주문 상세
-		public int insertOrdDtl(CltOrderDto pvo) {
-			return dao.insertOrdDtl(pvo);
-		}
-		
-		public CltOrderDto selectOrdDtlOne(CltOrderDto pvo) {
-			return dao.selectOrdDtlOne(pvo);
-		}
+		// 주문 저장 로직
+		dao.insertOrd(pvo);
+		dao.insertOrdDtl(pvo);
+	}
+	
+	public CltOrderDto selectOrdOne(CltOrderDto pvo) {
+		return dao.selectOrdOne(pvo);
+	}
+	
+	public List<CltOrderDto> selectOrdList(CltOrderDto pvo){
+		return dao.selectOrdList(pvo);
+	}
+	
+	public int updateOrd(CltOrderDto pvo) {
+		return dao.updateOrd(pvo);
+	}
+	
+	public int deleteOrd(CltOrderDto pvo) {
+		return dao.deleteOrd(pvo);
+	}
+	
+	//주문 상세
+	public int insertOrdDtl(CltOrderDto pvo) {
+		return dao.insertOrdDtl(pvo);
+	}
+	
+	public CltOrderDto selectOrdDtlOne(CltOrderDto pvo) {
+		return dao.selectOrdDtlOne(pvo);
+	}
 
-		public CltOrderDto selectOrdDtlNoOne(CltOrderDto pvo) {
-			return dao.selectOrdDtlNoOne(pvo);
-		}
-		
-		public List<CltOrderDto> selectOrdDtlList(CltOrderDto pvo){
-			return dao.selectOrdDtlList(pvo);
-		}
-		
-		public int updateOrdDtl(CltOrderDto pvo) {
-			return dao.updateOrdDtl(pvo);
-		}
-		
-		public int deleteOrdDtl(CltOrderDto pvo) {
-			return dao.deleteOrdDtl(pvo);
-		}
-		
-		public int admOrdStateChange(CltOrderDto pvo) {
-			return dao.admOrdStateChange(pvo);  
-		}
-		
-		public List<CltOrderDto> searchIdOrdList(CltOrderDto pvo){
-			return dao.searchIdOrdList(pvo);
-		}
-		
-		public List<CltOrderDto> searchOrdNoList(CltOrderDto pvo) {
-			return dao.searchOrdNoList(pvo);
-		}
-		
-		public CltOrderDto searchOrdNoOne(CltOrderDto pvo) {
-			return dao.searchOrdNoOne(pvo);
-		}
-		
-		public List<CltOrderDto> searchOrdDtlGoods(CltOrderDto pvo){
-			return dao.searchOrdDtlGoods(pvo);
-		}
-		
-		//매출관리 통계
-		public List<CltOrderDto> selectOrdBaseList(CltOrderDto pvo){
-			return dao.selectOrdBaseList(pvo);
-		}
-		
-		//장바구니
-		public int insertBasket(CltOrderDto pvo) {
-			return dao.insertBasket(pvo);
-		}
-		
-		public int deleteBasket(CltOrderDto pvo) {
-			return dao.deleteBasket(pvo);
-		}
-		
-		public int updateBasket(CltOrderDto pvo) {
-			return dao.updateBasket(pvo);
-		}
-		
-		public List<CltOrderDto> selectBasketList(CltOrderDto pvo){
-			return dao.selectBasketList(pvo);
-		}
-		
-		public CltOrderDto ordBasketSelect(CltOrderDto pvo){
-			return dao.ordBasketSelect(pvo);
-		}
-		
-		public List<CltOrderDto> selectCartOrdDtlList(CltOrderDto pvo){
-			return dao.selectCartOrdDtlList(pvo);
-		}
+	public CltOrderDto selectOrdDtlNoOne(CltOrderDto pvo) {
+		return dao.selectOrdDtlNoOne(pvo);
+	}
+	
+	public List<CltOrderDto> selectOrdDtlList(CltOrderDto pvo){
+		return dao.selectOrdDtlList(pvo);
+	}
+	
+	public int updateOrdDtl(CltOrderDto pvo) {
+		return dao.updateOrdDtl(pvo);
+	}
+	
+	public int deleteOrdDtl(CltOrderDto pvo) {
+		return dao.deleteOrdDtl(pvo);
+	}
+	
+	public int admOrdStateChange(CltOrderDto pvo) {
+		return dao.admOrdStateChange(pvo);  
+	}
+	
+	public List<CltOrderDto> searchIdOrdList(CltOrderDto pvo){
+		return dao.searchIdOrdList(pvo);
+	}
+	
+	public List<CltOrderDto> searchOrdNoList(CltOrderDto pvo) {
+		return dao.searchOrdNoList(pvo);
+	}
+	
+	public CltOrderDto searchOrdNoOne(CltOrderDto pvo) {
+		return dao.searchOrdNoOne(pvo);
+	}
+	
+	public List<CltOrderDto> searchOrdDtlGoods(CltOrderDto pvo){
+		return dao.searchOrdDtlGoods(pvo);
+	}
+	
+	//매출관리 통계
+	public List<CltOrderDto> selectOrdBaseList(CltOrderDto pvo){
+		return dao.selectOrdBaseList(pvo);
+	}
+	
+	//장바구니
+	public int insertBasket(CltOrderDto pvo) {
+		return dao.insertBasket(pvo);
+	}
+	
+	public int deleteBasket(CltOrderDto pvo) {
+		return dao.deleteBasket(pvo);
+	}
+	
+	public int updateBasket(CltOrderDto pvo) {
+		return dao.updateBasket(pvo);
+	}
+	
+	public List<CltOrderDto> selectBasketList(CltOrderDto pvo){
+		return dao.selectBasketList(pvo);
+	}
+	
+	public CltOrderDto ordBasketSelect(CltOrderDto pvo){
+		return dao.ordBasketSelect(pvo);
+	}
+	
+	public List<CltOrderDto> selectCartOrdDtlList(CltOrderDto pvo){
+		return dao.selectCartOrdDtlList(pvo);
+	}
 
 	
 	public int insertCartOrdDtl(CltOrderDto pvo) {

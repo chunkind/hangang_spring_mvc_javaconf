@@ -7,11 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CltOrderDto extends PagingVO{
+public class CltOrderDto extends PagingVO {
 	//주문 기본
 	private String ordNo;
-	private String usrId;
-	private Long entrNo;
+	private String ordClmNo;
+	private String clmSctCd;
+	private String clmStatCd;
 	private String ordStat;
 	private String ordrId;
 	private String ordrNm;
@@ -34,16 +35,21 @@ public class CltOrderDto extends PagingVO{
 	private String rgstId;
 	private Long billNum;
 	
+	private String usrId;
+	private Long entrNo;
 	private String ordStatNm; //주문 상태 -> "02"일 경우 "결제완료" 저장
-	 
+
 	//주문 상세
-	private Long ordDtlNo;
+	private String ordClmDtlSn;
 	private String goodsNm;
 	private int goodsCd;
 	private int goodsQty;
 	private String codeNm;
 	
-
+	//주문 이력
+	private String ordHistSeq;
+	private String histMemo;
+	
 	//장바구니
 	private Long ordBasketSeq;
 	private String useYn;
