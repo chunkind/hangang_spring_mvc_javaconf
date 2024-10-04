@@ -224,6 +224,10 @@ public class CltOrderService {
 		return dao.searchOrdNoList(pvo);
 	}
 	
+	public CltOrderDto searchOrdClmNoList(CltOrderDto pvo) {
+		return dao.searchOrdClmNoList(pvo);
+	}
+	
 	public CltOrderDto searchOrdNoOne(CltOrderDto pvo) {
 		return dao.searchOrdNoOne(pvo);
 	}

@@ -4,7 +4,6 @@
 <div class="container mt-4">
 	<h2 class="text-center mb-5">주문 관리</h2>
 	<form name="frm" action="/cltsh/adm/order/admOrdStateChange.do" method="post" enctype="multipart/form-data" onsubmit="return fn_order_edit()">
-		<input type="hidden" name="ordNo" value="${ordVo.ordNo }" />
 
 		<div class="row mb-3">
 			<div class="col-md-4">
@@ -58,8 +57,8 @@
 
 		<div class="row mb-3">
 			<div class="col-md-4">
-				<label for="usrId" class="form-label">주문자 아이디</label>
-				<input type="text" id="usrId" name="usrId" class="form-control" maxlength="20" value="${ordVo.usrId}" readonly>
+				<label for="ordrId" class="form-label">주문자 아이디</label>
+				<input type="text" id="ordrId" name="ordrId" class="form-control" maxlength="20" value="${ordVo.ordrId}" readonly>
 			</div>
 			<div class="col-md-4">
 				<label for="ordrPhon" class="form-label">주문자 연락처</label>

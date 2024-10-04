@@ -53,18 +53,8 @@ public class CltOrderController{
 		HttpSession session = req.getSession();
 		CltUserDto loginVo = (CltUserDto) session.getAttribute("loginInfo");
 		
-		pvo.setOrdStat("02"); //주문 상태 - 결제 완료
-		pvo.setOrdNo(OrdUtil.getPinNo());
-		pvo.setUsrId(loginVo.getUsrId());
-		pvo.setRgstId(loginVo.getUsrId());
-		pvo.setUpdtId(loginVo.getUsrId());
-		pvo.setOrdrId(loginVo.getUsrId());
-		pvo.setPrclWay("");
-		pvo.setPackWay("");
-		pvo.setBillNum((long) 0);
-		
-		orderService.insertOrd(pvo);
-		orderService.insertOrdDtl(pvo);
+		// 주문 생성 로직을 서비스로 위임
+		orderService.createOrder(pvo, loginVo);
 		
 		CltOrderDto orderOne = orderService.selectOrdOne(pvo);
 		CltOrderDto orderDtlOne = orderService.selectOrdDtlOne(pvo);
@@ -275,5 +265,17 @@ public class CltOrderController{
 		data.put("result", "success");
 		
 		return data;
+	}
+	
+	//주문 취소
+	@RequestMapping("/cltsh/order/order_cancel.do")
+	public String orderCancel(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+		CltOrderDto ordVo = orderService.selectOrdOne(pvo);
+		CltOrderDto ordDtlVo = orderService.searchOrdClmNoList(pvo);
+		
+		req.setAttribute("ordVo", ordVo);
+		req.setAttribute("ordDtlVo", ordDtlVo);
+		
+		return "cltsh/shp/order/order_cancel";
 	}
 }
