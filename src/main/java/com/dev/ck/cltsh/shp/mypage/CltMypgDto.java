@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CltMypgDto extends PagingVO {
 	private String ordNo; /* 주문번호 */
+	private String ordClmNo; /* 클레임 번호 */
 	private String rgstDate; /* 주문일자 */
 	private String ordrId; /* 주문자 아이디 */
 	private String ordrNm; /* 주문자 이름 */

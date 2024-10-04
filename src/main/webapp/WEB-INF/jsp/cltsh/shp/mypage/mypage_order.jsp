@@ -30,9 +30,14 @@
 									</div>
 								</c:if>
 
-								<!-- 결제 상세 -->
+								<!-- 주문 상세 -->
 								<a class="card-text" href="/cltsh/mypage/mypageDetail.do?ordNo=${obj.ordNo}" style="color: #22c55e; display: block;">
-									<small class="text-body-secondary">결제 상세</small>
+									<small class="text-body-secondary">주문 상세</small>
+								</a>
+								
+								<!-- 주문 취소 -->
+								<a class="card-text" href="/cltsh/order/order_cancel.do?ordClmNo=${obj.ordClmNo}" style="color: #22c55e; display: block;">
+									<small class="text-body-secondary">주문 취소</small>
 								</a>
 							</div>
 						</div>

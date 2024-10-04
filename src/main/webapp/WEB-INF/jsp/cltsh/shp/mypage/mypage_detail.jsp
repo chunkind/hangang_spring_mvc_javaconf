@@ -53,9 +53,8 @@
 				<div class="col-sm-3">
 					${obj.codeNm}
 					<c:if test="${obj.saleBoardRpySeq eq 0}">
-						<button class="btn btn-link p-0"
-							onclick="location.href='/cltsh/dress/dressRegister.do?ordDtlNo=${obj.ordDtlNo}'">드레스룸
-							등록</button>
+						<button class="btn btn-link p-0" onclick="location.href='/cltsh/dress/dressRegister.do?ordClmDtlSn=${obj.ordClmDtlSn}'">
+						드레스룸 등록</button>
 					</c:if>
 				</div>
 			</div>
