@@ -4,8 +4,6 @@
 <div class="container mt-4">
 	<h2 class="text-center mb-5">공통코드 관리 > 등록</h2>
 	<form name="frm" action="/cltsh/adm/code/admCodeRegisterAct.do" method="post" enctype="multipart/form-data">
-	<input type="hidden" name="stdCdBaseSeq" value="${pvo.stdCdBaseSeq }" />
-	
 	<div class="row mb-3">
 		<div class="col-md-4">
 			<label for="codeNm" class="form-label">코드 이름</label>
