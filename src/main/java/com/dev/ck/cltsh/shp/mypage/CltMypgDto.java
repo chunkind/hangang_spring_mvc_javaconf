@@ -20,7 +20,7 @@ public class CltMypgDto extends PagingVO {
 	private String bulTitNm; /* 판매게시판 제목 */
 	private int goodsQty; /* 수량 */
 	private long goodsPrc; /* 상품금액 */
-	private String ordStat; /* 주문상태코드 */
+	private String ordDtlStatCd; /* 주문상태코드 */
 	private String codeNm; /* 주문상태코드이름 */
 	private String payWay; /* 결제수단 */
 	private long dlvPrc; /* 배송비 */

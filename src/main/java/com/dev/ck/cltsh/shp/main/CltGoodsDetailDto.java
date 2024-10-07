@@ -44,7 +44,7 @@ public class CltGoodsDetailDto extends PagingVO{
 	//주문 기본
 	private String ordNo;
 	private String usrId;
-	private String ordStat;
+	private String ordDtlStatCd;
 	private String ordrId;
 	private String ordrNm;
 	private String ordrPhon;

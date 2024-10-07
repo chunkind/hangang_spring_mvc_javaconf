@@ -25,7 +25,7 @@ public class CltMypgService {
 		String bulTitNm = req.getParameter("bulTitNm");
 		int goodsQty = Integer.parseInt(req.getParameter("goodsQty"));
 		long goodsPrc = Long.parseLong(req.getParameter("goodsPrc"));
-		String ordStat = req.getParameter("ordStat");
+		String ordDtlStatCd = req.getParameter("ordDtlStatCd");
 		String codeNm = req.getParameter("codeNm");
 		String payWay = req.getParameter("payWay");
 		long dlvPrc = Long.parseLong(req.getParameter("dlvPrc"));
@@ -50,7 +50,7 @@ public class CltMypgService {
 		pvo.setBulTitNm(bulTitNm);
 		pvo.setGoodsQty(goodsQty);
 		pvo.setGoodsPrc(goodsPrc);
-		pvo.setOrdStat(ordStat);
+		pvo.setOrdDtlStatCd(ordDtlStatCd);
 		pvo.setCodeNm(codeNm);
 		pvo.setPayWay(payWay);
 		pvo.setDlvPrc(dlvPrc);

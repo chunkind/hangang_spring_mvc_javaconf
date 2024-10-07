@@ -43,43 +43,43 @@ public class CltAdmOrderController{
 	public String admOrderDetail(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
 		CltOrderDto ordVo = orderService.searchOrdNoOne(pvo);
 		
-		String ordStat = ordVo.getOrdStat();
+		String ordDtlStatCd = ordVo.getOrdDtlStatCd();
 
-	    if (ordStat != null) {
-	        if (ordStat.equals("01")) {
-	        	ordVo.setOrdStatNm("결제대기");
-	        } else if (ordStat.equals("02")) {
-	        	ordVo.setOrdStatNm("결제완료");
-	        } else if (ordStat.equals("03")) {
-	        	ordVo.setOrdStatNm("상품준비중");
-	        } else if (ordStat.equals("04")) {
-	        	ordVo.setOrdStatNm("배송중");
-	        } else if (ordStat.equals("05")) {
-	        	ordVo.setOrdStatNm("배송완료");
-	        } else if (ordStat.equals("06")) {
-	        	ordVo.setOrdStatNm("수취완료");
-	        } else if (ordStat.equals("07")) {
-	        	ordVo.setOrdStatNm("반품신청");
-	        } else if (ordStat.equals("08")) {
-	        	ordVo.setOrdStatNm("반품완료");
-	        } else if (ordStat.equals("09")) {
-	        	ordVo.setOrdStatNm("취소신청");
-	        } else if (ordStat.equals("10")) {
-	        	ordVo.setOrdStatNm("취소완료");
-	        }
-	    }
+		if (ordDtlStatCd != null) {
+			if (ordDtlStatCd.equals("01")) {
+				ordVo.setOrdStatNm("결제대기");
+			} else if (ordDtlStatCd.equals("02")) {
+				ordVo.setOrdStatNm("결제완료");
+			} else if (ordDtlStatCd.equals("03")) {
+				ordVo.setOrdStatNm("상품준비중");
+			} else if (ordDtlStatCd.equals("04")) {
+				ordVo.setOrdStatNm("배송중");
+			} else if (ordDtlStatCd.equals("05")) {
+				ordVo.setOrdStatNm("배송완료");
+			} else if (ordDtlStatCd.equals("06")) {
+				ordVo.setOrdStatNm("수취완료");
+			} else if (ordDtlStatCd.equals("07")) {
+				ordVo.setOrdStatNm("반품신청");
+			} else if (ordDtlStatCd.equals("08")) {
+				ordVo.setOrdStatNm("반품완료");
+			} else if (ordDtlStatCd.equals("09")) {
+				ordVo.setOrdStatNm("취소신청");
+			} else if (ordDtlStatCd.equals("10")) {
+				ordVo.setOrdStatNm("취소완료");
+			}
+		}
 		
-		List<CltCodeDto> ordStatList = codeService.selectOrdStatCdList();
+		List<CltCodeDto> ordDtlStatCdList = codeService.selectOrdDtlStatCdList();
 		req.setAttribute("ordVo", ordVo);
-		req.setAttribute("ordStatList", ordStatList);
+		req.setAttribute("ordDtlStatCdList", ordDtlStatCdList);
 		
 		return "cltsh/adm/order/order_detail";
 	}
 	
 	//주문 상태 변경
-	@RequestMapping("/cltsh/adm/order/admOrdStateChange.do")
-	public String admOrdStateChange(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-		orderService.admOrdStateChange(pvo);
+	@RequestMapping("/cltsh/adm/order/admOrdDtlStatCdChange.do")
+	public String admOrdDtlStatCdChange(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+		orderService.admOrdDtlStatCdeChange(pvo);
 		return "redirect:/cltsh/adm/order/admOrderList.do";
 	}
 }

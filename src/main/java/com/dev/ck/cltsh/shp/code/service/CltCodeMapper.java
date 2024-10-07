@@ -16,7 +16,7 @@ public interface CltCodeMapper {
 	List<CltCodeDto> selectOrdCdList(CltCodeDto pvo);
 	List<CltCodeDto> selectUsrCdList(CltCodeDto pvo);
 	List<CltCodeDto> selectAdmCdList(CltCodeDto pvo);
-	List<CltCodeDto> selectOrdStatCdList(); //주문 상태 코드 리스트
+	List<CltCodeDto> selectOrdDtlStatCdList(); //주문 상태 코드 리스트
 	int updateCode(CltCodeDto pvo);
 	int deleteCodeOne(CltCodeDto pvo);
 	int deleteCodeAll();

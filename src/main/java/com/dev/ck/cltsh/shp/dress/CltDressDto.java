@@ -32,7 +32,7 @@ public class CltDressDto extends PagingVO{
 	private String noticeDoc;
 	private String ordNo;
 	private String usrId;
-	private String ordStat;
+	private String ordDtlStatCd;
 	private String ordrId;
 	private String ordrNm;
 	private String ordrPhon;

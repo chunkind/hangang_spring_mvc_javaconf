@@ -2,6 +2,7 @@ package com.dev.ck.cltsh.shp.order;
 
 import com.dev.ck.cltsh.cmm.PagingVO;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +14,7 @@ public class CltOrderDto extends PagingVO {
 	private String ordClmNo;
 	private String clmSctCd;
 	private String clmStatCd;
-	private String ordStat;
+	private String ordDtlStatCd;
 	private String ordrId;
 	private String ordrNm;
 	private String ordrPhon;
@@ -40,14 +41,17 @@ public class CltOrderDto extends PagingVO {
 	private String ordStatNm; //주문 상태 -> "02"일 경우 "결제완료" 저장
 
 	//주문 상세
-	private String ordClmDtlSn;
+	private int ordClmDtlSn;
+	private int sndGoodsQty;
+	private int rtnGoodsQty;
 	private String goodsNm;
 	private int goodsCd;
 	private int goodsQty;
 	private String codeNm;
 	
 	//주문 이력
-	private String ordHistSeq;
+	private String procDate;
+	private String clmRasn;
 	private String histMemo;
 	
 	//장바구니
