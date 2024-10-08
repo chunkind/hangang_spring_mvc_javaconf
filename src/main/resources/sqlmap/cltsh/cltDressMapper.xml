@@ -164,7 +164,7 @@
 			ORD.ORD_NO AS ordNo ,
 			ORD.USR_ID AS usrId ,
 			ORD.ENTR_NO AS entrNo ,
-			ORD.ORD_STAT AS ordStat ,
+			DTL.ORD_DTL_STAT_CD AS ordDtlStatCd ,
 			ORD.ORDR_ID AS ordrId ,
 			ORD.ORDR_NM AS ordrNm ,
 			ORD.ORDR_PHON AS ordrPhon ,

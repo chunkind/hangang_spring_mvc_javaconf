@@ -141,8 +141,8 @@
 		ORDER BY STD_CD_BASE_SEQ ASC
 	</select>
 	
-	<select id="selectOrdStatCdList" resultType="cltCodeDto">
-		/* codeDao.selectOrdStatCdList - 주문 상태 코드 리스트 */
+	<select id="selectOrdDtlStatCdList" resultType="cltCodeDto">
+		/* codeDao.selectOrdDtlStatCdList - 주문 상태 코드 리스트 */
 		SELECT STD_CD_BASE_SEQ AS stdCdBaseSeq
 			, CODE_NM AS codeNm
 			, CODE_VAL AS codeVal

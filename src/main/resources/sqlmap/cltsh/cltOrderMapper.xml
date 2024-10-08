@@ -13,7 +13,7 @@
 			, BASE.ORD_CLM_NO AS ordClmNo
 			, BASE.CLM_SCT_CD AS clmSctCd
 			, BASE.CLM_STAT_CD AS clmStatCd
-			, BASE.ORD_STAT AS ordStat
+			, DTL.ORD_DTL_STAT_CD AS ordDtlStatCd
 			, BASE.ORDR_ID AS ordrId
 			, BASE.ORDR_NM AS ordrNm
 			, BASE.ORDR_PHON AS ordrPhon
@@ -44,7 +44,7 @@
 			, CLT_STD_CD_BASE STD
 		WHERE 1=1
 		AND BASE.ORD_CLM_NO = DTL.ORD_CLM_NO
-		AND BASE.ORD_STAT = STD.CODE_VAL
+		AND DTL.ORD_DTL_STAT_CD = STD.CODE_VAL
 		AND STD.GRP_CD = 'STD004'
 		ORDER BY BASE.ORD_NO ASC
 		LIMIT #{startIdx }, #{pagePerRows };
@@ -56,7 +56,6 @@
 			, ORD_CLM_NO AS ordClmNo
 			, CLM_SCT_CD AS clmSctCd
 			, CLM_STAT_CD AS clmStatCd
-			, ORD_STAT AS ordStat
 			, ORDR_ID AS ordrId
 			, ORDR_NM AS ordrNm
 			, ORDR_PHON AS ordrPhon
@@ -77,7 +76,7 @@
 			, RGST_DATE AS rgstDate
 			, RGST_ID AS rgstId
 			, BILL_NUM AS billNum
-		FROM  CLT_ORD_BASE
+		FROM  CLT_ORD_BASE OB
 		WHERE 1=1
 		AND ORD_NO = #{ordNo}
 	</select>
@@ -88,7 +87,6 @@
 		, ORD_CLM_NO
 		, CLM_SCT_CD
 		, CLM_STAT_CD
-		, ORD_STAT
 		, ORDR_ID
 		, ORDR_NM
 		, ORDR_PHON
@@ -114,7 +112,6 @@
 		, #{ordClmNo}
 		, #{clmSctCd}
 		, #{clmStatCd}
-		, #{ordStat}
 		, #{ordrId}
 		, #{ordrNm}
 		, #{ordrPhon}
@@ -142,7 +139,6 @@
 			SET ORD_CLM_NO  = #{ordClmNo}
 			, CLM_SCT_CD  = #{clmSctCd}
 			, CLM_STAT_CD  = #{clmStatCd}
-			, ORD_STAT  = #{ordStat}
 			, ORDR_ID  = #{ordrId}
 			, ORDR_NM  = #{ordrNm}
 			, ORDR_PHON  = #{ordrPhon}
@@ -172,17 +168,47 @@
 	</delete>
 
 	<!-- 주문상태 변경 -->
-	<update id="admOrdStateChange">
+	<update id="admOrdDtlStatCdChange">
 		UPDATE CLT_ORD_BASE 
-			SET ORD_STAT  = #{ordStat}
-			, BILL_NUM = #{billNum}
+			SET BILL_NUM = #{billNum}
 		WHERE 1=1
 		AND ORD_NO = #{ordNo}
 	</update>
 	
+	<!-- 주문 이력 -->
+	<insert id="insertOrdHist">
+		INSERT INTO CLT_ORD_HIST
+		( ORD_NO
+		, ORD_CLM_NO
+		, ORD_CLM_DTL_SN
+		, CLM_SCT_CD
+		, CLM_STAT_CD
+		, ORD_DTL_STAT_CD
+		, PROC_DATE
+		, RGST_ID
+		, RGST_DATE
+		, CLM_RASN
+		, HIST_MEMO
+		) VALUES
+		( #{ordNo}
+		, #{ordClmNo}
+		, #{ordClmDtlSn}
+		, #{clmSctCd}
+		, #{clmStatCd}
+		, #{ordDtlStatCd}
+		, NOW()
+		, #{rgstId}
+		, NOW()
+		, #{clmRasn}
+		, #{histMemo})
+	</insert>
+	
 	<!-- 주문 상세 -->
 	<select id="selectOrdDtlOne" resultType="cltOrderDto">
 		SELECT ORD_CLM_NO AS ordClmNo
+			, ORD_CLM_DTL_SN AS ordClmDtlSn
+			, SND_GOODS_QTY AS sndGoodsQty
+			, RTN_GOODS_QTY AS rtnGoodsQty
 			, GOODS_NM AS goodsNm
 			, GOODS_CD AS goodsCd
 			, GOODS_QTY AS goodsQty
@@ -192,6 +218,7 @@
 			, RGST_ID AS rgstId
 		FROM CLT_ORD_DTL
 		WHERE 1=1
+		AND ORD_CLM_NO = #{ordClmNo}
 		AND ORD_CLM_DTL_SN = #{ordClmDtlSn}
     </select>
 	
@@ -220,6 +247,8 @@
 	<select id="selectOrdDtlList" resultType="cltOrderDto">
 		SELECT ORD_CLM_NO AS ordClmNo
 			, ORD_CLM_DTL_SN AS ordClmDtlSn
+			, SND_GOODS_QTY AS sndGoodsQty
+			, RTN_GOODS_QTY AS rtnGoodsQty
 			, GOODS_NM AS goodsNm
 			, GOODS_CD AS goodsCd
 			, GOODS_QTY AS goodsQty
@@ -232,9 +261,13 @@
 	</select>
 
 	<insert id="insertOrdDtl">
+		/* cltOrderMapper - insertOrdDtl ] 주문상세 인설트 */
 		INSERT INTO CLT_ORD_DTL
 		( ORD_CLM_NO
 		, ORD_CLM_DTL_SN
+		, ORD_DTL_STAT_CD
+		, SND_GOODS_QTY
+		, RTN_GOODS_QTY
 		, GOODS_NM
 		, GOODS_CD
 		, GOODS_QTY
@@ -245,6 +278,9 @@
 		) VALUES
 		( #{ordClmNo}
 		, #{ordClmDtlSn}
+		, #{ordDtlStatCd}
+		, #{sndGoodsQty}
+		, #{rtnGoodsQty}
 		, #{goodsNm}
 		, #{goodsCd}
 		, #{goodsQty}
@@ -257,6 +293,8 @@
 	<update id="updateOrdDtl">
 		UPDATE CLT_ORD_DTL 
 			SET ORD_CLM_NO  = #{ordClmNo}
+			, SND_GOODS_QTY = #{sndGoodsQty}
+			, RTN_GOODS_QTY = #{rtnGoodsQty}
 			, GOODS_NM  = #{goodsNm}
 			, GOODS_CD  = #{goodsCd}
 			, GOODS_QTY  = #{goodsQty}
@@ -354,7 +392,7 @@
 			, BASE.ORD_CLM_NO AS ordClmNo
 			, BASE.CLM_SCT_CD AS clmSctCd
 			, BASE.CLM_STAT_CD AS clmStatCd
-			, BASE.ORD_STAT AS ordStat
+			, DTL.ORD_DTL_STAT_CD AS ordDtlStatCd
 			, BASE.ORDR_ID AS ordrId
 			, BASE.ORDR_NM AS ordrNm
 			, BASE.ORDR_PHON AS ordrPhon
@@ -386,7 +424,7 @@
 		WHERE 1=1
 		AND BASE.USR_ID = DTL.USR_ID
 		AND BASE.ORD_NO = DTL.ORD_NO
-		AND BASE.ORD_STAT = STD.CODE_VAL
+		AND DTL.ORD_DTL_STAT_CD = STD.CODE_VAL
 		AND STD.GRP_CD = 'STD004'
 		AND BASE.ORDR_ID = #{usrId}
     </select>
@@ -396,7 +434,7 @@
 			, BASE.ORD_CLM_NO AS ordClmNo
 			, BASE.CLM_SCT_CD AS clmSctCd
 			, BASE.CLM_STAT_CD AS clmStatCd
-			, BASE.ORD_STAT AS ordStat
+			, DTL.ORD_DTL_STAT_CD AS ordDtlStatCd
 			, BASE.ORDR_ID AS ordrId
 			, BASE.ORDR_NM AS ordrNm
 			, BASE.ORDR_PHON AS ordrPhon
@@ -430,7 +468,7 @@
 			, GOOD.IMG_NM  AS imgNm
 		FROM CLT_ORD_BASE BASE
 		INNER JOIN CLT_ORD_DTL DTL ON BASE.ORDR_ID = DTL.RGST_ID AND BASE.ORD_CLM_NO = DTL.ORD_CLM_NO
-		LEFT OUTER JOIN CLT_STD_CD_BASE STD ON BASE.ORD_STAT = STD.CODE_VAL
+		LEFT OUTER JOIN CLT_STD_CD_BASE STD ON DTL.ORD_DTL_STAT_CD = STD.CODE_VAL
 		LEFT OUTER JOIN CLT_GOODS_INFO GOOD ON GOOD.GOODS_CD = DTL.GOODS_CD
 		LEFT OUTER JOIN CLT_SALE_BOARD SALE ON SALE.GOODS_CD = GOOD.GOODS_CD
 		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SALERVW ON DTL.ORD_CLM_DTL_SN = SALERVW.ORD_CLM_DTL_SN
@@ -444,7 +482,7 @@
 			, BASE.ORD_CLM_NO AS ordClmNo
 			, BASE.CLM_SCT_CD AS clmSctCd
 			, BASE.CLM_STAT_CD AS clmStatCd
-			, BASE.ORD_STAT AS ordStat
+			, DTL.ORD_DTL_STAT_CD AS ordDtlStatCd
 			, BASE.ORDR_ID AS ordrId
 			, BASE.ORDR_NM AS ordrNm
 			, BASE.ORDR_PHON AS ordrPhon
@@ -478,7 +516,7 @@
 			, GOOD.IMG_NM  AS imgNm
 		FROM CLT_ORD_BASE BASE
 		INNER JOIN CLT_ORD_DTL DTL ON BASE.ORDR_ID = DTL.RGST_ID AND BASE.ORD_CLM_NO = DTL.ORD_CLM_NO
-		LEFT OUTER JOIN CLT_STD_CD_BASE STD ON BASE.ORD_STAT = STD.CODE_VAL
+		LEFT OUTER JOIN CLT_STD_CD_BASE STD ON DTL.ORD_DTL_STAT_CD = STD.CODE_VAL
 		LEFT OUTER JOIN CLT_GOODS_INFO GOOD ON GOOD.GOODS_CD = DTL.GOODS_CD
 		LEFT OUTER JOIN CLT_SALE_BOARD SALE ON SALE.GOODS_CD = GOOD.GOODS_CD
 		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SALERVW ON DTL.ORD_CLM_DTL_SN = SALERVW.ORD_CLM_DTL_SN
@@ -492,7 +530,7 @@
 			, BASE.ORD_CLM_NO AS ordClmNo
 			, BASE.CLM_SCT_CD AS clmSctCd
 			, BASE.CLM_STAT_CD AS clmStatCd
-			, BASE.ORD_STAT AS ordStat
+			, DTL.ORD_DTL_STAT_CD AS ordDtlStatCd
 			, BASE.ORDR_ID AS ordrId
 			, BASE.ORDR_NM AS ordrNm
 			, BASE.ORDR_PHON AS ordrPhon
@@ -521,7 +559,7 @@
 			, SALERVW.RVW_TAG AS rvwTag
 		FROM CLT_ORD_BASE BASE
 		INNER JOIN CLT_ORD_DTL DTL ON BASE.ORDR_ID  = DTL.RGST_ID AND BASE.ORD_CLM_NO = DTL.ORD_CLM_NO
-		LEFT OUTER JOIN CLT_STD_CD_BASE STD ON BASE.ORD_STAT = STD.CODE_VAL
+		LEFT OUTER JOIN CLT_STD_CD_BASE STD ON DTL.ORD_DTL_STAT_CD = STD.CODE_VAL
 		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SALERVW ON BASE.ORD_NO = SALERVW.ORD_NO
 		WHERE 1=1
 		AND STD.GRP_CD = 'STD004'
@@ -541,7 +579,7 @@
 		SELECT ORD_NO AS ordNo
 			, USR_ID AS usrId
 			, ENTR_NO AS entrNo
-			, ORD_STAT AS ordStat
+			, ORD_DTL_STAT_CD AS ordDtlStatCd
 			, ORDR_ID AS ordrId
 			, ORDR_NM AS ordrNm
 			, ORDR_PHON AS ordrPhon
@@ -564,12 +602,11 @@
 			, BILL_NUM AS billNum
 		FROM  CLT_ORD_BASE
 		WHERE 1=1
-    </select>
-    
-    <select id="selectCartOrdDtlList" resultType="cltOrderDto">
-		SELECT ORD_CLM_DTL_SN AS ORD_CLM_DTL_SN
-			, USR_ID AS usrId
-			, ORD_NO AS ordNo
+	</select>
+
+	<select id="selectCartOrdDtlList" resultType="cltOrderDto">
+		SELECT ORD_CLM_DTL_SN AS ordClmDtlSn
+			, ORD_CLM_NO AS ordClmNo
 			, GOODS_NM AS goodsNm
 			, GOODS_CD AS goodsCd
 			, GOODS_QTY AS goodsQty
@@ -579,17 +616,17 @@
 			, RGST_ID AS rgstId
 		FROM CLT_ORD_DTL
 		WHERE 1=1
-		AND ORD_NO = #{ordNo}
-    </select>
-    
-    <!-- 테이블 삭제, 시퀀스 삭제 생성-->
-    <delete id="deleteOrdAll">
-        DELETE FROM CLT_ORD_BASE;
-    </delete>
-    
-    <delete id="deleteOrdDtlAll">
-        DELETE FROM CLT_ORD_DTL;
-    </delete>
+		AND ORD_CLM_DTL_SN = #{ordClmDtlSn}
+	</select>
+	
+	<!-- 테이블 삭제, 시퀀스 삭제 생성-->
+	<delete id="deleteOrdAll">
+		DELETE FROM CLT_ORD_BASE;
+	</delete>
+		
+	<delete id="deleteOrdDtlAll">
+		DELETE FROM CLT_ORD_DTL;
+	</delete>
 
 	<delete id="dropDtlSeq">
 		DROP SEQUENCE SQ_ORD_DTL_NO
