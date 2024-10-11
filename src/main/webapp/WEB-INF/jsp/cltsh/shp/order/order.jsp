@@ -11,6 +11,8 @@
 			<input type="hidden" name="goodsNm" value="${detail.goodsNm}">
 			<input type="hidden" name="goodsCd" value="${detail.goodsCd}">
 			<input type="hidden" name="payMny" value="${detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc}">
+			<input type="hidden" name="clmSctCd" value="01">
+			<input type="hidden" name="clmStatCd" value="01">
 
 			<h2 class="mt-4">배송 정보</h2>
 			<table class="table table-bordered">

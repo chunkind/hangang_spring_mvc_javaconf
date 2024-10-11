@@ -126,44 +126,9 @@ public class CltOrderController{
 		HttpSession session = req.getSession();
 		CltUserDto loginVo = (CltUserDto) session.getAttribute("loginInfo");
 		
-		String seq = pvo.getCheckedList();
-		String goodsNm = pvo.getGoodsNm();
-		String[] seqs = seq.split(",");
-		String[] goodsNmArry = goodsNm.split(",");
+		String[] seqs = pvo.getCheckedList().split(",");
 		
-		pvo.setOrdNo(OrdUtil.getPinNo());
-		pvo.setUsrId(loginVo.getUsrId());
-		pvo.setRgstId(loginVo.getUsrId());
-		pvo.setUpdtId(loginVo.getUsrId());
-		pvo.setOrdrId(loginVo.getUsrId());
-		pvo.setPrclWay("");
-		pvo.setPackWay("");
-		pvo.setBillNum((long) 0);
-		pvo.setOrdStat("02"); //주문 상태 - 결제 완료
-		pvo.setSaleBoardSeq(Long.parseLong(seqs[0]));
-		pvo.setGoodsNmArry(goodsNmArry);
-		
-		for(int i = 0; i < seqs.length; i++) {
-			pvo.setOrdBasketSeq(Long.parseLong(seqs[i]));
-			CltOrderDto ordBasket = orderService.ordBasketSelect(pvo);
-			pvo.setSaleBoardSeq(ordBasket.getSaleBoardSeq());
-			
-			if(null != pvo.getGoodsNmArry() && null != pvo.getGoodsNmArry()[i] && !"".equals(pvo.getGoodsNmArry()[i])) {
-				pvo.setGoodsNm(goodsNmArry[i]);
-				pvo.setGoodsCd(ordBasket.getGoodsCd());
-			}
-			
-			if(i == 0) {
-				orderService.insertOrd(pvo);
-			}
-			
-			orderService.insertCartOrdDtl(pvo);	
-		}
-
-		for(int i = 0; i < seqs.length; i++) {
-			pvo.setOrdBasketSeq(Long.parseLong(seqs[i]));
-			orderService.updateBasket(pvo);
-		}
+		orderService.createOrder(pvo, loginVo);
 		
 		if(seqs.length > 1) {
 			CltOrderDto orderOne = orderService.selectOrdOne(pvo);
@@ -270,12 +235,38 @@ public class CltOrderController{
 	//주문 취소
 	@RequestMapping("/cltsh/order/order_cancel.do")
 	public String orderCancel(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+		CltOrderDto ordDtlVo = orderService.selectOrdClmNoOne(pvo);
+		
+		req.setAttribute("ordDtlVo", ordDtlVo);
+		
+		return "cltsh/shp/order/order_cancel";
+	}
+	
+	//주문 취소 액션
+	@RequestMapping("/cltsh/order/order_cancelAct.do")
+	public String orderCancelAct(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+		orderService.insertCancelOrdHist(pvo);
+		return "redirect:/cltsh/mypage/mypageOrder.do";
+	}
+	
+	//주문 취소 현황
+		@RequestMapping("/cltsh/order/order_cancel_ing.do")
+		public String orderCancelIng(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+			List<CltOrderDto> ordDtlVo = orderService.searchOrdClmNoList(pvo);
+			req.setAttribute("ordDtlVo", ordDtlVo);
+			
+			return "cltsh/shp/order/order_cancel_ing";
+		}
+
+	//반품 및 교환
+	@RequestMapping("/cltsh/order/order_return.do")
+	public String orderReturn(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
 		CltOrderDto ordVo = orderService.selectOrdOne(pvo);
-		CltOrderDto ordDtlVo = orderService.searchOrdClmNoList(pvo);
+		List<CltOrderDto> ordDtlVo = orderService.searchOrdClmNoList(pvo);
 		
 		req.setAttribute("ordVo", ordVo);
 		req.setAttribute("ordDtlVo", ordDtlVo);
 		
-		return "cltsh/shp/order/order_cancel";
+		return "cltsh/shp/order/order_return";
 	}
 }

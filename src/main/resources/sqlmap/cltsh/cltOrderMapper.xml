@@ -52,6 +52,7 @@
 
 	<!-- 주문 -->
 	<select id="selectOrdOne" resultType="cltOrderDto">
+		/* cltOrderMapper - selectOrdOne */
 		SELECT ORD_NO AS ordNo
 			, ORD_CLM_NO AS ordClmNo
 			, CLM_SCT_CD AS clmSctCd
@@ -82,6 +83,7 @@
 	</select>
 
 	<insert id="insertOrd">
+		/* cltOrderMapper - insertOrd */
 		INSERT INTO CLT_ORD_BASE
 		( ORD_NO
 		, ORD_CLM_NO
@@ -169,6 +171,7 @@
 
 	<!-- 주문상태 변경 -->
 	<update id="admOrdDtlStatCdChange">
+	/* cltOrderMapper - admOrdDtlStatCdChange */
 		UPDATE CLT_ORD_BASE 
 			SET BILL_NUM = #{billNum}
 		WHERE 1=1
@@ -177,6 +180,7 @@
 	
 	<!-- 주문 이력 -->
 	<insert id="insertOrdHist">
+	/* cltOrderMapper - insertOrdHist */
 		INSERT INTO CLT_ORD_HIST
 		( ORD_NO
 		, ORD_CLM_NO
@@ -203,8 +207,56 @@
 		, #{histMemo})
 	</insert>
 	
+	<!-- 주문 이력 조회 -->
+	<select id="selectOrdHistOne" resultType="cltOrderDto">
+		/* cltOrderMapper - selectOrdHistOne */
+		SELECT ORD_NO AS ordNo
+			, ORD_CLM_NO AS ordClmNo
+			, ORD_CLM_DTL_SN AS ordClmDtlSn
+			, CLM_SCT_CD AS clmSctCd
+			, CLM_STAT_CD AS clmStatCd
+			, ORD_DTL_STAT_CD AS ordDtlStatCd
+			, PROC_DATE AS procDate
+			, RGST_ID AS rgstId
+			, RGST_DATE AS rgstDate
+			, CLM_RASN AS clmRasn
+			, HIST_MEMO AS histMemo
+		FROM CLT_ORD_HIST
+		WHERE 1=1
+		AND ORD_NO = #{ordNo}
+		AND ORD_CLM_NO = #{ordClmNo}
+	</select>
+	
+	<!-- admOrdBaseUpdate -->
+	<update id="admOrdBaseUpdate">
+	/* cltOrderMapper - admOrdBaseUpdate */
+		UPDATE CLT_ORD_BASE 
+			SET CLM_SCT_CD = #{clmSctCd}
+			, CLM_STAT_CD = #{clmStatCd}
+		WHERE 1=1
+		AND ORD_NO = #{ordNo}
+		AND ORD_CLM_NO = #{ordClmNo}
+	</update>
+
+	<!-- admOrdDtlUpdate -->
+	<update id="admOrdDtlUpdate">
+	/* cltOrderMapper - admOrdDtlUpdate */
+		UPDATE CLT_ORD_DTL 
+			SET ORD_DTL_STAT_CD = #{ordDtlStatCd}
+			<!-- , SND_GOODS_QTY = #{sndGoodsQty}
+			, RTN_GOODS_QTY = #{rtnGoodsQty} -->
+			, UPDT_DATE  = NOW()
+			, UPDT_ID  = #{updtId}
+		WHERE 1=1
+		AND ORD_CLM_NO = #{ordClmNo}
+		AND ORD_CLM_DTL_SN = #{ordClmDtlSn}
+	</update>
+
+
+	
 	<!-- 주문 상세 -->
 	<select id="selectOrdDtlOne" resultType="cltOrderDto">
+		/* cltOrderMapper - selectOrdDtlOne */
 		SELECT ORD_CLM_NO AS ordClmNo
 			, ORD_CLM_DTL_SN AS ordClmDtlSn
 			, SND_GOODS_QTY AS sndGoodsQty
@@ -220,9 +272,10 @@
 		WHERE 1=1
 		AND ORD_CLM_NO = #{ordClmNo}
 		AND ORD_CLM_DTL_SN = #{ordClmDtlSn}
-    </select>
+	</select>
 	
-	<select id="selectOrdDtlNoOne" resultType="cltOrderDto">
+	<select id="selectOrdClmNoOne" resultType="cltOrderDto">
+		/* cltOrderMapper - selectOrdClmNoOne */
 		SELECT DTL.ORD_CLM_NO AS ordClmNo
 			, DTL.GOODS_NM AS goodsNm
 			, DTL.GOODS_CD AS goodsCd
@@ -237,14 +290,19 @@
 			, GOOD.IMG_PATH AS imgPath
 			, GOOD.IMG_NM AS imgNm
 			, GOOD.DLV_PRC AS dlvPrc
+			, BASE.ORD_NO AS ordNo
+			, BASE.PAY_MNY AS payMny
 		FROM CLT_ORD_DTL DTL
 		INNER JOIN CLT_SALE_BOARD SALE ON SALE.GOODS_CD = DTL.GOODS_CD
 		INNER JOIN CLT_GOODS_INFO GOOD ON GOOD.GOODS_CD = DTL.GOODS_CD
+		INNER JOIN CLT_ORD_BASE BASE ON BASE.ORD_CLM_NO = DTL.ORD_CLM_NO
 		WHERE 1=1
-		AND ORD_CLM_DTL_SN = #{ordClmDtlSn}
+		AND BASE.ORD_CLM_NO = #{ordClmNo}
+		AND DTL.ORD_CLM_DTL_SN = #{ordClmDtlSn}
 	</select>
 	
 	<select id="selectOrdDtlList" resultType="cltOrderDto">
+		/* cltOrderMapper - selectOrdDtlList */
 		SELECT ORD_CLM_NO AS ordClmNo
 			, ORD_CLM_DTL_SN AS ordClmDtlSn
 			, SND_GOODS_QTY AS sndGoodsQty
@@ -261,7 +319,7 @@
 	</select>
 
 	<insert id="insertOrdDtl">
-		/* cltOrderMapper - insertOrdDtl ] 주문상세 인설트 */
+		/* cltOrderMapper - insertOrdDtl */
 		INSERT INTO CLT_ORD_DTL
 		( ORD_CLM_NO
 		, ORD_CLM_DTL_SN
@@ -313,6 +371,7 @@
     
 	<!-- 장바구니 -->
 	<select id="ordBasketSelect" resultType="cltOrderDto">
+		/* cltOrderMapper - ordBasketSelect */
 		SELECT ORD.SALE_BOARD_SEQ AS saleBoardSeq
 			, SALE.GOODS_PRC AS goodsPrc
 			, SALE.GOODS_SALE_PRC AS goodsSalePrc
@@ -330,6 +389,7 @@
 	</select>
 	
 	<select id="selectBasketList" resultType="cltOrderDto">
+		/* cltOrderMapper - selectBasketList */
 		SELECT BSKT.ORD_BASKET_SEQ AS ordBasketSeq<!-- 다시 구현 -->
 			, BSKT.USR_ID AS usrId
 			, BSKT.GOODS_QTY AS goodsQty
@@ -355,6 +415,7 @@
     </select>
 
 	<insert id="insertBasket">
+		/* cltOrderMapper - insertBasket */
 		INSERT INTO CLT_ORD_BASKET 
 		( USR_ID
 		, GOODS_QTY
@@ -374,6 +435,7 @@
     </insert>
     
 	<update id="updateBasket">
+		/* cltOrderMapper - updateBasket */
 		UPDATE CLT_ORD_BASKET 
 		SET USE_YN  = 'N'
 		WHERE 1=1
@@ -381,6 +443,7 @@
 	</update>
 
 	<delete id="deleteBasket">
+		/* cltOrderMapper - deleteBasket */
 		DELETE FROM CLT_ORD_BASKET
 		WHERE ORD_BASKET_SEQ = #{ordBasketSeq}
 	</delete>
@@ -388,6 +451,7 @@
 
 	<!-- 검색 -->
 	<select id="searchIdOrdList" resultType="cltOrderDto">
+		/* cltOrderMapper - searchIdOrdList */
 		SELECT BASE.ORD_NO AS ordNo
 			, BASE.ORD_CLM_NO AS ordClmNo
 			, BASE.CLM_SCT_CD AS clmSctCd
@@ -430,6 +494,7 @@
     </select>
     
 	<select id="searchOrdNoList" resultType="cltOrderDto">
+		/* cltOrderMapper - searchOrdNoList */
 		SELECT BASE.ORD_NO AS ordNo
 			, BASE.ORD_CLM_NO AS ordClmNo
 			, BASE.CLM_SCT_CD AS clmSctCd
@@ -478,6 +543,7 @@
 	</select>
 	
 	<select id="searchOrdClmNoList" resultType="cltOrderDto">
+		/* cltOrderMapper - searchOrdClmNoList */
 		SELECT BASE.ORD_NO AS ordNo
 			, BASE.ORD_CLM_NO AS ordClmNo
 			, BASE.CLM_SCT_CD AS clmSctCd
@@ -526,6 +592,7 @@
 	</select>
 	
 	<select id="searchOrdNoOne" resultType="cltOrderDto">
+		/* cltOrderMapper - searchOrdNoOne */
 		SELECT BASE.ORD_NO AS ordNo
 			, BASE.ORD_CLM_NO AS ordClmNo
 			, BASE.CLM_SCT_CD AS clmSctCd
@@ -563,10 +630,11 @@
 		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SALERVW ON BASE.ORD_NO = SALERVW.ORD_NO
 		WHERE 1=1
 		AND STD.GRP_CD = 'STD004'
-		AND BASE.ORD_NO = #{ordNo}
+		AND BASE.ORD_CLM_NO = #{ordClmNo}
 	</select>
 
 	<select id="searchOrdDtlGoods" resultType="cltOrderDto">
+		/* cltOrderMapper - searchOrdDtlGoods */
 		SELECT GOODS_NM AS goodsNm
 			, GOODS_CD AS goodsCd
 			, GOODS_QTY AS goodsQty
@@ -576,6 +644,7 @@
 	</select>
 	
 	<select id="selectOrdBaseList" resultType="cltOrderDto">
+		/* cltOrderMapper - selectOrdBaseList */
 		SELECT ORD_NO AS ordNo
 			, USR_ID AS usrId
 			, ENTR_NO AS entrNo
@@ -605,6 +674,7 @@
 	</select>
 
 	<select id="selectCartOrdDtlList" resultType="cltOrderDto">
+		/* cltOrderMapper - selectCartOrdDtlList */
 		SELECT ORD_CLM_DTL_SN AS ordClmDtlSn
 			, ORD_CLM_NO AS ordClmNo
 			, GOODS_NM AS goodsNm

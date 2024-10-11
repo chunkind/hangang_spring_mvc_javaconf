@@ -8,6 +8,8 @@
 
 	<form name="frm" action="/cltsh/order/orderCartRegisterAct.do" method="post">
 		<input type="hidden" name="checkedList" value="${key}">
+		<input type="hidden" name="clmSctCd" value="01">
+		<input type="hidden" name="clmStatCd" value="01">
 
 		<div class="mb-4">
 			<h4>배송 정보</h4>

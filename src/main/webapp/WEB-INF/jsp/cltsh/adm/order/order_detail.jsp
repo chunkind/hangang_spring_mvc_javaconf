@@ -3,7 +3,7 @@
 
 <div class="container mt-4">
 	<h2 class="text-center mb-5">주문 관리</h2>
-	<form name="frm" action="/cltsh/adm/order/admOrdStateChange.do" method="post" enctype="multipart/form-data" onsubmit="return fn_order_edit()">
+	<form name="frm" action="/cltsh/adm/order/admOrdDtlStatCdChange.do" method="post" enctype="multipart/form-data" onsubmit="return fn_order_edit()">
 
 		<div class="row mb-3">
 			<div class="col-md-4">
@@ -23,10 +23,10 @@
 
 		<div class="row mb-3">
 			<div class="col-md-4">
-				<label for="ordStat" class="form-label">주문 상태</label>
-				<select name="ordStat" id="ordStat" class="form-select">
-					<c:forEach items="${ordStatList}" var="obj">
-						<option value="${obj.codeVal}" ${obj.codeVal eq ordVo.ordStat ? 'selected' : ''}>${obj.codeNm}</option>
+				<label for="ordDtlStatCd" class="form-label">주문 상태</label>
+				<select name="ordDtlStatCd" id="ordDtlStatCd" class="form-select">
+					<c:forEach items="${ordDtlStatCdList}" var="obj">
+						<option value="${obj.codeVal}" ${obj.codeVal eq ordVo.ordDtlStatCd ? 'selected' : ''}>${obj.codeNm}</option>
 					</c:forEach>
 				</select>
 			</div>

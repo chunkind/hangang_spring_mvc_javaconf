@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import com.dev.ck.cltsh.shp.code.CltCodeDto;
 import com.dev.ck.cltsh.shp.code.service.CltCodeService;
 import com.dev.ck.cltsh.shp.order.CltOrderDto;
 import com.dev.ck.cltsh.shp.order.service.CltOrderService;
+import com.dev.ck.cltsh.shp.user.CltUserDto;
 
 @Controller
 public class CltAdmOrderController{
@@ -74,6 +76,30 @@ public class CltAdmOrderController{
 		req.setAttribute("ordDtlStatCdList", ordDtlStatCdList);
 		
 		return "cltsh/adm/order/order_detail";
+	}
+	
+	//주문 관리 - 주문 취소 확인
+	@RequestMapping("/cltsh/adm/order/admOrderCancelConfirm.do")
+	public String admOrderCancelConfirm(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+		CltOrderDto ordVo = orderService.searchOrdNoOne(pvo);
+		CltOrderDto ordHistVo = orderService.selectOrdHistOne(pvo);
+	
+		req.setAttribute("ordVo", ordVo);
+		req.setAttribute("ordHistVo", ordHistVo);
+		return "cltsh/adm/order/order_cancel_confirm";
+	}
+	
+	//주문 관리 - 주문 취소 확인 액션
+	@RequestMapping("/cltsh/adm/order/admOrderCancelConfirmAct.do")
+	public String admOrderCancelConfirmAct(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+		//로그인 정보 가져오기
+		HttpSession session = req.getSession();
+		CltUserDto loginVo = (CltUserDto) session.getAttribute("loginInfo");
+		pvo.setRgstId(loginVo.getUsrId());
+		
+		orderService.ordCancelUpdate(pvo);
+		
+		return "redirect:/cltsh/adm/order/admOrderList.do";
 	}
 	
 	//주문 상태 변경

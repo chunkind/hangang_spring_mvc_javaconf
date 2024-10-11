@@ -76,7 +76,7 @@
 				<c:forEach items="${orderList}" var="obj">
 					<tr>
 						<td class="text-center align-middle"><input type="checkbox"></td>
-						<td class="text-center align-middle"><a href="/cltsh/adm/order/admOrderDetail.do?ordNo=${obj.ordNo}">${obj.ordNo}</td>
+						<td class="text-center align-middle"><a href="/cltsh/adm/order/admOrderDetail.do?ordClmNo=${obj.ordClmNo}">${obj.ordNo}</td>
 						<td class="text-center align-middle">${obj.ordDate}</td>
 						<td class="text-center align-middle">${obj.goodsNm}</td>
 						<td class="text-center align-middle">${obj.usrId}<br>${obj.ordrNm}</td>
@@ -89,7 +89,35 @@
 								<td class="text-center align-middle">${obj.billNum }</td>
 							</c:otherwise>
 						</c:choose>
-						<td class="text-center align-middle">${obj.codeNm }</td>
+						<td class="text-center align-middle"">
+							<c:choose>
+								<c:when test="${obj.clmSctCd == '01' and obj.clmStatCd == '01'}">
+									<a style="color: blue;">주문 대기</a>
+								</c:when>
+								<c:when test="${obj.clmSctCd == '01' and obj.clmStatCd == '02'}">
+									<a style="color: green;">주문 완료</a>
+								</c:when>
+								<c:when test="${obj.clmSctCd == '01' and obj.clmStatCd == '03'}">
+									<a style="color: red;">주문 취소</a>
+								</c:when>
+
+								<c:when test="${obj.clmSctCd == '02' and obj.clmStatCd == '01'}">
+									<a href="/cltsh/adm/order/admOrderCancelConfirm.do?ordNo=${obj.ordNo}&ordClmNo=${obj.ordClmNo}" style="color: orange; text-decoration: none;">취소 대기</a>
+								</c:when>
+								<c:when test="${obj.clmSctCd == '02' and obj.clmStatCd == '02'}">
+									<%-- <a href="/cltsh/adm/order/admOrderCancelConfirm.do?ordNo=${obj.ordNo}&ordClmNo=${obj.ordClmNo}" style="color: green; text-decoration: none;">취소 완료</a> --%>
+									<a style="color: green; text-decoration: none;">취소 완료</a>
+								</c:when>
+								<c:when test="${obj.clmSctCd == '02' and obj.clmStatCd == '03'}">
+									<%-- <a href="/cltsh/adm/order/admOrderCancelConfirm.do?ordNo=${obj.ordNo}&ordClmNo=${obj.ordClmNo}" style="color: red; text-decoration: none;">취소 취소</a> --%>
+									<a style="color: red; text-decoration: none;">취소 취소</a>
+								</c:when>
+								
+								<c:otherwise>
+									거래중
+								</c:otherwise>
+							</c:choose>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
