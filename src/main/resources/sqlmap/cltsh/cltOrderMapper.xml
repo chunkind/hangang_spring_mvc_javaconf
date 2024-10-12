@@ -80,6 +80,7 @@
 		FROM  CLT_ORD_BASE OB
 		WHERE 1=1
 		AND ORD_NO = #{ordNo}
+		AND ORD_CLM_NO = #{ordClmNo}
 	</select>
 
 	<insert id="insertOrd">
@@ -540,6 +541,7 @@
 		WHERE 1=1
 		AND STD.GRP_CD = 'STD004'
 		AND BASE.ORD_NO = #{ordNo}
+		AND BASE.ORD_CLM_NO = #{ordClmNo}
 	</select>
 	
 	<select id="searchOrdClmNoList" resultType="cltOrderDto">
