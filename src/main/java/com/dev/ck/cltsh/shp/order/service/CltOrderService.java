@@ -3,15 +3,14 @@ package com.dev.ck.cltsh.shp.order.service;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev.ck.ackwd.utils.StringUtil;
 import com.dev.ck.cltsh.cmm.util.OrdUtil;
+import com.dev.ck.cltsh.shp.mypage.service.CltMypgMapper;
 import com.dev.ck.cltsh.shp.order.CltOrderDto;
-import com.dev.ck.cltsh.shp.sales.service.CltSalesService;
 import com.dev.ck.cltsh.shp.user.CltUserDto;
 
 @Service

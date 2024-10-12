@@ -10,9 +10,6 @@
 		<input type="hidden" name="ordClmDtlSn" value="${ordDtlVo.ordClmDtlSn}">
 		<input type="hidden" name="goodsCd" value="${ordDtlVo.goodsCd}">
 		<input type="hidden" name="goodsQty" value="${ordDtlVo.goodsQty}">
-		<%-- <input type="hidden" name="clmSctCd" value="02">
-		<input type="hidden" name="clmStatCd" value="${ordDtlVo.clmStatCd}"> //컨트롤러에서
-		<input type="hidden" name="ordDtlStatCd" value="09"> --%>
 		
 		<div class="row mb-3">
 			<div class="col-md-4">
@@ -21,7 +18,7 @@
 			</div>
 			<div class="col-md-4">
 				<label for="goodsNm" class="form-label">주문 상품</label>
-				<input type="text" id="goodsNm" class="form-control" value="${ordDtlVo.bulTitNm}" readonly>
+				<input type="text" id="goodsNm" name="goodsNm" class="form-control" value="${ordDtlVo.bulTitNm}" readonly>
 			</div>
 			<div class="col-md-4">
 				<label for="payMny" class="form-label">결제 금액</label>

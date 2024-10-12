@@ -1,6 +1,11 @@
 package com.dev.ck.cltsh.shp.mypage.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,10 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dev.ck.cltsh.shp.mypage.CltMypgDto;
+import com.dev.ck.cltsh.shp.order.CltOrderDto;
 
 @Service
 public class CltMypgService {
-	@Autowired private CltMypgMapper mypgDao;
+	@Autowired private CltMypgMapper dao;
 
 	public CltMypgDto parameterSetting(HttpServletRequest req) {
 		String ordNo = req.getParameter("ordNo");
@@ -65,10 +71,41 @@ public class CltMypgService {
 	}
 	
 	public int ordCnt(){
-		return mypgDao.ordCnt();
+		return dao.ordCnt();
 	};
 	
 	public List<CltMypgDto> selectMypgList(CltMypgDto pvo){
-		return mypgDao.selectMypgList(pvo);
+		return dao.selectMypgList(pvo);
 	};
+	
+	public List<CltMypgDto> getOrderList(CltMypgDto pvo) {
+		List<CltMypgDto> orders = selectMypgList(pvo);
+
+		// 주문 취소 여부 확인을 위한 Map (ordNo 기준)
+		Map<String, CltMypgDto> orderMap = new HashMap<>();
+
+		for (CltMypgDto order : orders) {
+			String ordNo = order.getOrdNo(); // 주문 번호
+			String clmSctCd = order.getClmSctCd(); // 클레임 구분 코드 (01: 주문, 02: 취소)
+			String clmStatCd = order.getClmStatCd(); // 클레임 상태 코드
+
+			// 취소 주문인지 확인
+			boolean isCanceled = "02".equals(clmSctCd.trim())
+					&& ("01".equals(clmStatCd.trim()) || "02".equals(clmStatCd.trim()));
+
+			// 기존에 같은 주문 번호의 주문이 없다면 추가
+			if (!orderMap.containsKey(ordNo)) {
+				orderMap.put(ordNo, order); // 처음 들어온 주문 추가
+			} else {
+				// 같은 주문 번호가 이미 있고, 취소된 주문인 경우 덮어쓰기
+				if (isCanceled) {
+					orderMap.put(ordNo, order); // 취소된 주문으로 덮어쓰기
+				}
+				// 기존 주문이 일반 주문이면 아무것도 하지 않음
+			}
+		}
+
+		// Map에서 주문 리스트로 변환
+		return new ArrayList<>(orderMap.values());
+	}
 }

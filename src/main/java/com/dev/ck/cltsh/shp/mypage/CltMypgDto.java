@@ -30,6 +30,11 @@ public class CltMypgDto extends PagingVO {
 	private String acqrAddrDtl; /* 수령지 상세 주소 */
 	private String reqMemo; /* 배송메모 */
 
+	private String ordClmDtlSn; /* 주문상세*/
+	private String clmSctCd; /* 클레임 구분*/
+	private String clmStatCd; /* 클레임 상태*/
+	
+	
 	private String usrId;
 	private long saleBoardRpySeq;
 	private String bulTitNms; /* 여러 건 -  판매게시판 제목들  */

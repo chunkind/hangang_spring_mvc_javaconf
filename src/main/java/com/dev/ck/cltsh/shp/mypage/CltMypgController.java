@@ -40,11 +40,12 @@ public class CltMypgController{
 	@RequestMapping("/cltsh/mypage/mypageOrder.do")
 	public String mypageOrder(HttpServletRequest req, HttpServletResponse res, CltMypgDto mypgVO) {
 		CltUserDto loginVo = commonCode(req);
-		
 		mypgVO.setUsrId(loginVo.getUsrId());
+		List<CltMypgDto> ordList = mypgService.getOrderList(mypgVO);
+		
 		List<CltMypgDto> mypgList = mypgService.selectMypgList(mypgVO);
 		
-		for (CltMypgDto mypg : mypgList) {
+		/*for (CltMypgDto mypg : mypgList) {
 			String bulTitNms = mypg.getBulTitNm();
 			
 			if (bulTitNms != null && !bulTitNms.isEmpty()) {
@@ -59,9 +60,11 @@ public class CltMypgController{
 					mypg.setBulTitNms(processedBulTitNms);
 				}
 			}
-		}
+		}*/
 		
+		req.setAttribute("ordList", ordList);
 		req.setAttribute("mypgList", mypgList);
+		
 		return "cltsh/shp/mypage/mypage_order";
 	}
 	
@@ -73,19 +76,17 @@ public class CltMypgController{
 	
 	@RequestMapping("/cltsh/mypage/mypageDetail.do")
 	public String mypageDetail(HttpServletRequest req, HttpServletResponse res, CltOrderDto ordVo) {
-		CltUserDto loginVo = commonCode(req);
-		
 		CltOrderDto ordList = orderService.selectOrdOne(ordVo);
+		CltOrderDto ordDtlList = orderService.searchOrdNoOne(ordVo);
 		
-		List<CltOrderDto> ordDtlList = orderService.searchOrdNoList(ordVo);
-//		ordVo.setUsrId(loginVo.getUsrId());
-		
+		//배송비
 		CltGoodsDto goodsVo = new CltGoodsDto();
-		goodsVo.setGoodsCd(ordList.getGoodsCd());
+		goodsVo.setGoodsCd(ordDtlList.getGoodsCd());
 		CltGoodsDto searchGoods = goodsService.selectMypgGoodsOne(goodsVo);//selectMypgSalesOne
 		
+		// 상품 가격
 		CltSalesDto salesVo = new CltSalesDto();
-		salesVo.setGoodsCd(ordList.getGoodsCd());
+		salesVo.setGoodsCd(ordDtlList.getGoodsCd());
 		CltSalesDto searchSalesGoods = salesService.selectMypgSalesOne(salesVo);
 		
 		req.setAttribute("ordList", ordList);

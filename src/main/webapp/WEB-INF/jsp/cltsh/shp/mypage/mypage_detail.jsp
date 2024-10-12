@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <section class="container my-5">
@@ -39,7 +38,25 @@
 			<div class="col-sm-3">주문금액</div>
 			<div class="col-sm-3">진행상황</div>
 		</div>
-		<c:forEach items="${ordDtlList }" var="obj">
+			<div class="row mb-2 align-items-center">
+				<div class="col-sm-3">
+					<img src="${searchGoods.imgPath}${searchGoods.imgNm}" class="img-fluid"
+						alt="상품 이미지">
+				</div>
+				<div class="col-sm-3">
+					<div>${ordDtlList.bulTitNm}</div>
+				</div>
+				<div class="col-sm-3">${String.format("%,d", searchSalesGoods.goodsPrc - searchSalesGoods.goodsSalePrc)}원
+				</div>
+				<div class="col-sm-3">
+					${ordDtlList.codeNm}
+					<c:if test="${ordDtlList.saleBoardRpySeq eq 0}">
+						<button class="btn btn-link p-0" onclick="location.href='/cltsh/dress/dressRegister.do?ordClmDtlSn=${obj.ordClmDtlSn}'">
+						드레스룸 등록</button>
+					</c:if>
+				</div>
+			</div>
+<%-- 		<c:forEach items="${ordDtlList }" var="obj">
 			<div class="row mb-2 align-items-center">
 				<div class="col-sm-3">
 					<img src="${obj.imgPath}${obj.imgNm}" class="img-fluid"
@@ -59,7 +76,7 @@
 				</div>
 			</div>
 			<hr>
-		</c:forEach>
+		</c:forEach> --%>
 	</div>
 
 	<h2 class="mb-4">결제 정보</h2>
@@ -119,8 +136,6 @@
 	</div>
 
 	<div class="text-center">
-		<button class="btn btn-primary"
-			onclick="location.href='/cltsh/mypage/mypage.do'">주문/배송조회로
-			이동</button>
+		<button class="btn btn-primary" onclick="location.href='/cltsh/mypage/mypageOrder.do'">주문/배송조회로 이동</button>
 	</div>
 </section>

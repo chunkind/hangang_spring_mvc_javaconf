@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:forEach items="${mypgList }" var="obj">
+<c:forEach items="${ordList }" var="obj">
 	<div class="container marketing">
 		<div class="low">
 			<div class="col">
@@ -29,16 +29,31 @@
 											onclick="location.href='/cltsh/dress/dressRegister.do?ordNo=${obj.ordNo}'" value="리뷰 쓰기" />
 									</div>
 								</c:if>
-
+								
 								<!-- 주문 상세 -->
-								<a class="card-text" href="/cltsh/mypage/mypageDetail.do?ordNo=${obj.ordNo}" style="color: #22c55e; display: block;">
+								<a class="card-text" href="/cltsh/mypage/mypageDetail.do?ordNo=${obj.ordNo}&ordClmNo=${obj.ordClmNo}" style="color: #22c55e; display: block;">
 									<small class="text-body-secondary">주문 상세</small>
 								</a>
 								
-								<!-- 주문 취소 -->
-								<a class="card-text" href="/cltsh/order/order_cancel.do?ordClmNo=${obj.ordClmNo}" style="color: #22c55e; display: block;">
-									<small class="text-body-secondary">주문 취소</small>
-								</a>
+								<c:choose>
+									<c:when test="${obj.clmSctCd == '01' and obj.clmStatCd == '01'}">
+										<a class="card-text" href="/cltsh/order/order_cancel.do?ordClmNo=${obj.ordClmNo}&ordClmDtlSn=${obj.ordClmDtlSn}" style="color: #22c55e; display: block;">
+											<small class="text-body-secondary">주문 취소</small>
+										</a>
+									</c:when>
+									
+									<c:when test="${obj.clmSctCd == '02'}">
+										<a class="card-text" href="/cltsh/order/order_cancel_ing.do?ordClmNo=${obj.ordClmNo}&ordClmDtlSn=${obj.ordClmDtlSn}" style="color: #22c55e; display: block;">
+											<small class="text-body-secondary">주문 취소 확인</small>
+										</a>
+									</c:when>
+
+									<c:otherwise>
+										<a class="card-text" href="/cltsh/order/order_return.do?ordClmNo=${obj.ordClmNo}&ordClmDtlSn=${obj.ordClmDtlSn}" style="color: #22c55e; display: block;">
+											<small class="text-body-secondary">반품 및 환불</small>
+										</a>
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</div>
 					</div>
