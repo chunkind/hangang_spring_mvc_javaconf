@@ -211,21 +211,22 @@
 	<!-- 주문 이력 조회 -->
 	<select id="selectOrdHistOne" resultType="cltOrderDto">
 		/* cltOrderMapper - selectOrdHistOne */
-		SELECT ORD_NO AS ordNo
-			, ORD_CLM_NO AS ordClmNo
-			, ORD_CLM_DTL_SN AS ordClmDtlSn
-			, CLM_SCT_CD AS clmSctCd
-			, CLM_STAT_CD AS clmStatCd
-			, ORD_DTL_STAT_CD AS ordDtlStatCd
-			, PROC_DATE AS procDate
-			, RGST_ID AS rgstId
-			, RGST_DATE AS rgstDate
-			, CLM_RASN AS clmRasn
-			, HIST_MEMO AS histMemo
+		SELECT ORD_NO AS ordNo,
+			ORD_CLM_NO AS ordClmNo,
+			ORD_CLM_DTL_SN AS ordClmDtlSn,
+			CLM_SCT_CD AS clmSctCd,
+			CLM_STAT_CD AS clmStatCd,
+			ORD_DTL_STAT_CD AS ordDtlStatCd,
+			PROC_DATE AS procDate,
+			RGST_ID AS rgstId,
+			RGST_DATE AS rgstDate,
+			CLM_RASN AS clmRasn,
+			HIST_MEMO AS histMemo
 		FROM CLT_ORD_HIST
-		WHERE 1=1
-		AND ORD_NO = #{ordNo}
-		AND ORD_CLM_NO = #{ordClmNo}
+		WHERE ORD_NO = #{ordNo}
+		AND ORD_CLM_NO =  #{ordClmNo}
+		ORDER BY RGST_DATE DESC
+		LIMIT 1;
 	</select>
 	
 	<!-- admOrdBaseUpdate -->
