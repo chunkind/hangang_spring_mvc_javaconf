@@ -64,8 +64,11 @@
 	</div>
 </c:forEach>
 
-<c:if test="${empty mypgList }">
-	<tr>
-		<td colspan="6"><div class="nodata">주문내역이 없습니다.</div></td>
-	</tr>
+<!-- 주문 내역이 없는 경우 -->
+<c:if test="${empty ordList}">
+	<div class="container marketing">
+		<div class="nodata" style="text-align: center; padding: 40px;">
+			<p>주문 내역이 없습니다.</p>
+		</div>
+	</div>
 </c:if>
