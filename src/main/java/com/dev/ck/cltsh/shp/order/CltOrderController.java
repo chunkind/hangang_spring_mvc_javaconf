@@ -252,8 +252,11 @@ public class CltOrderController{
 	//주문 취소 현황
 		@RequestMapping("/cltsh/order/order_cancel_ing.do")
 		public String orderCancelIng(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-			List<CltOrderDto> ordDtlVo = orderService.searchOrdClmNoList(pvo);
+			CltOrderDto ordDtlVo = orderService.searchOrdClmNoList(pvo);
+			CltOrderDto ordHistVo = orderService.selectOrdHistOne(ordDtlVo);
+
 			req.setAttribute("ordDtlVo", ordDtlVo);
+			req.setAttribute("ordHistVo", ordHistVo);
 			
 			return "cltsh/shp/order/order_cancel_ing";
 		}
@@ -262,10 +265,10 @@ public class CltOrderController{
 	@RequestMapping("/cltsh/order/order_return.do")
 	public String orderReturn(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
 		CltOrderDto ordVo = orderService.selectOrdOne(pvo);
-		List<CltOrderDto> ordDtlVo = orderService.searchOrdClmNoList(pvo);
+//		List<CltOrderDto> ordDtlVo = orderService.searchOrdClmNoList(pvo);
 		
 		req.setAttribute("ordVo", ordVo);
-		req.setAttribute("ordDtlVo", ordDtlVo);
+//		req.setAttribute("ordDtlVo", ordDtlVo);
 		
 		return "cltsh/shp/order/order_return";
 	}
