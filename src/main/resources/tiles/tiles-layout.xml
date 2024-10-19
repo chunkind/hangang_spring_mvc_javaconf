@@ -3,7 +3,7 @@
 	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
 	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-<!-- Cltsh-->
+	<!-- Cltsh-->
 	<definition name="cltshTemplate" template="/WEB-INF/jsp/cltsh/cmm/default_template.jsp">
 		<put-attribute name="title" value="쇼핑몰" />
 		<put-attribute name="header" value="/WEB-INF/jsp/cltsh/cmm/header.jsp" />
@@ -13,6 +13,18 @@
 		<put-attribute name="title" value="쇼핑몰 관리자" />
 		<put-attribute name="header" value="/WEB-INF/jsp/cltsh/cmm/admHeader.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/jsp/cltsh/cmm/admFooter.jsp" />
+	</definition>
+	<!-- no template 적용 --> 
+	<definition name="noFrame" template="/WEB-INF/jsp/cltsh/cmm/no_template.jsp">
+		<put-attribute name="title" value="쇼핑몰" />
+	</definition>
+	
+	<!-- noTemplate -->
+	<definition name="*/*.view" extends="noFrame">
+		<put-attribute name="body" value="/WEB-INF/jsp/cltsh/{1}/{2}.jsp" />
+	</definition>
+	<definition name="*/*/*.view" extends="noFrame">
+		<put-attribute name="body" value="/WEB-INF/jsp/cltsh/{1}/{2}/{3}.jsp" />
 	</definition>
 	
 	<definition name="cltsh/adm/*/*" extends="cltshAdmTemplate">

@@ -95,8 +95,15 @@
 			</table>
 
 			<div class="text-center my-4">
-				<input type="submit" class="btn btn-primary" value="주문하기">
+				<input type="button" class="btn btn-primary" onclick="orderPay();" value="주문하기">
 			</div>
 		</form>
 	</div>
 </div>
+
+<script>
+function orderPay(){
+	window.open('/cltsh/order/payPcReq.do', 'orderPay', 'width=800,height=600');
+}
+
+</script>
