@@ -69,7 +69,7 @@ public class CltGoodsDto extends PagingVO{
 	private String bulCont;
 	private String qryCnt;
 	private String lkeCnt;
-	private String goodsSalePrc;
+	private int goodsSalePrc;
 	private String prclWay;
 	private String saleCnt;
 	private String description;
