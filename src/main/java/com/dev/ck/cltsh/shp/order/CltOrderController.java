@@ -20,6 +20,8 @@ import com.dev.ck.cltsh.shp.cate.service.CltCateService;
 import com.dev.ck.cltsh.shp.goods.CltGoodsDto;
 import com.dev.ck.cltsh.shp.goods.service.CltGoodsService;
 import com.dev.ck.cltsh.shp.order.service.CltOrderService;
+import com.dev.ck.cltsh.shp.payment.CltPaymentDto;
+import com.dev.ck.cltsh.shp.payment.service.CltPaymentService;
 import com.dev.ck.cltsh.shp.sales.CltSalesDto;
 import com.dev.ck.cltsh.shp.sales.service.CltSalesService;
 import com.dev.ck.cltsh.shp.user.CltUserDto;
@@ -31,23 +33,24 @@ public class CltOrderController{
 	@Autowired private CltGoodsService goodsService;
 	@Autowired private CltSalesService salesService;
 	@Autowired private CltCateService cateService;
+	@Autowired private CltPaymentService paymentService;
 	
-	@RequestMapping("/cltsh/order/payPcReq.do")
-	public String payPcReq(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-		return "inss/INIstdpay_pc_req.view";
-	}
-	@RequestMapping("/cltsh/order/payPcReturn.do")
-	public String payPcReturn(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-		return "inss/INIstdpay_pc_return.view";
-	}
-	@RequestMapping("/cltsh/order/payPcClose.do")
-	public String payPcClose(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-		return "inss/close.view";
-	}
+//	@RequestMapping("/cltsh/order/payPcReq.do")
+//	public String payPcReq(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+//		return "inss/INIstdpay_pc_req.view";
+//	}
+//	@RequestMapping("/cltsh/order/payPcReturn.do")
+//	public String payPcReturn(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+//		return "inss/INIstdpay_pc_return.view";
+//	}
+//	@RequestMapping("/cltsh/order/payPcClose.do")
+//	public String payPcClose(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+//		return "inss/close.view";
+//	}
 	
 	//주문
 	@RequestMapping("/cltsh/order/order.do")
-	public String order(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+	public String order(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) throws Exception {
 		String optionInfo[] = {pvo.getColorOption(),pvo.getSizeOption()};
 		req.setAttribute("optionInfo", optionInfo);
 		
@@ -56,7 +59,10 @@ public class CltOrderController{
 		
 		List<CltOrderDto> orderList = orderService.selectOrdList(pvo);
 		req.setAttribute("orderList", orderList);
-
+		
+		CltPaymentDto payVo = paymentService.createPaymentParameters(detail, pvo);
+		req.setAttribute("payVo", payVo);
+		
 		return "cltsh/shp/order/order";
 	}
 	
