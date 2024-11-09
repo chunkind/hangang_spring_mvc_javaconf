@@ -58,7 +58,7 @@ public class CltPaymentService {
 	public Map<String, String> processPayment(HttpServletRequest req) throws Exception {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		CltPaymentDto pvo = new CltPaymentDto();
-		
+		String a = req.getParameter("CARD_Num");
 		try{
 			//#############################
 			// 인증결과 파라미터 일괄 수신

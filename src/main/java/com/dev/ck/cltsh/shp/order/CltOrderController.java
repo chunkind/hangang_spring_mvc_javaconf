@@ -35,19 +35,6 @@ public class CltOrderController{
 	@Autowired private CltCateService cateService;
 	@Autowired private CltPaymentService paymentService;
 	
-//	@RequestMapping("/cltsh/order/payPcReq.do")
-//	public String payPcReq(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-//		return "inss/INIstdpay_pc_req.view";
-//	}
-//	@RequestMapping("/cltsh/order/payPcReturn.do")
-//	public String payPcReturn(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-//		return "inss/INIstdpay_pc_return.view";
-//	}
-//	@RequestMapping("/cltsh/order/payPcClose.do")
-//	public String payPcClose(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-//		return "inss/close.view";
-//	}
-	
 	//주문
 	@RequestMapping("/cltsh/order/order.do")
 	public String order(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) throws Exception {

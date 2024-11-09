@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.ck.cltsh.shp.payment.service.CltPaymentMapper">
+	
+	<select id="selectPaymentOne" resultType="cltPaymentDto">
+		/* PaymentDao.selectPaymentOne - 결제 1건 */
+		SELECT TID AS tid
+			, MID AS mid
+			, OID AS oid
+			, PRICE AS price
+			, TIMESTAMP AS timestamp
+			, SIGNATURE AS signature
+			, VERIFICATION AS verification
+			, CURRENCY AS currency
+			, GOODS_NM AS goodsNm
+			, BUYER_NM AS buyerNm
+			, BUYER_TEL AS buyerTel
+			, BUYER_EMAIL AS buyerEmail
+			, PAYMENT_STATUS AS paymentStatus
+			, RGST_DATE AS rgstDate
+			, UPDT_DATE AS updtDate
+		FROM  CLT_PAYMENT
+		WHERE 1=1
+		AND TID = #{tid};
+	</select>
+	
+	<select id="selectPaymentList" resultType="cltPaymentDto">
+		/* PaymentDao.selectPaymentList - 결제 리스트 */
+		SELECT TID AS tid
+			, MID AS mid
+			, OID AS oid
+			, PRICE AS price
+			, TIMESTAMP AS timestamp
+			, SIGNATURE AS signature
+			, VERIFICATION AS verification
+			, CURRENCY AS currency
+			, GOODS_NM AS goodsNm
+			, BUYER_NM AS buyerNm
+			, BUYER_TEL AS buyerTel
+			, BUYER_EMAIL AS buyerEmail
+			, PAYMENT_STATUS AS paymentStatus
+			, RGST_DATE AS rgstDate
+			, UPDT_DATE AS updtDate
+		FROM  CLT_PAYMENT
+		WHERE 1=1
+	</select>
+
+	<insert id="insertPayment">
+		/* PaymentDao.insertPayment - 결제 등록 */
+		INSERT INTO CLT_PAYMENT 
+		( TID
+		, MID
+		, OID
+		, PRICE
+		, TIMESTAMP
+		, SIGNATURE
+		, VERIFICATION
+		, CURRENCY
+		, GOODS_NM
+		, BUYER_NM
+		, BUYER_TEL
+		, BUYER_EMAIL
+		, PAYMENT_STATUS
+		, RGST_DATE
+		, UPDT_DATE ) 
+		VALUES
+		( #{tid}
+		, #{mid}
+		, #{oid}
+		, #{price}
+		, #{timestamp}
+		, #{signature}
+		, #{verification}
+		, #{currency}
+		, #{goodsNm}
+		, #{buyerNm}
+		, #{buyerTel}
+		, #{buyerEmail}
+		, #{paymentStatus}
+		, NOW()
+		, NULL )
+	</insert>
+
+</mapper>

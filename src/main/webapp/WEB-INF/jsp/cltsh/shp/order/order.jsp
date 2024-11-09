@@ -125,9 +125,8 @@
 			</table>
 
 			<div class="text-center my-4">
-				<!-- <input type="button" class="btn btn-primary" onclick="orderPay();" value="주문하기"> -->
 				<input type="button" class="btn btn-primary" onclick="openPaymentPopup();" value="주문하기">
-				
+				<!-- <input type="button" class="btn btn-primary" onclick="document.getElementById('SendPayForm_id').submit();" value="주문하기"> -->
 			</div>
 		</form>
 	</div>
@@ -135,28 +134,8 @@
 
 <script type="text/javascript">
 	function openPaymentPopup() {
-		// 결제 창을 여는 코드 (INIStdPay 사용)
-		INIStdPay.pay('SendPayForm_id'); // ID를 결제 폼의 ID로 설정하세요.
+		// payPcReq에서 응답을 받은 후 결제 창을 열기 위해 호출
+		INIStdPay.pay('SendPayForm_id');
 	}
 </script>
-
-<!-- <script type="text/javascript">
-	function openPaymentPopup() {
-		var form = document.frm; // 폼 객체
-		var popUrl = form.action; // form에서 action 속성을 가져와 팝업으로 사용할 URL
-		var popOption = "width=800, height=600, resizable=no, scrollbars=no, status=no"; // 팝업창 옵션
-
-		// 새로운 창에 form 데이터를 post 방식으로 전송하기 위한 방법
-		var newWindow = window.open('', 'orderPay', popOption); // 새로운 창을 팝업으로 엶
-		form.target = 'orderPay'; // 폼의 타겟을 팝업창으로 설정
-		form.submit(); // 폼 제출
-	}
-</script> -->
-
-<!-- <script>
-function orderPay(){
-	window.open('/cltsh/order/payPcReq.do', 'orderPay', 'width=800,height=600');
-}
-
-</script> -->
 
