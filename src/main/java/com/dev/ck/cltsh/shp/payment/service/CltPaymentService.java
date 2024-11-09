@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 import com.inicis.std.util.HttpUtil;
 import com.inicis.std.util.ParseUtil;
 import com.inicis.std.util.SignatureUtil;
+
 import java.util.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.dev.ck.cltsh.cmm.util.OrdUtil;
 import com.dev.ck.cltsh.shp.goods.CltGoodsDto;
@@ -15,8 +18,8 @@ import com.dev.ck.cltsh.shp.payment.CltPaymentDto;
 
 @Service
 public class CltPaymentService {
-	// @Autowired public CltPaymentMapper dao;
-
+	@Autowired public CltPaymentMapper dao;
+	
 	public CltPaymentDto createPaymentParameters(CltGoodsDto goodsVo, CltOrderDto orderVo) throws Exception {
 		CltPaymentDto payVo = new CltPaymentDto();
 		
@@ -52,50 +55,162 @@ public class CltPaymentService {
 		return payVo;
 	}
 	
-	public Map<String, String> processPayment(Map<String, String> paramMap) {
-		Map<String, String> resultMap = new HashMap<>();
+	public Map<String, String> processPayment(HttpServletRequest req) throws Exception {
+		Map<String, String> resultMap = new HashMap<String, String>();
+		CltPaymentDto pvo = new CltPaymentDto();
+		
+		try{
+			//#############################
+			// 인증결과 파라미터 일괄 수신
+			//#############################
+			req.setCharacterEncoding("UTF-8");
 
-		try {
-			// 인증 성공 여부 체크
-			if ("0000".equals(paramMap.get("resultCode")) && paramMap.get("authUrl")
-					.equals(ResourceBundle.getBundle("properties/idc_name").getString(paramMap.get("idc_name")))) {
+			Map<String,String> paramMap = new Hashtable<String,String>();
+			
+			Enumeration elems = req.getParameterNames();
+			
+			String temp = "";
 
-				String mid = paramMap.get("mid");
-				String timestamp = SignatureUtil.getTimestamp();
-				String charset = "UTF-8";
-				String format = "JSON";
-				String authToken = paramMap.get("authToken");
-				String authUrl = paramMap.get("authUrl");
-				String netCancelUrl = paramMap.get("netCancelUrl");
+			while(elems.hasMoreElements())
+			{
+				temp = (String) elems.nextElement();
+				paramMap.put(temp, req.getParameter(temp));
+			}
+			
+			pvo.setPaymentStatus(paramMap.get("resultMsg"));
+			//##############################
+			// 인증성공 resultCode=0000 확인
+			// IDC센터 확인 [idc_name=fc,ks,stg]	
+			// idc_name 으로 수신 받은 값 기준 properties 에 설정된 승인URL과 authURL 이 같은지 비교
+			// 승인URL은  https://manual.inicis.com 참조
+			//##############################
+			
+			if("0000".equals(paramMap.get("resultCode")) && paramMap.get("authUrl").equals(ResourceBundle.getBundle("properties/idc_name").getString(paramMap.get("idc_name")))){			
+				
+				System.out.println("####인증성공/승인요청####");
 
-				// 서명 생성
-				Map<String, String> signParam = new HashMap<>();
-				signParam.put("authToken", authToken);
-				signParam.put("timestamp", timestamp);
+				//############################################
+				// 1.전문 필드 값 설정(***가맹점 개발수정***)
+				//############################################
+				
+				String mid 		= paramMap.get("mid");
+				String timestamp= SignatureUtil.getTimestamp();
+				String charset 	= "UTF-8";
+				String format 	= "JSON";
+				String authToken= paramMap.get("authToken");
+				String authUrl	= paramMap.get("authUrl");
+				String netCancel= paramMap.get("netCancelUrl");	
+				String merchantData = paramMap.get("merchantData");
+				
+				//#####################
+				// 2.signature 생성
+				//#####################
+				Map<String, String> signParam = new HashMap<String, String>();
 
+				signParam.put("authToken",	authToken);		// 필수
+				signParam.put("timestamp",	timestamp);		// 필수
+
+				// signature 데이터 생성 (모듈에서 자동으로 signParam을 알파벳 순으로 정렬후 NVP 방식으로 나열해 hash)
 				String signature = SignatureUtil.makeSignature(signParam);
+				
+				signParam.put("signKey",	"SU5JTElURV9UUklQTEVERVNfS0VZU1RS");		// 필수
+				
+				// signature 데이터 생성 (모듈에서 자동으로 signParam을 알파벳 순으로 정렬후 NVP 방식으로 나열해 hash)
+				String verification = SignatureUtil.makeSignature(signParam);
+				
+				
 
-				// 인증 데이터 생성
-				Map<String, String> authMap = new HashMap<>();
-				authMap.put("mid", mid);
-				authMap.put("authToken", authToken);
-				authMap.put("signature", signature);
-				authMap.put("timestamp", timestamp);
-				authMap.put("charset", charset);
-				authMap.put("format", format);
+				//#####################
+				// 3.API 요청 전문 생성
+				//#####################
+				Map<String, String> authMap = new Hashtable<String, String>();
+				
+				authMap.put("mid"			,mid);			// 필수
+				authMap.put("authToken"		,authToken);	// 필수
+				authMap.put("signature"		,signature);	// 필수
+				authMap.put("verification"	,verification);	// 필수
+				authMap.put("timestamp"		,timestamp);	// 필수
+				authMap.put("charset"		,charset);		// default=UTF-8
+				authMap.put("format"		,format);
 
-				// 승인 요청
 				HttpUtil httpUtil = new HttpUtil();
-				String authResultString = httpUtil.processHTTP(authMap, authUrl);
-				resultMap = ParseUtil.parseStringToMap(authResultString);
-			} else {
+
+				try{
+					//#####################
+					// 4.API 통신 시작
+					//#####################
+
+					String authResultString = "";
+					
+					authResultString = httpUtil.processHTTP(authMap, authUrl);
+					
+					//############################################################
+					//6.API 통신결과 처리(***가맹점 개발수정***)
+					//############################################################
+					
+					String test = authResultString.replace(",", "&").replace(":", "=").replace("\"", "").replace(" ","").replace("\n", "").replace("}", "").replace("{", "");
+								
+					resultMap = ParseUtil.parseStringToMap(test); //문자열을 MAP형식으로 파싱
+					
+					//파라미터 셋팅//
+					pvo.setTid(resultMap.get("tid"));
+					pvo.setMid(mid);
+					pvo.setTimestamp(timestamp);
+					pvo.setSignature(signature);
+					pvo.setVerification(verification);
+					pvo.setBuyerNm(resultMap.get("buyerName"));
+					pvo.setBuyerTel(resultMap.get("buyerTel"));
+					pvo.setBuyerEmail(resultMap.get("buyerEmail"));
+					pvo.setOid(resultMap.get("MOID"));
+					pvo.setPrice(resultMap.get("TotPrice"));
+					pvo.setCurrency(resultMap.get("currency"));
+					pvo.setGoodsNm(resultMap.get("goodsName"));
+
+					insertPayment(pvo);
+					
+					// 수신결과를 파싱후 resultCode가 "0000"이면 승인성공 이외 실패
+					//throw new Exception("강제 망취소 요청 Exception ");
+					
+					return resultMap;
+					
+				} catch (Exception ex) {
+
+					//####################################
+					// 실패시 처리(***가맹점 개발수정***)
+					//####################################
+
+					//---- db 저장 실패시 등 예외처리----//
+					System.out.println(ex);
+
+					//#####################
+					// 망취소 API
+					//#####################
+					String netcancelResultString = httpUtil.processHTTP(authMap, netCancel);	// 망취소 요청 API url(고정, 임의 세팅 금지)
+
+					System.out.println("## 망취소 API 결과 ##");
+
+					// 망취소 결과 확인
+					System.out.println("<p>"+netcancelResultString.replaceAll("<", "&lt;").replaceAll(">", "&gt;")+"</p>");
+				}
+
+			}else{
+				
 				resultMap.put("resultCode", paramMap.get("resultCode"));
 				resultMap.put("resultMsg", paramMap.get("resultMsg"));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
-
 		return resultMap;
+	}
+	
+	public int insertPayment(CltPaymentDto data) {
+		return dao.insertPayment(data);
+	}
+	public CltPaymentDto selectPaymentOne(CltPaymentDto pvo) {
+		return dao.selectPaymentOne(pvo);
+	}
+	public List<CltPaymentDto> selectPaymentList(CltPaymentDto pvo){
+		return dao.selectPaymentList(pvo);
 	}
 }
