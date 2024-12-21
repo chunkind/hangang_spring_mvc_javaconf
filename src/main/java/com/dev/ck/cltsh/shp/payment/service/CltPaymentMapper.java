@@ -11,4 +11,5 @@ public interface CltPaymentMapper {
 	int insertPayment(CltPaymentDto pvo);
 	CltPaymentDto selectPaymentOne(CltPaymentDto pvo);
 	List<CltPaymentDto> selectPaymentList(CltPaymentDto pvo);
+	CltPaymentDto ordNoSearch(String ordNo);
 }

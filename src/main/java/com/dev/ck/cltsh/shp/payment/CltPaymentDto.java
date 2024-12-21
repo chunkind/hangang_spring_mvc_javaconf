@@ -6,11 +6,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CltPaymentDto {
-	private String version;		// 1.0
+	private int paySn;
+	private String ordClmNo;
+	private int ordClmDtlSn;
+	private int payState;
+	
 	private String gopaymethod;	// Card:Directbank:vbank
 	private String tid;			// 거래 고유 식별자 (transaction_id)
 	private String mid;			// 상점 아이디 (이니시스에서 발급한 상점 아이디 merchant_order_id)
-	private String oid;			// 주문 번호
+	private String ordNo;			// oid - 주문 번호
 	private String price;		// 결제 금액
 	private String timestamp;	// 타임스탬프 - 요청 시간
 	private String useChkfake;	// pc결제 보안강화 사용 [Y 고정]

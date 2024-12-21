@@ -4,9 +4,13 @@
 	
 	<select id="selectPaymentOne" resultType="cltPaymentDto">
 		/* PaymentDao.selectPaymentOne - 결제 1건 */
-		SELECT TID AS tid
+		SELECT PAY_SN AS paySn
+			, ORD_NO AS ordNo
+			, ORD_CLM_NO AS ordClmNo
+			, ORD_CLM_DTL_SN AS ordClmDtlSn
+			, PAY_STATE AS payState 
+			, TID AS tid
 			, MID AS mid
-			, OID AS oid
 			, PRICE AS price
 			, TIMESTAMP AS timestamp
 			, SIGNATURE AS signature
@@ -26,9 +30,13 @@
 	
 	<select id="selectPaymentList" resultType="cltPaymentDto">
 		/* PaymentDao.selectPaymentList - 결제 리스트 */
-		SELECT TID AS tid
+		SELECT PAY_SN AS paySn
+			, ORD_NO AS ordNo
+			, ORD_CLM_NO AS ordClmNo
+			, ORD_CLM_DTL_SN AS ordClmDtlSn
+			, PAY_STATE AS payState 
+			, TID AS tid
 			, MID AS mid
-			, OID AS oid
 			, PRICE AS price
 			, TIMESTAMP AS timestamp
 			, SIGNATURE AS signature
@@ -41,14 +49,19 @@
 			, PAYMENT_STATUS AS paymentStatus
 			, RGST_DATE AS rgstDate
 			, UPDT_DATE AS updtDate
-		FROM  CLT_PAYMENT
-		WHERE 1=1
+		FROM  CLT_PAY_BASE
+		WHERE 1=1;
 	</select>
 
 	<insert id="insertPayment">
 		/* PaymentDao.insertPayment - 결제 등록 */
 		INSERT INTO CLT_PAYMENT 
-		( TID
+		( PAY_SN
+		, ORD_NO
+		, ORD_CLM_NO
+		, ORD_CLM_DTL_SN
+		, PAY_STATE
+		, TID
 		, MID
 		, OID
 		, PRICE
@@ -64,7 +77,12 @@
 		, RGST_DATE
 		, UPDT_DATE ) 
 		VALUES
-		( #{tid}
+		( #{paySn}
+		, #{ordNo}
+		, #{ordClmNo}
+		, #{ordClmDtlSn}
+		, #{payState}
+		, #{tid}
 		, #{mid}
 		, #{oid}
 		, #{price}
@@ -80,5 +98,15 @@
 		, NOW()
 		, NULL )
 	</insert>
+
+	<select id="ordNoSearch" resultType="cltPaymentDto">
+		/* PaymentDao.ordNoSearch */
+		SELECT base.ORD_CLM_NO AS ordClmNo,
+			dtl.ORD_CLM_DTL_SN AS ordClmDtlSn
+		FROM CLT_ORD_BASE base
+		JOIN CLT_ORD_DTL dtl  ON base.ORD_CLM_NO = dtl.ORD_CLM_NO
+		WHERE 1=1
+		AND base.ORD_NO = #{ordNo};
+	</select>
 
 </mapper>

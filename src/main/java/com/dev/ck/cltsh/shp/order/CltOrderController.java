@@ -1,7 +1,9 @@
 package com.dev.ck.cltsh.shp.order;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -53,6 +56,26 @@ public class CltOrderController{
 		return "cltsh/shp/order/order";
 	}
 	
+	//주문 생성 (결제 하기 전)
+	@RequestMapping("/cltsh/order/payOrder.do")
+	@ResponseBody
+	public Map<String, Object> payOrder(HttpServletRequest req, @ModelAttribute CltOrderDto pvo) {
+		Map<String, Object> response = new HashMap<>();
+		try {
+			HttpSession session = req.getSession();
+			CltUserDto loginVo = (CltUserDto) session.getAttribute("loginInfo");
+			
+			// 서비스 호출
+			orderService.createOrder(pvo, loginVo);
+			response.put("result", "success");
+			
+		}catch (Exception e) {
+			response.put("result", "fail");
+			response.put("message", e.getMessage());
+		}
+		return response;
+	}
+
 	//주문 생성
 	@RequestMapping("/cltsh/order/orderRegister.do")
 	public String orderRegister(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {

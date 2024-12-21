@@ -49,7 +49,7 @@ public class CltPaymentService {
 		payVo.setMKey(mKey);
 		payVo.setTimestamp(timestamp);
 		payVo.setPrice(price);
-		payVo.setOid(pinNo);
+		payVo.setOrdNo(pinNo);
 		payVo.setUseChkfake(useChkfake);
 		
 		return payVo;
@@ -58,7 +58,7 @@ public class CltPaymentService {
 	public Map<String, String> processPayment(HttpServletRequest req) throws Exception {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		CltPaymentDto pvo = new CltPaymentDto();
-		String a = req.getParameter("CARD_Num");
+		
 		try{
 			//#############################
 			// 인증결과 파라미터 일괄 수신
@@ -161,11 +161,16 @@ public class CltPaymentService {
 					pvo.setBuyerNm(resultMap.get("buyerName"));
 					pvo.setBuyerTel(resultMap.get("buyerTel"));
 					pvo.setBuyerEmail(resultMap.get("buyerEmail"));
-					pvo.setOid(resultMap.get("MOID"));
+					pvo.setOrdNo(resultMap.get("MOID"));
 					pvo.setPrice(resultMap.get("TotPrice"));
 					pvo.setCurrency(resultMap.get("currency"));
 					pvo.setGoodsNm(resultMap.get("goodsName"));
-
+					
+					CltPaymentDto payVo = ordNoSearch(resultMap.get("MOID"));
+					pvo.setOrdClmNo(payVo.getOrdClmNo());
+					pvo.setOrdClmDtlSn(payVo.getOrdClmDtlSn());
+					pvo.setPayState(payVo.getPayState());
+					
 					insertPayment(pvo);
 					
 					// 수신결과를 파싱후 resultCode가 "0000"이면 승인성공 이외 실패
@@ -212,5 +217,8 @@ public class CltPaymentService {
 	}
 	public List<CltPaymentDto> selectPaymentList(CltPaymentDto pvo){
 		return dao.selectPaymentList(pvo);
+	}
+	public CltPaymentDto ordNoSearch(String ordNo) {
+		return dao.ordNoSearch(ordNo);
 	}
 }

@@ -28,7 +28,7 @@
 			<input type="hidden" name="version" value="1.0">
 			<input type="hidden" name="gopaymethod" value="Card:Directbank:vbank">
 			<input type="hidden" name="mid" value="${payVo.mid }">
-			<input type="hidden" name="oid" value="${payVo.oid }">
+			<input type="hidden" name="oid" value="${payVo.ordNo }">
 			<input type="hidden" name="price" value="${payVo.price }">
 			<input type="hidden" name="timestamp" value="${payVo.timestamp }">
 			<input type="hidden" name="useChkfake" value="${payVo.useChkfake }">
@@ -107,7 +107,7 @@
 					<td>${String.format("%,d", detail.dlvPrc)} 원</td>
 					<th>총 결제 금액</th>
 					<td>${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)} 원</td>
-				</tr>
+				</tr>Q
 				<tr>
 					<th>배송지</th>
 					<td>${sessionScope.loginInfo.loadAddrBase}(${sessionScope.loginInfo.loadAddrDtl})</td>
@@ -125,7 +125,7 @@
 			</table>
 
 			<div class="text-center my-4">
-				<input type="button" class="btn btn-primary" onclick="openPaymentPopup();" value="주문하기">
+				<input type="button" class="btn btn-primary" onclick="sendPaymentData();" value="주문하기">
 				<!-- <input type="button" class="btn btn-primary" onclick="document.getElementById('SendPayForm_id').submit();" value="주문하기"> -->
 			</div>
 		</form>
@@ -137,5 +137,24 @@
 		// payPcReq에서 응답을 받은 후 결제 창을 열기 위해 호출
 		INIStdPay.pay('SendPayForm_id');
 	}
+	
+	function sendPaymentData() {
+		const formData = new FormData(document.getElementById('SendPayForm_id'));
+		
+		fetch('/cltsh/order/payOrder.do', {
+			method: 'POST',
+			body: formData
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.result === 'success') {
+				INIStdPay.pay('SendPayForm_id');
+			} else {
+				alert('저장 실패: ' + data.message);
+			}
+		})
+		.catch(error => console.error('Error:', error));
+	}
 </script>
+
 
