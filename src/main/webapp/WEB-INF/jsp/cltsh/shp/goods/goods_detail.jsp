@@ -12,21 +12,20 @@
 		<p class="lead my-1">예상 구매가 ${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)}원</p>
 		<p class="lead my-1">적립 ${String.format("%,d", ((detail.goodsPrc - detail.goodsSalePrc) * 0.03).intValue())}원</p>
 		
-		<select class="form-select my-1" name="colorOption" id="colorOption">
-			<option value="">[컬러] 옵션을 선택하세요.</option>
-			<option value="흰색">흰색</option>
-			<option value="검정색">검정색</option>
-			<option value="회색">회색</option>
-			<option value="파란색">파란색</option>
-		</select>
+		 
+		<c:if test="${not empty optList}">
+			<c:forEach var="entry" items="${optList}">
+			<select class="form-select my-1" name="option_${entry.key}" id="colorOption">
+				<option value="">[${entry.value[0].optsNm}] 옵션을 선택하세요.</option>
+				
+				<c:forEach var="option" items="${entry.value}">
+				<option value="${option.optsCd}">${option.optsVal}</option>
+				</c:forEach>
+			</select>
+			<br/>
+			</c:forEach>
+		</c:if>
 		
-		<select class="form-select my-1" name="sizeOption" id="sizeOption">
-			<option value="">[사이즈] 옵션을 선택하세요.</option>
-			<option value="S">S</option>
-			<option value="M">M</option>
-			<option value="L">L</option>
-			<option value="XL">XL</option>
-		</select>
 		
 		<p class="lead my-1">총 상품 금액 ${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)}원</p>
 		<c:if test="${not empty sessionScope.loginInfo }">
