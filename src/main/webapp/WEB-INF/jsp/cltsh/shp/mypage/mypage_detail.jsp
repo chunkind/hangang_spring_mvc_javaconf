@@ -38,29 +38,10 @@
 			<div class="col-sm-3">주문금액</div>
 			<div class="col-sm-3">진행상황</div>
 		</div>
+		<c:forEach var="obj" items="${ordDtlList}">
 			<div class="row mb-2 align-items-center">
 				<div class="col-sm-3">
-					<img src="${searchGoods.imgPath}${searchGoods.imgNm}" class="img-fluid"
-						alt="상품 이미지">
-				</div>
-				<div class="col-sm-3">
-					<div>${ordDtlList.bulTitNm}</div>
-				</div>
-				<div class="col-sm-3">${String.format("%,d", searchSalesGoods.goodsPrc - searchSalesGoods.goodsSalePrc)}원
-				</div>
-				<div class="col-sm-3">
-					${ordDtlList.codeNm}
-					<c:if test="${ordDtlList.saleBoardRpySeq eq 0}">
-						<button class="btn btn-link p-0" onclick="location.href='/cltsh/dress/dressRegister.do?ordClmDtlSn=${obj.ordClmDtlSn}'">
-						드레스룸 등록</button>
-					</c:if>
-				</div>
-			</div>
-<%-- 		<c:forEach items="${ordDtlList }" var="obj">
-			<div class="row mb-2 align-items-center">
-				<div class="col-sm-3">
-					<img src="${obj.imgPath}${obj.imgNm}" class="img-fluid"
-						alt="상품 이미지">
+					<img src="${obj.imgPath}${obj.imgNm}" class="img-fluid" alt="상품 이미지">
 				</div>
 				<div class="col-sm-3">
 					<div>${obj.bulTitNm}</div>
@@ -70,13 +51,11 @@
 				<div class="col-sm-3">
 					${obj.codeNm}
 					<c:if test="${obj.saleBoardRpySeq eq 0}">
-						<button class="btn btn-link p-0" onclick="location.href='/cltsh/dress/dressRegister.do?ordClmDtlSn=${obj.ordClmDtlSn}'">
-						드레스룸 등록</button>
+						<button class="btn btn-link p-0" onclick="location.href='/cltsh/dress/dressRegister.do?ordNo=${obj.ordNo }&ordClmDtlSn=${obj.ordClmDtlSn}'"> 드레스룸 등록</button>
 					</c:if>
 				</div>
 			</div>
-			<hr>
-		</c:forEach> --%>
+		</c:forEach>
 	</div>
 
 	<h2 class="mb-4">결제 정보</h2>
@@ -87,7 +66,11 @@
 		</div>
 		<div class="row mb-2">
 			<div class="col-sm-3 fw-bold">상품 금액</div>
-			<div class="col-sm-9">${String.format("%,d", searchSalesGoods.goodsPrc - searchSalesGoods.goodsSalePrc)}원</div>
+			<div class="col-sm-9">
+				<c:forEach var="obj" items="${ordDtlList}">
+					${String.format("%,d", obj.goodsPrc - obj.goodsSalePrc)}원<br>
+				</c:forEach>
+			</div>
 		</div>
 		<div class="row mb-2">
 			<div class="col-sm-3 fw-bold">쿠폰 할인 금액</div>
@@ -99,7 +82,7 @@
 		</div>
 		<div class="row mb-2">
 			<div class="col-sm-3 fw-bold">배송비</div>
-			<div class="col-sm-9">${String.format("%,d", searchGoods.dlvPrc)}원</div>
+			<div class="col-sm-9">${String.format("%,d", ordDtlList[0].dlvPrc)}원</div>
 		</div>
 		<div class="row mb-2">
 			<div class="col-sm-3 fw-bold">총 주문금액</div>

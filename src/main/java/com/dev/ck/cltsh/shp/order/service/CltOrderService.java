@@ -366,8 +366,8 @@ public class CltOrderService {
 		return dao.deleteOrdDtl(pvo);
 	}
 	
-	public int admOrdDtlStatCdeChange(CltOrderDto pvo) {
-		return dao.admOrdDtlStatCdeChange(pvo);  
+	public int admOrdDtlStatCdChange(CltOrderDto pvo) {
+		return dao.admOrdDtlStatCdChange(pvo);  
 	}
 	
 	public List<CltOrderDto> searchIdOrdList(CltOrderDto pvo){
@@ -384,6 +384,10 @@ public class CltOrderService {
 	
 	public CltOrderDto searchOrdNoOne(CltOrderDto pvo) {
 		return dao.searchOrdNoOne(pvo);
+	}
+	
+	public List<CltOrderDto> mypgOrdDtl(CltOrderDto pvo) {
+		return dao.mypgOrdDtl(pvo);
 	}
 	
 	public List<CltOrderDto> searchOrdDtlGoods(CltOrderDto pvo){
