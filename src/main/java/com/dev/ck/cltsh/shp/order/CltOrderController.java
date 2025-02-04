@@ -64,6 +64,8 @@ public class CltOrderController{
 		try {
 			HttpSession session = req.getSession();
 			CltUserDto loginVo = (CltUserDto) session.getAttribute("loginInfo");
+			pvo.setOrdNo(req.getParameter("oid"));
+			pvo.setOrdClmNo(req.getParameter("oid"));
 			
 			// 서비스 호출
 			orderService.createOrder(pvo, loginVo);

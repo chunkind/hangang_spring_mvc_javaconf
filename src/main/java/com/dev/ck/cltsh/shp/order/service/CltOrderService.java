@@ -160,12 +160,12 @@ public class CltOrderService {
 	public void createOrder(CltOrderDto pvo, CltUserDto loginVo) {
 		
 		String seq = pvo.getCheckedList();
-		String pinNo = OrdUtil.getPinNo();
+//		String pinNo = OrdUtil.getPinNo();
 		
 		// 비즈니스 로직 처리
 		pvo.setOrdDtlStatCd("02"); // 주문 상태 - 결제 완료
-		pvo.setOrdNo(pinNo);
-		pvo.setOrdClmNo(pinNo);
+//		pvo.setOrdNo(pinNo);
+//		pvo.setOrdClmNo(pinNo);
 		pvo.setOrdClmDtlSn(1);
 		pvo.setRgstId(loginVo.getUsrId());
 		pvo.setUpdtId(loginVo.getUsrId());
