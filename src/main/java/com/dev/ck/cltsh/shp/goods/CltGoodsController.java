@@ -1,7 +1,6 @@
 package com.dev.ck.cltsh.shp.goods;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -57,57 +56,59 @@ public class CltGoodsController{
 	}
 	
 	@RequestMapping("/cltsh/goods/goodsDetail.do")
-	public String goodsDetail(HttpServletRequest req, HttpServletResponse res, CltQnaDto qvo) {
+	public String goodsDetail(HttpServletRequest req, HttpServletResponse res, CltQnaDto qvo) throws IOException {
+		String referer = req.getHeader("Referer"); // 이전 페이지의 URL
+	    
 		//공통 코드 가져오기
 		CltCateDto cateVO = new CltCateDto();
 		List<CltCateDto> oneDepthCateList = cateService.selectCateList(cateVO);
-		
-		
+
 		// 상품정보
 		CltGoodsDto detail = goodsService.selectGoodsDetail(req.getParameter("searchSaleBoardSeq"));
-		
-		
-		// 상품정보: 옵션
-		CltOptsDto ovo = new CltOptsDto();
-		ovo.setGoodsCd((int) detail.getGoodsCd());
-		List<CltOptsDto> optList = optsService.selectAdmOptsList(ovo);
-		
-		Map<String, List<Map<String, Object>>> groupedOptions = new HashMap<>();
 
-		for (CltOptsDto option : optList) {
-		    String optsCd = option.getOptsCd();
-		    groupedOptions.putIfAbsent(optsCd, new ArrayList<>());
-		    groupedOptions.get(optsCd).add((Map<String, Object>) option);
+		if(detail !=null && !"".equals(detail.getGoodsCd())) {
+			// 상품정보: 옵션
+			CltOptsDto ovo = new CltOptsDto();
+			ovo.setGoodsCd((int) detail.getGoodsCd());
+			Map<String, List<Map<String, Object>>> groupedOptions = optsService.selectoptsMap(ovo);
+			
+			// 리뷰
+			CltDressDto dvo = new CltDressDto();
+			dvo.setGoodsCd((int) detail.getGoodsCd());
+			List<CltDressDto> rvo = dressService.goodsDtlDressList(dvo);
+			
+			////////////////////////////////////////////////////////////////////////////////
+			String requestURI = (String) req.getAttribute("requestURI"); //페이징
+			String page = req.getParameter("page");
+			int totalCnt = qnaService.qnaCnt();
+			qvo.setPath(requestURI);
+			qvo.setParamPage(page);
+			qvo.setTotalCnt(totalCnt);
+			PagingUtil.getPagingKeys(qvo);
+			////////////////////////////////////////////////////////////////////////////////
+			
+			qvo.setGoodsCd(detail.getGoodsCd());
+			// 문의
+			List<CltQnaDto> rqvo = qnaService.searchGoodsCdQna(qvo);
+			
+			req.setAttribute("oneDepthCateList", oneDepthCateList); //카테고리
+			req.setAttribute("detail", detail); // 상품상세
+			req.setAttribute("optList", groupedOptions); // 상품상세:옵션
+			
+			req.setAttribute("rvo", rvo);	// 리뷰 (드레스룸)
+			req.setAttribute("rqvo", rqvo);	// 문의
+			req.setAttribute("paging", qvo.getHtml()); //페이징
+			
+			return "cltsh/shp/goods/goods_detail";
+		}else {
+			// Referer가 있을 경우 이전 페이지로 이동
+	        if (referer != null) {
+	            res.sendRedirect(referer);
+	        } else {
+	            res.sendRedirect("/"); // 기본 페이지로 이동
+	        }
+	        return null;
 		}
 		
-		
-		// 리뷰
-		CltDressDto dvo = new CltDressDto();
-		dvo.setGoodsCd((int) detail.getGoodsCd());
-		List<CltDressDto> rvo = dressService.goodsDtlDressList(dvo);
-		
-		////////////////////////////////////////////////////////////////////////////////
-		String requestURI = (String) req.getAttribute("requestURI"); //페이징
-		String page = req.getParameter("page");
-		int totalCnt = qnaService.qnaCnt();
-		qvo.setPath(requestURI);
-		qvo.setParamPage(page);
-		qvo.setTotalCnt(totalCnt);
-		PagingUtil.getPagingKeys(qvo);
-		////////////////////////////////////////////////////////////////////////////////
-		
-		qvo.setGoodsCd(detail.getGoodsCd());
-		// 문의
-		List<CltQnaDto> rqvo = qnaService.searchGoodsCdQna(qvo);
-		
-		req.setAttribute("oneDepthCateList", oneDepthCateList); //카테고리
-		req.setAttribute("detail", detail); // 상품상세
-		req.setAttribute("optList", optList); // 상품상세:옵션
-		
-		req.setAttribute("rvo", rvo);	// 리뷰 (드레스룸)
-		req.setAttribute("rqvo", rqvo);	// 문의
-		req.setAttribute("paging", qvo.getHtml()); //페이징
-		
-		return "cltsh/shp/goods/goods_detail";
 	}
 }

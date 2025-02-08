@@ -5,6 +5,10 @@
 		SELECT 
 			COUNT(*)
 		FROM CLT_GOODS_INFO
+		WHERE 1=1
+		<if test="entrNo gt 0">
+			AND ENTR_NO = #{entrNo }
+		</if>
 	</select>
 	
 	<select id="selectGoodsPagingList" resultType="cltGoodsDto">
@@ -93,7 +97,7 @@
 		</if>
 	</select>
 
-	<insert id="insertGoods">
+	<insert id="insertGoods" useGeneratedKeys="true" keyProperty="id">
 		<selectKey keyProperty="goodsInfoSeq" resultType="long" order="BEFORE">
 			SELECT IFNULL(MAX(GOODS_CD) + 1, 1)  FROM CLT_GOODS_INFO
 		</selectKey>

@@ -23,35 +23,49 @@
 		/* optsDao.selectOptsList - 옵션 리스트 */
 		SELECT
 			GOODS_OPTS_SEQ AS goodsOptsSeq	/* 상품 옵션 시퀀스 */
-			, OPTS_CD AS optsCd		/* 옵션 코드 */
-			, OPTS_NM AS optsNm		/* 옵션이름 */
-			, OPTS_VAL AS optsVal		/* 옵션값 */
-			, USE_YN AS useYn			/* 사용여부 */
-			, RGST_ID AS rgstId		/* 등록아이디 */
-			, RGST_DATE AS rgstDate	/* 등록일 */
-			, UPDT_ID AS updtId		/* 수정아이디 */
-			, UPDT_DATE AS updtDate	/* 수정일 */
-			, GOODS_CD AS goodsCd		/* 상품코드 */
+			, OPTS_CD AS optsCd				/* 옵션 코드 */
+			, OPTS_NM AS optsNm				/* 옵션이름 */
+			, OPTS_VAL AS optsVal			/* 옵션값 */
+			, USE_YN AS useYn				/* 사용여부 */
+			, RGST_ID AS rgstId				/* 등록아이디 */
+			, RGST_DATE AS rgstDate			/* 등록일 */
+			, UPDT_ID AS updtId				/* 수정아이디 */
+			, UPDT_DATE AS updtDate			/* 수정일 */
+			, GOODS_CD AS goodsCd			/* 상품코드 */
+			, OPTS_ORDR AS optsOrdr			/* 노출순서 */
 		FROM CLT_GOODS_OPTS
 		WHERE 1=1
+		AND USE_YN = 'Y'
+		<if test="goodsCd gt 0">
+		AND GOODS_CD = #{goodsCd}
+		</if>
+		ORDER BY 
+			OPTS_CD ASC
+			, OPTS_ORDR ASC
 	</select>
 	
 	<select id="selectAdmOptsList" resultType="cltOptsDto">
 		/* optsDao.selectAdmOptsList - 옵션 리스트 */
 		SELECT
 			GOODS_OPTS_SEQ AS goodsOptsSeq	/* 상품 옵션 시퀀스 */
-			, OPTS_CD AS optsCd		/* 옵션 코드 */
-			, OPTS_NM AS optsNm		/* 옵션이름 */
+			, OPTS_CD AS optsCd			/* 옵션 코드 */
+			, OPTS_NM AS optsNm			/* 옵션이름 */
 			, OPTS_VAL AS optsVal		/* 옵션값 */
 			, USE_YN AS useYn			/* 사용여부 */
-			, RGST_ID AS rgstId		/* 등록아이디 */
-			, RGST_DATE AS rgstDate	/* 등록일 */
-			, UPDT_ID AS updtId		/* 수정아이디 */
-			, UPDT_DATE AS updtDate	/* 수정일 */
+			, RGST_ID AS rgstId			/* 등록아이디 */
+			, RGST_DATE AS rgstDate		/* 등록일 */
+			, UPDT_ID AS updtId			/* 수정아이디 */
+			, UPDT_DATE AS updtDate		/* 수정일 */
 			, GOODS_CD AS goodsCd		/* 상품코드 */
+			, OPTS_ORDR AS optsOrdr		/* 노출순서 */
 		FROM CLT_GOODS_OPTS
 		WHERE 1=1
+		<if test="goodsCd gt 0">
 		AND GOODS_CD = #{goodsCd}
+		</if>
+		ORDER BY 
+			OPTS_CD	ASC
+			, OPTS_ORDR ASC
 	</select>
 
 	<insert id="insertOpts">
@@ -86,10 +100,21 @@
 			, OPTS_VAL = #{optsVal} 	/* 옵션값 */
 			, USE_YN = #{useYn} 		/* 사용여부 */
 			, UPDT_ID = #{updtId} 		/* 수정아이디 */
-			, UPDT_DATE = NOW() 	/* 수정일 */
+			, UPDT_DATE = NOW() 		/* 수정일 */
 			, GOODS_CD = #{goodsCd} 	/* 수정일 */
 		WHERE 1=1
 		AND GOODS_OPTS_SEQ = #{goodsOptsSeq} /* 옵션 시퀀스 */
+	</update>
+	
+	<update id="updatePartOpts">
+		/* optsDao.updatePartOpts - 옵션 부분 수정 */
+		UPDATE CLT_GOODS_OPTS 
+		SET USE_YN = #{useYn} 			/* 사용여부 */
+			, OPTS_ORDR = #{optsOrdr}	/* 노출순서 */
+			, UPDT_ID = #{updtId} 		/* 수정아이디 */
+			, UPDT_DATE = NOW() 		/* 수정일 */
+		WHERE 
+			GOODS_OPTS_SEQ = #{goodsOptsSeq} /* 옵션 시퀀스 */
 	</update>
 
 	<delete id="deleteOptsOne">

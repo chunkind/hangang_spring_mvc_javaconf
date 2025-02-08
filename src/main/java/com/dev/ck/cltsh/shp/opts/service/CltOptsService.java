@@ -1,6 +1,9 @@
 package com.dev.ck.cltsh.shp.opts.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -156,6 +159,31 @@ public class CltOptsService {
 	public List<CltOptsDto> selectOptsList(CltOptsDto pvo){
 		return optsDao.selectOptsList(pvo);
 	};
+	
+	/*
+	 * 옵션코드 그룹핑 하여 리스트 출력
+	 */
+	public Map<String, List<Map<String, Object>>> selectoptsMap(CltOptsDto pvo){
+		Map<String, List<Map<String, Object>>> groupedOptions = new HashMap<>();
+		try {
+			// 상품정보: 옵션
+			List<CltOptsDto> optList = optsDao.selectOptsList(pvo);
+
+			for (CltOptsDto option : optList) {
+			    
+			    if (!groupedOptions.containsKey(option.getOptsCd())) {
+			        groupedOptions.put(option.getOptsCd(), new ArrayList<Map<String, Object>>());
+			    }
+			    groupedOptions.get(option.getOptsCd()).add(option.toMap());
+			}
+				
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		
+		return groupedOptions;
+	}
 
 	public List<CltOptsDto> selectAdmOptsList(CltOptsDto pvo){
 		return optsDao.selectAdmOptsList(pvo);
@@ -167,6 +195,10 @@ public class CltOptsService {
 	
 	public int updateOpts(CltOptsDto pvo) {
 		return optsDao.updateOpts(pvo);
+	};
+	
+	public int updatePartOpts(CltOptsDto pvo) {
+		return optsDao.updatePartOpts(pvo);
 	};
 	
 	public int deleteOptsOne(CltOptsDto pvo) {

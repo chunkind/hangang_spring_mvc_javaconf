@@ -1,5 +1,8 @@
 package com.dev.ck.cltsh.shp.opts;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,13 +12,14 @@ public class CltOptsDto {
 	private int goodsOptsSeq;	/* 상품 옵션 시퀀스 */
 	private String optsCd;		/* 옵션 코드 */
 	private String optsNm;		/* 옵션이름 */
-	private String optsVal;	/* 옵션값 */
+	private String optsVal;		/* 옵션값 */
 	private String useYn;		/* 사용여부 */
 	private String rgstId;		/* 등록아이디 */
 	private String rgstDate;	/* 등록일 */
 	private String updtId;		/* 수정아이디 */
 	private String updtDate;	/* 수정일 */
 	private int goodsCd;		/* 상품코드 */
+	private int optsOrdr;		/* 노출순서 */
 	
 	private String optsType;
 	private int addTextCnt;
@@ -34,4 +38,14 @@ public class CltOptsDto {
 	private String[] addOptsValArr;
 	private int[] addGoodsCdArr;
 	private String[] addUseYnArr;
+	
+	public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("optsSeq", this.goodsOptsSeq);
+        map.put("optsCd", this.optsCd);
+        map.put("optsNm", this.optsNm);
+        map.put("optsVal", this.optsVal);
+        map.put("goodsCd", this.goodsCd);
+        return map;
+    }
 }

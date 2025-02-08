@@ -35,12 +35,12 @@ public class CltCommonInterceptor extends HandlerInterceptorAdapter {
 		CltUserDto loginInfo = (CltUserDto) session.getAttribute("loginInfo");
 		
 		// 예외처리 url
-		/*if(isCheckUrl(request.getRequestURI()) && null == loginInfo) {
+		if(isCheckUrl(request.getRequestURI()) && null == loginInfo) {
 			session.setAttribute("message", "로그인 해주세요...");
 			//response.sendRedirect("/cltsh/main.do");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/cltsh/main.do");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/cltsh/user/userLogin.do");
 	        dispatcher.forward(request, response);
-		}*/
+		}
 		
 		// 필수로 체크해야하는 url
 		

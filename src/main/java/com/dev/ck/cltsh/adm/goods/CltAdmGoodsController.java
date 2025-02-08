@@ -1,3 +1,4 @@
+
 package com.dev.ck.cltsh.adm.goods;
 
 import java.util.List;
@@ -70,11 +71,11 @@ public class CltAdmGoodsController{
 		if(entrList.size() > 0) {
 			if(null == searchEntrNo || "".equals(searchEntrNo) || "null".equals(searchEntrNo)) {
 				pvo.setEntrNo(entrList.get(0).getEntrNo());
-				searchEntrNo = "";
 			}else {
 				pvo.setEntrNo(Long.parseLong(searchEntrNo));
-				goodsList = goodsService.selectGoodsPagingList(pvo);
 			}
+			searchEntrNo = String.valueOf(pvo.getEntrNo());
+			goodsList = goodsService.selectGoodsPagingList(pvo);
 		}
 		
 		req.setAttribute("paging", pvo.getHtml());
@@ -146,6 +147,42 @@ public class CltAdmGoodsController{
 		return "cltsh/adm/goods/goods_register";
 	}
 	
+	//상품 등록 화면 (리뉴얼)
+	@RequestMapping("/cltsh/adm/goods/admGoodsRegisterNew.do")
+	public String admGoodsRegisterNew(HttpServletRequest req, HttpServletResponse res, CltGoodsDto pvo) {
+		//세션
+		HttpSession session = req.getSession();
+		CltUserDto loginInfo = (CltUserDto) session.getAttribute("loginInfo");
+		
+		//업체 리스트
+		CltEntrDto entrVO = new CltEntrDto();
+		entrVO.setUsrId(loginInfo.getUsrId());
+		List<CltEntrDto> entrList = entrService.selectIdEntrList(entrVO);
+		
+		//카테고리 리스트
+		CltCateDto cateVO = new CltCateDto();
+		List<CltCateDto> upperCodeList = cateService.selectCateList(cateVO);
+		cateVO.setUprClassCd(upperCodeList.get(0).getCatgryCd());
+		List<CltCateDto> underCodeList = cateService.selectCateUnList(cateVO);
+		
+		//공통 코드 - 판매 상태 리스트
+		CltCodeDto codeVo = new CltCodeDto();
+		codeVo.setRgstId(loginInfo.getUsrId());
+		List<CltCodeDto> codeList = codeService.selectSaleStatCdList(codeVo);
+		
+		//상품 옵션 리스트
+		CltOptsDto optsVo = new CltOptsDto();
+		List<CltOptsDto> optsList = optsService.selectOptsList(optsVo);
+		
+		req.setAttribute("optsList", optsList);
+		req.setAttribute("codeList", codeList);
+		req.setAttribute("entrList", entrList);
+		req.setAttribute("upperCodeList", upperCodeList);
+		req.setAttribute("underCodeList", underCodeList);
+		
+		return "cltsh/adm/goods/goods_register_new";
+	}
+	
 	//상품 등록 액션
 	@RequestMapping("/cltsh/adm/goods/admGoodsRegisterAct.do")
 	public String admGoodsRegisterAct(HttpServletRequest req, HttpServletResponse res, CltGoodsDto pvo) {
@@ -160,7 +197,38 @@ public class CltAdmGoodsController{
 		pvo.setImgNm((String)req.getAttribute("imgNm"));
 		pvo.setRgstId(loginInfo.getUsrId());
 		
-		int result = goodsService.insertGoods(pvo);
+		int resultGoodsCd = goodsService.insertGoods(pvo);
+		
+		String[] optsNmArray = req.getParameterValues("optsNmArray[]");
+		String[] optsValArray = req.getParameterValues("optsValArray[]");
+		String[] useYnArray = req.getParameterValues("useYnArray[]");
+		
+		// 배열 값 출력
+		if (optsNmArray != null && optsValArray != null && useYnArray != null) {
+			int code = 1;
+			String tmpOptNm = null;
+			// 데이터 반복 삽입
+            for (int i = 0; i < optsNmArray.length; i++) {
+            	if(null!= tmpOptNm && !tmpOptNm.equals(optsNmArray[i])) {
+            		code++;
+            	}
+            	
+            	String optsCd = String.format("%04d", code);
+            	
+            	CltOptsDto opt = new CltOptsDto();
+            	opt.setOptsCd(optsCd);
+            	opt.setOptsNm(optsNmArray[i]);
+            	opt.setOptsVal(optsValArray[i]);
+            	opt.setUseYn(useYnArray[i]);
+            	opt.setGoodsCd(resultGoodsCd);
+            	opt.setRgstId(loginInfo.getUsrId());
+            	opt.setUpdtId(loginInfo.getUsrId());
+            	
+            	tmpOptNm = optsNmArray[i];
+            	optsService.insertOpts(opt);
+            }
+		}
+		
 		req.setAttribute("pvo", pvo);
 		
 		return "redirect:/cltsh/adm/goods/admGoodsList.do";
@@ -200,6 +268,47 @@ public class CltAdmGoodsController{
 		return "cltsh/adm/goods/goods_edit";
 	}
 	
+	// TO-BE 상품 수정 화면
+	@RequestMapping("/cltsh/adm/goods/admGoodsEditNew.do")
+	public String admGoodsEditNew(HttpServletRequest req, HttpServletResponse res, CltGoodsDto pvo) {
+		CltGoodsDto rvo = goodsService.selectGoodsOne(pvo);
+		
+		//세션
+		HttpSession session = req.getSession();
+		CltUserDto loginInfo = (CltUserDto) session.getAttribute("loginInfo");
+		
+		//업체 리스트
+		CltEntrDto entrVO = new CltEntrDto();
+		entrVO.setUsrId(loginInfo.getUsrId());
+		List<CltEntrDto> entrList = entrService.selectIdEntrList(entrVO);
+		
+		//카테고리 리스트
+		CltCateDto cateVO = new CltCateDto();
+		List<CltCateDto> upperCodeList = cateService.selectCateList(cateVO);
+		cateVO.setUprClassCd(rvo.getCatgryCd());
+		List<CltCateDto> underCodeList = cateService.selectCateUnList(cateVO);
+		
+		//공통 코드 - 판매 상태 리스트
+		CltCodeDto codeVo = new CltCodeDto();
+		codeVo.setRgstId(loginInfo.getUsrId());
+		codeVo.setGrpCd("STD001");
+		List<CltCodeDto> codeList = codeService.selectSaleStatCdList(codeVo);
+		
+		//옵션리스트
+		CltOptsDto optVo = new CltOptsDto();
+		optVo.setGoodsCd(rvo.getGoodsCd());
+		List<CltOptsDto> optList = optsService.selectAdmOptsList(optVo);
+		
+		req.setAttribute("pvo", rvo);
+		req.setAttribute("optList", optList);
+		req.setAttribute("codeList", codeList);
+		req.setAttribute("entrList", entrList);
+		req.setAttribute("upperCodeList", upperCodeList);
+		req.setAttribute("underCodeList", underCodeList);
+		
+		return "cltsh/adm/goods/goods_edit_new";
+	}
+	
 	// 상품 수정 액션
 	@RequestMapping("/cltsh/adm/goods/admGoodsEditAct.do")
 	public String admGoodsEditAct(HttpServletRequest req, HttpServletResponse res, CltGoodsDto pvo) {
@@ -216,7 +325,32 @@ public class CltAdmGoodsController{
 		}
 		pvo.setUpdtId(loginInfo.getUsrId());
 		
-		int result = goodsService.updateGoods(pvo);
+		int resultGoodsCd = goodsService.updateGoods(pvo);
+		
+		
+		String[] optsSeqArray = req.getParameterValues("optsSeqArray[]");
+		String[] optsOrdrArray = req.getParameterValues("optsOrdrArray[]");
+		String[] useYnArray = req.getParameterValues("useYnArray[]");
+		
+		// 배열 값 출력
+		if (optsSeqArray != null && optsOrdrArray != null && useYnArray != null) {
+
+			// 데이터 반복 삽입
+            for (int i = 0; i < optsSeqArray.length; i++) {
+            	
+            	int optSeq = Integer.parseInt(optsSeqArray[i]);
+            	int optOrdr = Integer.parseInt(optsOrdrArray[i]);
+
+            	CltOptsDto opt = new CltOptsDto();
+            	opt.setGoodsOptsSeq(optSeq);
+            	opt.setOptsOrdr(optOrdr);
+            	opt.setUseYn(useYnArray[i]);
+            	opt.setUpdtId(loginInfo.getUsrId());
+            	
+            	optsService.updatePartOpts(opt);
+            }
+		}
+		
 		req.setAttribute("pvo", pvo);
 		
 		return "redirect:/cltsh/adm/goods/admGoodsList.do";
