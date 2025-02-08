@@ -48,7 +48,7 @@ public class CltPaymentService {
 		payVo.setMid(mid);
 		payVo.setMKey(mKey);
 		payVo.setTimestamp(timestamp);
-		payVo.setPrice(price);
+		payVo.setGoodsPrc(price);
 		payVo.setOrdNo(pinNo);
 		payVo.setUseChkfake(useChkfake);
 		
@@ -162,7 +162,7 @@ public class CltPaymentService {
 					pvo.setBuyerTel(resultMap.get("buyerTel"));
 					pvo.setBuyerEmail(resultMap.get("buyerEmail"));
 					pvo.setOrdNo(resultMap.get("MOID"));
-					pvo.setPrice(resultMap.get("TotPrice"));
+					pvo.setGoodsPrc(resultMap.get("TotPrice"));
 					pvo.setCurrency(resultMap.get("currency"));
 					pvo.setGoodsNm(resultMap.get("goodsName"));
 					

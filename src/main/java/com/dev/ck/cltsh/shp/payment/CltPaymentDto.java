@@ -15,7 +15,7 @@ public class CltPaymentDto {
 	private String tid;			// 거래 고유 식별자 (transaction_id)
 	private String mid;			// 상점 아이디 (이니시스에서 발급한 상점 아이디 merchant_order_id)
 	private String ordNo;			// oid - 주문 번호
-	private String price;		// 결제 금액
+	private String goodsPrc;		// 결제 금액
 	private String timestamp;	// 타임스탬프 - 요청 시간
 	private String useChkfake;	// pc결제 보안강화 사용 [Y 고정]
 	private String signature;	// 결제 요청 시 서명 (이니시스에서 제공하는 방식에 따라 생성)

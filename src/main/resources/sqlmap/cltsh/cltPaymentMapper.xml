@@ -11,7 +11,7 @@
 			, PAY_STATE AS payState 
 			, TID AS tid
 			, MID AS mid
-			, PRICE AS price
+			, GOODS_PRC AS goodsPrc
 			, TIMESTAMP AS timestamp
 			, SIGNATURE AS signature
 			, VERIFICATION AS verification
@@ -23,7 +23,7 @@
 			, PAYMENT_STATUS AS paymentStatus
 			, RGST_DATE AS rgstDate
 			, UPDT_DATE AS updtDate
-		FROM  CLT_PAYMENT
+		FROM  CLT_PAY_BASE
 		WHERE 1=1
 		AND TID = #{tid};
 	</select>
@@ -37,7 +37,7 @@
 			, PAY_STATE AS payState 
 			, TID AS tid
 			, MID AS mid
-			, PRICE AS price
+			, GOODS_PRC AS goodsPrc
 			, TIMESTAMP AS timestamp
 			, SIGNATURE AS signature
 			, VERIFICATION AS verification
@@ -55,7 +55,7 @@
 
 	<insert id="insertPayment">
 		/* PaymentDao.insertPayment - 결제 등록 */
-		INSERT INTO CLT_PAYMENT 
+		INSERT INTO CLT_PAY_BASE 
 		( PAY_SN
 		, ORD_NO
 		, ORD_CLM_NO
@@ -63,8 +63,7 @@
 		, PAY_STATE
 		, TID
 		, MID
-		, OID
-		, PRICE
+		, GOODS_PRC
 		, TIMESTAMP
 		, SIGNATURE
 		, VERIFICATION
@@ -84,8 +83,7 @@
 		, #{payState}
 		, #{tid}
 		, #{mid}
-		, #{oid}
-		, #{price}
+		, #{goodsPrc}
 		, #{timestamp}
 		, #{signature}
 		, #{verification}

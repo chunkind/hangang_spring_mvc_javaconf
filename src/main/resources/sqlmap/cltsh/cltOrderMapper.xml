@@ -594,6 +594,8 @@
 		AND BASE.ORD_CLM_NO = #{ordClmNo}
 	</select>
 	
+	
+	
 	<select id="searchOrdNoOne" resultType="cltOrderDto">
 		/* cltOrderMapper - searchOrdNoOne */
 		SELECT BASE.ORD_NO AS ordNo
@@ -632,6 +634,56 @@
 		LEFT OUTER JOIN CLT_STD_CD_BASE STD ON DTL.ORD_DTL_STAT_CD = STD.CODE_VAL
 		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SALERVW ON BASE.ORD_NO = SALERVW.ORD_NO
 		WHERE 1=1
+		AND STD.GRP_CD = 'STD004'
+		AND BASE.ORD_CLM_NO = #{ordClmNo}
+	</select>
+	
+	<select id="mypgOrdDtl" resultType="cltOrderDto">
+		/* cltOrderMapper - mypgOrdDtl */
+		SELECT BASE.ORD_NO AS ordNo , 
+			BASE.ORD_CLM_NO AS ordClmNo , 
+			BASE.CLM_SCT_CD AS clmSctCd , 
+			BASE.CLM_STAT_CD AS clmStatCd , 
+			BASE.ORDR_ID AS ordrId ,
+			BASE.ORDR_NM AS ordrNm , 
+			BASE.ORDR_PHON AS ordrPhon , 
+			BASE.ORDR_EMAIL AS ordrEmail , 
+			BASE.ACQR_PHON AS acqrPhon ,
+			BASE.ACQR_NM AS acqrNm , 
+			BASE.ACQR_ADDR AS acqrAddr , 
+			BASE.ACQR_ADDR_DTL AS acqrAddrDtl , 
+			BASE.ACQR_EMAIL AS acqrEmail , 
+			BASE.PRCL_WAY AS prclWay , 
+			BASE.PACK_WAY AS packWay ,
+			BASE.PAY_WAY AS payWay , 
+			BASE.PAY_MNY AS payMny ,
+			BASE.REQ_MEMO AS reqMemo ,
+			BASE.ORD_DATE AS ordDate ,
+			BASE.UPDT_DATE AS updtDate ,
+			BASE.UPDT_ID AS updtId ,
+			BASE.RGST_DATE AS rgstDate ,
+			BASE.RGST_ID AS rgstId ,
+			BASE.BILL_NUM AS billNum ,
+			DTL.ORD_CLM_DTL_SN AS ordClmDtlSn , 
+			DTL.GOODS_NM AS goodsNm ,
+			DTL.GOODS_CD AS goodsCd ,
+			DTL.GOODS_QTY AS goodsQty , 
+			DTL.ORD_DTL_STAT_CD AS ordDtlStatCd , 
+			STD.CODE_NM AS codeNm ,
+			SALE.BUL_TIT_NM AS bulTitNm ,
+			SALE.GOODS_PRC AS goodsPrc ,
+			SALE.GOODS_SALE_PRC AS goodsSalePrc ,
+			GOOD.DLV_PRC AS dlvPrc ,
+			GOOD.IMG_PATH AS imgPath ,
+			GOOD.IMG_NM AS imgNm ,
+			RVW.SALE_BOARD_RPY_SEQ AS saleBoardRpySeq
+		FROM CLT_ORD_DTL DTL 
+		INNER JOIN CLT_ORD_BASE BASE ON BASE.ORDR_ID = DTL.RGST_ID AND BASE.ORD_CLM_NO = DTL.ORD_CLM_NO 
+		LEFT OUTER JOIN CLT_STD_CD_BASE STD ON DTL.ORD_DTL_STAT_CD = STD.CODE_VAL 
+		LEFT OUTER JOIN CLT_SALE_BOARD SALE ON DTL.GOODS_CD = SALE.GOODS_CD
+		LEFT OUTER JOIN CLT_GOODS_INFO GOOD ON DTL.GOODS_CD = GOOD.GOODS_CD
+		LEFT OUTER JOIN CLT_SALE_BOARD_RVW RVW ON BASE.ORD_NO = RVW.ORD_NO
+		WHERE 1=1 
 		AND STD.GRP_CD = 'STD004'
 		AND BASE.ORD_CLM_NO = #{ordClmNo}
 	</select>

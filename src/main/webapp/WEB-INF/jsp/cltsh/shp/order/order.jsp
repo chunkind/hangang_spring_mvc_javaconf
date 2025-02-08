@@ -29,7 +29,7 @@
 			<input type="hidden" name="gopaymethod" value="Card:Directbank:vbank">
 			<input type="hidden" name="mid" value="${payVo.mid }">
 			<input type="hidden" name="oid" value="${payVo.ordNo }">
-			<input type="hidden" name="price" value="${payVo.price }">
+			<input type="hidden" name="price" value="${payVo.goodsPrc }">
 			<input type="hidden" name="timestamp" value="${payVo.timestamp }">
 			<input type="hidden" name="useChkfake" value="${payVo.useChkfake }">
 			<input type="hidden" name="signature" value="${payVo.signature }">
@@ -107,7 +107,7 @@
 					<td>${String.format("%,d", detail.dlvPrc)} 원</td>
 					<th>총 결제 금액</th>
 					<td>${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)} 원</td>
-				</tr>Q
+				</tr>
 				<tr>
 					<th>배송지</th>
 					<td>${sessionScope.loginInfo.loadAddrBase}(${sessionScope.loginInfo.loadAddrDtl})</td>

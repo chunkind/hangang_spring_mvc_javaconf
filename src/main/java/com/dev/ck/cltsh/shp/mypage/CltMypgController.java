@@ -77,22 +77,10 @@ public class CltMypgController{
 	@RequestMapping("/cltsh/mypage/mypageDetail.do")
 	public String mypageDetail(HttpServletRequest req, HttpServletResponse res, CltOrderDto ordVo) {
 		CltOrderDto ordList = orderService.selectOrdOne(ordVo);
-		CltOrderDto ordDtlList = orderService.searchOrdNoOne(ordVo);
-		
-		//배송비
-		CltGoodsDto goodsVo = new CltGoodsDto();
-		goodsVo.setGoodsCd(ordDtlList.getGoodsCd());
-		CltGoodsDto searchGoods = goodsService.selectMypgGoodsOne(goodsVo);//selectMypgSalesOne
-		
-		// 상품 가격
-		CltSalesDto salesVo = new CltSalesDto();
-		salesVo.setGoodsCd(ordDtlList.getGoodsCd());
-		CltSalesDto searchSalesGoods = salesService.selectMypgSalesOne(salesVo);
+		List<CltOrderDto> ordDtlList = orderService.mypgOrdDtl(ordVo);
 		
 		req.setAttribute("ordList", ordList);
 		req.setAttribute("ordDtlList", ordDtlList);
-		req.setAttribute("searchGoods", searchGoods);
-		req.setAttribute("searchSalesGoods", searchSalesGoods);
 
 		return "cltsh/shp/mypage/mypage_detail";
 	}
