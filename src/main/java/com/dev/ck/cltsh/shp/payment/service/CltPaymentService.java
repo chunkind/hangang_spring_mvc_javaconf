@@ -20,7 +20,7 @@ import com.dev.ck.cltsh.shp.payment.CltPaymentDto;
 public class CltPaymentService {
 	@Autowired public CltPaymentMapper dao;
 	
-	public CltPaymentDto createPaymentParameters(CltGoodsDto goodsVo, CltOrderDto orderVo) throws Exception {
+	public CltPaymentDto createPaymentParameters(CltGoodsDto goodsVo) throws Exception {
 		CltPaymentDto payVo = new CltPaymentDto();
 		
 		String mid = "INIpayTest";

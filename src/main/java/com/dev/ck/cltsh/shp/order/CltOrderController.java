@@ -50,7 +50,7 @@ public class CltOrderController{
 		List<CltOrderDto> orderList = orderService.selectOrdList(pvo);
 		req.setAttribute("orderList", orderList);
 		
-		CltPaymentDto payVo = paymentService.createPaymentParameters(detail, pvo);
+		CltPaymentDto payVo = paymentService.createPaymentParameters(detail);
 		req.setAttribute("payVo", payVo);
 		
 		return "cltsh/shp/order/order";
@@ -119,7 +119,7 @@ public class CltOrderController{
 	
 	//장바구니 구매
 	@RequestMapping("/cltsh/order/orderCartRegister.do")
-	public String orderCartRegister(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
+	public String orderCartRegister(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) throws Exception {
 		String seq = pvo.getCheckedList();
 		String key = seq.substring(0, seq.length() - 1);
 		pvo.setKey(key);
@@ -132,16 +132,35 @@ public class CltOrderController{
 			detail.add(orderService.ordBasketSelect(pvo));
 		}
 
-//		List<OrderVO> detail = orderService.ordBasketSelect(pvo);
 		Long totalPayment = (long) (detail.get(0).getDlvPrc());
 		Long totalDlvPrc = (long) (detail.get(0).getDlvPrc());
 		Long totalGoodsPrc = 0L;
+		int goodsPrc = 0;
+		int goodsSalePrc = 0;
+		String goodsNm = "";
 
 		for (int i = 0; i < detail.size(); i++) {
 			totalPayment += (long) (detail.get(i).getGoodsPrc() - detail.get(i).getGoodsSalePrc());
 			totalGoodsPrc += (long) (detail.get(i).getGoodsPrc() - detail.get(i).getGoodsSalePrc());
+			goodsPrc += detail.get(i).getGoodsPrc();
+			goodsSalePrc += detail.get(i).getGoodsSalePrc();
+			
+			if(i != detail.size() - 1) {
+				goodsNm += detail.get(i).getGoodsNm() + " , ";
+			} else {
+				goodsNm += detail.get(i).getGoodsNm();
+			}
 		}
-
+		
+		CltGoodsDto goodsVo = new CltGoodsDto();
+		goodsVo.setGoodsPrc(goodsPrc);
+		goodsVo.setGoodsSalePrc(goodsSalePrc);
+		goodsVo.setDlvPrc(2500);
+		
+		CltPaymentDto payVo = paymentService.createPaymentParameters(goodsVo);
+		req.setAttribute("payVo", payVo);
+		
+		req.setAttribute("goodsNm", goodsNm);
 		req.setAttribute("detail", detail);
 		req.setAttribute("totalPayment", totalPayment);
 		req.setAttribute("totalDlvPrc", totalDlvPrc);

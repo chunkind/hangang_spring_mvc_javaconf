@@ -182,7 +182,7 @@ function resultPrint(){
 	var totalPackPrc = 0;
 	//상품 전체 가격
 	for(var i=0; i<basketList.length; i++){
-		totalPrc += (basketList[i].goodsPrc * basketList[i].goodsQty);
+		totalPrc = totalPrc + (basketList[i].goodsPrc - basketList[i].goodsSalePrc) * basketList[i].goodsQty;
 	}
 	//배송비
 	for(var i=0; i<basketList.length; i++){

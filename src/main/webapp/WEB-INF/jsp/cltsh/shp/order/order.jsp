@@ -15,7 +15,6 @@
 	<div class="item_list_area my-4">
 		<h3 class="title text-center">주문 내역 입니다.</h3>
 
-		<!-- <form name="frm" action="/cltsh/order/orderRegister.do" method="post"> -->
 		<form name="SendPayForm_id" id="SendPayForm_id" action="/cltsh/order/payPcReq.do" method="post">
 			<input type="hidden" name="saleBoardSeq" value="${detail.saleBoardSeq}">
 			<input type="hidden" name="entrNo" value="${detail.entrNo}">
