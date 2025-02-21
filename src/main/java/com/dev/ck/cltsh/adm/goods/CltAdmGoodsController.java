@@ -111,43 +111,7 @@ public class CltAdmGoodsController{
 		return data;
 	}
 	
-	//상품 등록 화면
-	@RequestMapping("/cltsh/adm/goods/admGoodsRegister.do")
-	public String admGoodsRegister(HttpServletRequest req, HttpServletResponse res, CltGoodsDto pvo) {
-		//세션
-		HttpSession session = req.getSession();
-		CltUserDto loginInfo = (CltUserDto) session.getAttribute("loginInfo");
-		
-		//업체 리스트
-		CltEntrDto entrVO = new CltEntrDto();
-		entrVO.setUsrId(loginInfo.getUsrId());
-		List<CltEntrDto> entrList = entrService.selectIdEntrList(entrVO);
-		
-		//카테고리 리스트
-		CltCateDto cateVO = new CltCateDto();
-		List<CltCateDto> upperCodeList = cateService.selectCateList(cateVO);
-		cateVO.setUprClassCd(upperCodeList.get(0).getCatgryCd());
-		List<CltCateDto> underCodeList = cateService.selectCateUnList(cateVO);
-		
-		//공통 코드 - 판매 상태 리스트
-		CltCodeDto codeVo = new CltCodeDto();
-		codeVo.setRgstId(loginInfo.getUsrId());
-		List<CltCodeDto> codeList = codeService.selectSaleStatCdList(codeVo);
-		
-		//상품 옵션 리스트
-		CltOptsDto optsVo = new CltOptsDto();
-		List<CltOptsDto> optsList = optsService.selectOptsList(optsVo);
-		
-		req.setAttribute("optsList", optsList);
-		req.setAttribute("codeList", codeList);
-		req.setAttribute("entrList", entrList);
-		req.setAttribute("upperCodeList", upperCodeList);
-		req.setAttribute("underCodeList", underCodeList);
-		
-		return "cltsh/adm/goods/goods_register";
-	}
-	
-	//상품 등록 화면 (리뉴얼)
+	// TO-BE) 상품 등록 화면
 	@RequestMapping("/cltsh/adm/goods/admGoodsRegisterNew.do")
 	public String admGoodsRegisterNew(HttpServletRequest req, HttpServletResponse res, CltGoodsDto pvo) {
 		//세션
@@ -189,7 +153,12 @@ public class CltAdmGoodsController{
 		//세션
 		HttpSession session = req.getSession();
 		CltUserDto loginInfo = (CltUserDto) session.getAttribute("loginInfo");
-				
+		
+		// 세션 체크 (로그인 정보가 없을 경우 예외 발생)
+	    if (loginInfo == null) {
+	    	return "redirect:/cltsh/adm/main.do";
+	    }
+		
 		//파일 업로드
 		FileUtil.uploadFile(req, pvo.getFile1());
 		
@@ -202,6 +171,9 @@ public class CltAdmGoodsController{
 		String[] optsNmArray = req.getParameterValues("optsNmArray[]");
 		String[] optsValArray = req.getParameterValues("optsValArray[]");
 		String[] useYnArray = req.getParameterValues("useYnArray[]");
+		String[] optsOrdrArray = req.getParameterValues("optsOrdrArray[]");
+		String[] isMainProductArray = req.getParameterValues("isMainProductArray[]");
+		String[] optInyQtyArray = req.getParameterValues("optInyQtyArray[]");
 		
 		// 배열 값 출력
 		if (optsNmArray != null && optsValArray != null && useYnArray != null) {
@@ -215,11 +187,18 @@ public class CltAdmGoodsController{
             	
             	String optsCd = String.format("%04d", code);
             	
+            	int optOrdr = Integer.parseInt(optsOrdrArray[i]);
+            	int optInyQty = Integer.parseInt(optInyQtyArray[i]);
+            	
             	CltOptsDto opt = new CltOptsDto();
             	opt.setOptsCd(optsCd);
             	opt.setOptsNm(optsNmArray[i]);
             	opt.setOptsVal(optsValArray[i]);
-            	opt.setUseYn(useYnArray[i]);
+            	opt.setOptsUseYn(useYnArray[i]);
+            	opt.setOptsOrdr(optOrdr);
+            	opt.setIsMainProduct(isMainProductArray[i]);
+            	opt.setOptValInyQty(optInyQty);
+            	
             	opt.setGoodsCd(resultGoodsCd);
             	opt.setRgstId(loginInfo.getUsrId());
             	opt.setUpdtId(loginInfo.getUsrId());
@@ -235,40 +214,6 @@ public class CltAdmGoodsController{
 	}
 	
 	// 상품 수정 화면
-	@RequestMapping("/cltsh/adm/goods/admGoodsEdit.do")
-	public String admGoodsEdit(HttpServletRequest req, HttpServletResponse res, CltGoodsDto pvo) {
-		CltGoodsDto rvo = goodsService.selectGoodsOne(pvo);
-		
-		//세션
-		HttpSession session = req.getSession();
-		CltUserDto loginInfo = (CltUserDto) session.getAttribute("loginInfo");
-		
-		//업체 리스트
-		CltEntrDto entrVO = new CltEntrDto();
-		entrVO.setUsrId(loginInfo.getUsrId());
-		List<CltEntrDto> entrList = entrService.selectIdEntrList(entrVO);
-		
-		//카테고리 리스트
-		CltCateDto cateVO = new CltCateDto();
-		List<CltCateDto> upperCodeList = cateService.selectCateList(cateVO);
-		cateVO.setUprClassCd(rvo.getCatgryCd());
-		List<CltCateDto> underCodeList = cateService.selectCateUnList(cateVO);
-		
-		//공통 코드 - 판매 상태 리스트
-		CltCodeDto codeVo = new CltCodeDto();
-		codeVo.setRgstId(loginInfo.getUsrId());
-		List<CltCodeDto> codeList = codeService.selectCodeList(codeVo);
-		
-		req.setAttribute("pvo", rvo);
-		req.setAttribute("codeList", codeList);
-		req.setAttribute("entrList", entrList);
-		req.setAttribute("upperCodeList", upperCodeList);
-		req.setAttribute("underCodeList", underCodeList);
-		
-		return "cltsh/adm/goods/goods_edit";
-	}
-	
-	// TO-BE 상품 수정 화면
 	@RequestMapping("/cltsh/adm/goods/admGoodsEditNew.do")
 	public String admGoodsEditNew(HttpServletRequest req, HttpServletResponse res, CltGoodsDto pvo) {
 		CltGoodsDto rvo = goodsService.selectGoodsOne(pvo);
@@ -310,11 +255,30 @@ public class CltAdmGoodsController{
 	}
 	
 	// 상품 수정 액션
+	/*
+	 * [개선해야 할 내용]
+	 * 1. 로직 분리 필요 => SRP(단일 책임 원칙) 적용.
+	 *    - 파일업로드 로직 서비스 분리
+	 *    - 상품수정 로직 서비스 분리
+	 *    - 옵션수정 로직 서비스 분리
+	 *    
+	 * 2. 옵션변수 객체 사용으로 데이터 변환 처리
+	 *    - HttpServletRequest 에서 직접 데이터를 추출하는 대신 DTO/VO 객체를 사용하여 데이터 변환 처리. 
+	 *      => 객체를 활용하여 데이터 바인딩을 단순화하고, 유효성 검사 추가
+	 *      
+	 * 3. 예외처리 통
+	 *    => 컨트롤러에서 try-catch를 직접 사용하지 않고, AOP 기반의 예외 처리 핸들러로 관리.
+	 * */
 	@RequestMapping("/cltsh/adm/goods/admGoodsEditAct.do")
 	public String admGoodsEditAct(HttpServletRequest req, HttpServletResponse res, CltGoodsDto pvo) {
 		//세션
 		HttpSession session = req.getSession();
 		CltUserDto loginInfo = (CltUserDto) session.getAttribute("loginInfo");
+		
+		// 세션 체크 (로그인 정보가 없을 경우 예외 발생)
+	    if (loginInfo == null) {
+	    	return "redirect:/cltsh/adm/main.do";
+	    }
 		
 		//파일 업로드
 		FileUtil.uploadFile(req, pvo.getFile1());
@@ -327,24 +291,29 @@ public class CltAdmGoodsController{
 		
 		int resultGoodsCd = goodsService.updateGoods(pvo);
 		
-		
 		String[] optsSeqArray = req.getParameterValues("optsSeqArray[]");
 		String[] optsOrdrArray = req.getParameterValues("optsOrdrArray[]");
+		String[] isMainProductArray = req.getParameterValues("isMainProductArray[]");
 		String[] useYnArray = req.getParameterValues("useYnArray[]");
+		String[] optInyQtyArray = req.getParameterValues("optInyQtyArray[]");
 		
 		// 배열 값 출력
-		if (optsSeqArray != null && optsOrdrArray != null && useYnArray != null) {
+		if (optsSeqArray != null && optsOrdrArray != null && useYnArray != null
+			&& isMainProductArray != null && optInyQtyArray != null ) {
 
 			// 데이터 반복 삽입
             for (int i = 0; i < optsSeqArray.length; i++) {
             	
             	int optSeq = Integer.parseInt(optsSeqArray[i]);
             	int optOrdr = Integer.parseInt(optsOrdrArray[i]);
+            	int optInyQty = Integer.parseInt(optInyQtyArray[i]);
 
             	CltOptsDto opt = new CltOptsDto();
             	opt.setGoodsOptsSeq(optSeq);
             	opt.setOptsOrdr(optOrdr);
-            	opt.setUseYn(useYnArray[i]);
+            	opt.setIsMainProduct(isMainProductArray[i]);
+            	opt.setOptsUseYn(useYnArray[i]);
+            	opt.setOptValInyQty(optInyQty);
             	opt.setUpdtId(loginInfo.getUsrId());
             	
             	optsService.updatePartOpts(opt);
@@ -353,7 +322,7 @@ public class CltAdmGoodsController{
 		
 		req.setAttribute("pvo", pvo);
 		
-		return "redirect:/cltsh/adm/goods/admGoodsList.do";
+		return "redirect:/cltsh/adm/goods/admGoodsEditNew.do?goodsInfoSeq="+pvo.getGoodsInfoSeq();
 	}
 	
 	// 상품 삭제 액션

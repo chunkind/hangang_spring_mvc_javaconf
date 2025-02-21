@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dev.ck.cltsh.shp.cate.CltCateDto;
 import com.dev.ck.cltsh.shp.opts.CltOptsDto;
 
 @Service
@@ -76,7 +75,7 @@ public class CltOptsService {
 		pvo.setOptsCd(optsCd);
 		pvo.setOptsNm(optsNm);
 		pvo.setOptsVal(optsVal);
-		pvo.setUseYn(useYn);
+		pvo.setOptsUseYn(useYn);
 		pvo.setRgstId(rgstId);
 		pvo.setRgstDate(rgstDate);
 		pvo.setUpdtId(updtId);
@@ -128,7 +127,7 @@ public class CltOptsService {
 					pvo.setOptsVal(optsValArr[i]);
 					pvo.setOptsCd(optsCdArr[i]);
 					pvo.setGoodsCd(goodsCdArr[i]);
-					pvo.setUseYn(useYnArr[i]);
+					pvo.setOptsUseYn(useYnArr[i]);
 					optsDao.updateOpts(pvo);
 				}
 			}
@@ -140,7 +139,7 @@ public class CltOptsService {
 					pvo.setOptsVal(addOptsValArr[i]);
 					pvo.setOptsCd(addOptsCdArr[i]);
 					pvo.setGoodsCd(addGoodsCdArr[i]);
-					pvo.setUseYn(addUseYnArr[i]);
+					pvo.setOptsUseYn(addUseYnArr[i]);
 					optsDao.insertOpts(pvo);
 				}
 			}
@@ -161,25 +160,32 @@ public class CltOptsService {
 	};
 	
 	/*
-	 * 옵션코드 그룹핑 하여 리스트 출력
+	 * 옵션 코드 (opts_cd)를 기준으로 데이터를 그룹화하여리스트로 반환하는 메서드
 	 */
 	public Map<String, List<Map<String, Object>>> selectoptsMap(CltOptsDto pvo){
+		
+		// 옵션 데터를 그룹화하여 저장할 Map
 		Map<String, List<Map<String, Object>>> groupedOptions = new HashMap<>();
+		
 		try {
-			// 상품정보: 옵션
+			// otpsDao를 통해 옵션 리스트 조회
 			List<CltOptsDto> optList = optsDao.selectOptsList(pvo);
 
+			// 조회된 옵션 리스트를 옵션 코드(opts_cd) 기준으로 그룹화
 			for (CltOptsDto option : optList) {
 			    
+				// opts_cd 값이 존재하지 않으면 새로운 리스트 생성
 			    if (!groupedOptions.containsKey(option.getOptsCd())) {
 			        groupedOptions.put(option.getOptsCd(), new ArrayList<Map<String, Object>>());
 			    }
+			    
+			    // DTO 객체를 Map 형태로 변환 후 추가
 			    groupedOptions.get(option.getOptsCd()).add(option.toMap());
 			}
 				
 		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e);
+			// 예외 발생 시 오류 메시지 출력 (추후 로깅 처리 필요)
+			e.printStackTrace();
 		}
 		
 		return groupedOptions;

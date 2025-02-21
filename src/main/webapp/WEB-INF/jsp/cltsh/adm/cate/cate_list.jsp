@@ -159,12 +159,13 @@ function fn_getHtmlInput(type, index, classCd) {
 
 function fnDel(_this, goodsCataSeq , classLvlCd){
 	if(goodsCataSeq == null){
-		_this.parentNode.parentNode.parentNode.remove();
+		//_this.parentNode.parentNode.parentNode.remove();
+		_this.parentNode.parentNode.remove();
 	}else {
 		if(classLvlCd == "1" && 0 < underTextCnt){
 			alert("하위 카테고리가 있습니다.");
 		}else if(confirm('상품을 정말 삭제 하시겠습니까?')){
-			_this.parentNode.parentNode.parentNode.remove();
+			_this.parentNode.parentNode.remove();
 			location.href = '/cltsh/adm/cate/admCateRemoveAct.do?goodsCataSeq='+goodsCataSeq;
 		}
 	}

@@ -123,7 +123,7 @@
 				</figure>
 			</div>
 				<div id="itemTagArea">
-					<ul id="itemList">
+					<!--  ul id="itemList">
 						<c:forEach items="${optList}" var="opt">
 							<li class="row col-md-12 pm-3">
 								<input type="hidden" name="optsSeqArray[]" value="${opt.goodsOptsSeq}" />
@@ -156,7 +156,64 @@
 								</div>
 							</li>
 						</c:forEach>
-					</ul>
+					</ul-->
+				
+				<table class="table table-sm" id="itemList">
+					<colgroup>
+						<col width="10%"/>
+						<col width="20%"/>
+						<col width="20%"/>
+						<col width="10%"/>
+						<col width="10%"/>
+						<col width="10%"/>
+					</colgroup>
+					<thead>
+						<tr>
+							<th>옵션명</th>
+							<th>옵션값</th>
+							<th>노출순서</th>
+							<th>대표상품여부</th>
+							<th>사용여부</th>
+							<th>재고수량</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${optList}" var="opt">
+						<tr>
+							<td>
+								<input type="hidden" name="optsSeqArray[]" value="${opt.goodsOptsSeq}" />
+								<select id="optsNmArray" class="form-control" disabled>
+									<option>${opt.optsNm}</option>
+								</select>
+							</td>
+							<td>
+								<select id="optsValArray" class="form-control" disabled>
+									<option>${opt.optsVal}</option>
+								</select>
+							</td>
+							<td>
+								<input type="number" id="optsOrdrArray" name="optsOrdrArray[]" value="${opt.optsOrdr}" class="form-control" maxlength="20">
+							</td>
+							<td>
+								<select id="isMainProductArray" name="isMainProductArray[]" class="form-select">
+									<option value="Y" <c:if test="${opt.isMainProduct eq 'Y'}" >selected</c:if>>대표상품</option>
+									<option value="N" <c:if test="${opt.isMainProduct eq 'N'}" >selected</c:if>>일반상품</option>
+								</select>
+							</td>
+							<td>
+								<select id="useYnArray" name="useYnArray[]" class="form-select">
+									<option value="Y" <c:if test="${opt.useYn eq 'Y'}" >selected</c:if>>사용</option>
+									<option value="N" <c:if test="${opt.useYn eq 'N'}" >selected</c:if>>사용안함</option>
+								</select>
+							</td>
+							<td>
+								<input type="number" id="optInyQtyArray" name="optInyQtyArray[]" value="${opt.optInyQty}" class="form-control" maxlength="20">
+							</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
 				</div>
 		</div>
 	
