@@ -105,7 +105,7 @@
 		
 		<div class="row mb-3">
 			<div id="itemTitle" class="row">	
-				<h4>아이템정보</h4>
+				<h4>옵션 관리</h4>
 				<figure>
 					<figcaption class="blockquote-footer">
 					<cite title="Source Title">최초 상품 등록 시 아이템 설정이 가능하며 상품 등록 후 아이템 추가는 불가합니다.</cite>
@@ -113,13 +113,33 @@
 				</figure>
 				
 				<div id="itemButton" class="col-md-2">
-					<button id="addItem" type="button" class="btn btn-primary btn-sm">아이템추가</button>
+					<!-- button id="addItem" type="button" class="btn btn-primary btn-sm">아이템추가</button-->
 				</div>
 			</div>
 				<div id="itemTagArea">
-					<ul id="itemList">
-						<li>등록된 아이템이 없습니다.</li>
-					</ul>
+					 <!-- 옵션 그룹 추가 -->
+				    <div id="optionGroups" class="mb-3">
+				        <h5>옵션 그룹</h5>
+				        <button class="btn btn-primary btn-sm mb-2" onclick="addOptionGroup();return false;">옵션 그룹 추가</button>
+				    </div>
+				
+				    <!-- 옵션 조합 생성 버튼 -->
+				    <button class="btn btn-success" onclick="generateCombinations(); return false;">옵션 조합 생성</button>
+				
+				    <!-- 옵션 조합 리스트 -->
+				    <h5 class="mt-4">옵션 조합</h5>
+				    <table class="table">
+				        <thead>
+				            <tr>
+				                <th>옵션 조합</th>
+				                <th>재고</th>
+				                <th>사용 여부</th>
+				            </tr>
+				        </thead>
+				        <tbody id="optionGrid">
+				            <!-- 옵션 조합이 여기에 동적으로 추가됨 -->
+				        </tbody>
+				    </table>
 				</div>
 		</div>
 	
@@ -202,55 +222,6 @@ document.getElementById("catgryCd").addEventListener('change', ()=>{
 	});
 });
 
-$(document).ready(function(){
-    let itemCount = 0; // 항목 갯수
-
-	// 항목 추가
-	$("#addItem").click(function(){
-		
-		// 항목 1개 이상: 문구삭제
-		if(itemCount==0) $('#itemList li:eq(0)').remove();
-		
-		itemCount++;
-		
-		let itemTag = '';
-		itemTag += '<li class="row col-md-12">';
-		
-			itemTag += '<label for="optsNmArray" class="col-sm-2 col-form-label">옵션명</label>';
-			itemTag += '<div class="col-md-2 col-sm-10">';
-				itemTag += '<input type="text" class="form-control" id="optsNmArray" name="optsNmArray[]">';
-			itemTag += '</div>';
-			
-			itemTag += '<label for="optsValArray" class="col-sm-2 col-form-label">옵션값</label>';
-			itemTag += '<div class="col-md-1 col-sm-10">';
-				itemTag += '<input type="text" class="form-control" id="optsValArray" name="optsValArray[]">';
-			itemTag += '</div>';
-			
-			itemTag += '<label for="useYnArray" class="col-sm-2 col-form-label">사용여부</label>';
-			itemTag += '<div class="col-md-2 col-sm-10">';
-			itemTag += '<select id="useYnArray" name="useYnArray[]" class="form-select">';
-				itemTag += '<option value="Y">사용</option>';
-				itemTag += '<option value="N">사용안함</option>';
-			itemTag += '</select>';
-			itemTag += '</div>';
-			
-			itemTag += '<button class="col-md-1 removeItem btn btn-sm btn-danger">삭제</button>';
-		itemTag += '</li>';
-		
-		$("#itemList").append(itemTag);
-	});
-
-	// 항목 삭제 (이벤트 위임 방식으로 구현)
-	$("#itemList").on("click", ".removeItem", function(){
-		$(this).parent().remove();
-		itemCount--;
-		
-		// 항목 0개: 문구추가
-		if(itemCount == 0) $("#itemList").append('<li>등록된 아이템이 없습니다.</li>');
-	});
-});
-
-
 function previewImg(e){
 	let reader = new FileReader();
 	reader.onload = function(event) {
@@ -265,5 +236,85 @@ function previewImg(e){
 		document.querySelector("#imgPreView").appendChild(img);
 	};
 	reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+
+
+<script>
+function addOptionGroup() {
+    let optionGroupId = $(".option-group").length + 1;
+    let groupHtml = `
+        <div class="option-group mb-3">
+            <label>옵션 그룹명</label>
+            <input type="text" class="form-control option-group-name" placeholder="예: 사이즈, 색상, 소재">
+            <label class="mt-2">옵션 값</label>
+            <input type="text" class="form-control option-values" placeholder="쉼표(,)로 구분 (예: S, M, L)">
+            <button class="btn btn-danger btn-sm mt-2" onclick="removeOptionGroup(this)">옵션 그룹 삭제</button>
+        </div>
+    `;
+    $("#optionGroups").append(groupHtml);
+}
+
+function removeOptionGroup(button) {
+    $(button).closest(".option-group").remove();
+}
+
+function generateCombinations() {
+    let optionGrid = $("#optionGrid");
+    optionGrid.empty(); // 기존 조합 초기화
+
+    let optionGroups = [];
+    $(".option-group").each(function () {
+        let groupName = $(this).find(".option-group-name").val().trim();
+        let values = $(this).find(".option-values").val().split(",").map(v => v.trim()).filter(Boolean);
+
+        if (groupName && values.length > 0) {
+            optionGroups.push({ groupName, values });
+        }
+    });
+
+    if (optionGroups.length === 0) {
+        alert("옵션 그룹을 추가하고 값을 입력해주세요.");
+        return;
+    }
+
+    let combinations = getCombinations(optionGroups.map(g => g.values));
+
+    combinations.forEach(combination => {
+        if (!Array.isArray(combination)) {
+            console.error("잘못된 데이터 형식:", combination);
+            return;
+        }
+
+        let rowHtml = '';
+        	rowHtml += '<tr>';
+       		rowHtml += '<td>'+combination.join(" > ")+'</td>';
+       		rowHtml += '<td><input type="number" class="form-control" value="10"></td>';
+       		rowHtml += '<td>';
+    		rowHtml += '<select class="form-select">';
+    		rowHtml += '<option value="Y" selected>사용</option>';
+    		rowHtml += '<option value="N">사용 안함</option>';
+    		rowHtml += '</select>';
+    		rowHtml += '</td>';
+    		rowHtml += '</tr>';
+        optionGrid.append(rowHtml);
+    });
+}
+
+function getCombinations(arrays) {
+    if (!arrays || arrays.length === 0) return [];
+
+    let result = [[]];
+    for (let i = 0; i < arrays.length; i++) {
+        let temp = [];
+        for (let res of result) {
+            for (let val of arrays[i]) {
+                temp.push([...res, val]);
+            }
+        }
+        result = temp;
+    }
+
+    return result;
 }
 </script>
