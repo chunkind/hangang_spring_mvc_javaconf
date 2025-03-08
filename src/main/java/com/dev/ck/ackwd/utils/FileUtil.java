@@ -84,34 +84,49 @@ public class FileUtil {
 	}
 	
 	public static void uploadFile(HttpServletRequest req, MultipartFile file) {
+		// 업로드 경로 설정(xml 설정방식)
 		String saveDir = req.getServletContext().getInitParameter("uploadPath");
 		String tomcatPath = req.getServletContext().getInitParameter("tomcatPath");
 		String imgPath = "/img/cltsh/";
 		
-		//path 설정
+		// 경로 설정에 따른 추가 경로 구성
 		String path = req.getRequestURI();
-		if(path.contains("dressRegisterAct.do")) {
+		if (path.contains("dressRegisterAct.do")) {
 			saveDir += "reviews/";
 			tomcatPath += "reviews/";
 			imgPath += "reviews/";
 		}
 		
 		String fileName = file.getOriginalFilename();
+		
 		if (file.getSize() > 0) {
-			System.out.println("saveDir:" + saveDir + File.separator + fileName);
-			System.out.println("tomcatPath:" + tomcatPath + File.separator + fileName);
-			
-			File saveFile = new File(saveDir + File.separator + fileName);
-			File tomcatFile = new File(tomcatPath + File.separator + fileName);
-			
 			try {
+				System.out.println("saveDir:" + saveDir + imgPath+ fileName);
+				System.out.println("tomcatPath:" + tomcatPath + imgPath+ fileName);
+				
+				// 파일 객체 생성
+				File saveFile = new File(saveDir + imgPath + fileName);
+				File tomcatFile = new File(tomcatPath + imgPath + fileName);
+				
+				// 디렉토리 없을 경우 생성
+				if (!saveFile.getParentFile().exists()) {
+					saveFile.getParentFile().mkdirs();
+				}
+			
+				// 파일 저장 및 복사
 				file.transferTo(saveFile);
+				
+				System.out.println("saveFile.toPath() ::: " +saveFile.toPath());
+				System.out.println("tomcatFile.toPath() ::: " +tomcatFile.toPath());
 				Files.copy(saveFile.toPath(), tomcatFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 //				file.transferTo(tomcatFile);
+				
+				
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
 			
+			// 업로드 성공 메시지 및 경로 반환
 			req.setAttribute("imgPath", imgPath);
 			req.setAttribute("imgNm", fileName);
 		}

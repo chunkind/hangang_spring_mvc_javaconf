@@ -13,6 +13,7 @@ public interface CltOptsMapper {
 	List<CltOptsDto> selectAdmOptsList(CltOptsDto pvo);
 	int insertOpts(CltOptsDto pvo);
 	int updateOpts(CltOptsDto pvo);
+	int updatePartOpts(CltOptsDto pvo);
 	int deleteOptsOne(CltOptsDto pvo);
 	int deleteOptsAll();
 }

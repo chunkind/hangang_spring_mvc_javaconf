@@ -4,7 +4,6 @@
 <div class="container mt-4">
 	<h2 class="text-center mb-5">상품 관리 > 상품 목록 > 상품 등록</h2>
 	<form action="/cltsh/adm/goods/admGoodsRegisterAct.do" method="post" enctype="multipart/form-data">
-
 		<div class="row mb-3">
 			<div class="col-md-4">
 				<div class="form-group">

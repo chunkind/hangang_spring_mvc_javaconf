@@ -1,38 +1,87 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+.product_menu{
+max-height: 900px;
+min-height: 590px;
+}
+
+#imgArea img {width: 90%;}
+#prdArea {position: relative;}
+#prdArea .textBox {position: absolute; bottom:0; width:100%;}
+
+dl.goodsPrcInfo { width: 100%; }
+dl.goodsPrcInfo dt{ 
+	font-weight : 100;
+	display: inline-block;
+	width: 50%;
+}
+
+dl.goodsPrcInfo dd{
+	display: inline-block;
+	width: 49%;
+	text-align: right;
+}
+dl.goodsPrcInfo .dashed {
+	border-top: 1px dashed #2222;
+	margin-top: 10px;
+	padding-top: 15px;
+}
+
+dl.goodsPrcInfo .tt {
+	font-weight : 400;
+}
+
+</style>
+
 <main class="container">
-	<div class="p-4 p-md-5 mb-4 product_menu">
-		<div class="col-lg-6 px-0 text-center">
-			<img alt="메인이미지" src="${detail.imgPath}${detail.imgNm} " width="90%" height="90%">
+	<div class="row p-4 p-md-5 mb-4 product_menu">
+		<div id="imgArea" class="col-lg-6 px-0 text-center">
+			<img alt="메인이미지" src="${detail.imgPath}${detail.imgNm}">
 		</div>
-		<div class="col-lg-6 px-0">
-		   <h1 class="display-4 fst-italic">${detail.bulTitNm}</h1>
-		<p class="lead my-3">${(detail.goodsSalePrc/detail.goodsPrc * 100).intValue()}%<del> ${String.format("%,d", detail.goodsPrc)}원</del> ${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc)}원</p>
-		<p class="lead my-1">배송비 ${String.format("%,d", detail.dlvPrc)}원</p>
-		<p class="lead my-1">예상 구매가 ${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)}원</p>
-		<p class="lead my-1">적립 ${String.format("%,d", ((detail.goodsPrc - detail.goodsSalePrc) * 0.03).intValue())}원</p>
-		
-		<select class="form-select my-1" name="colorOption" id="colorOption">
-			<option value="">[컬러] 옵션을 선택하세요.</option>
-			<option value="흰색">흰색</option>
-			<option value="검정색">검정색</option>
-			<option value="회색">회색</option>
-			<option value="파란색">파란색</option>
-		</select>
-		
-		<select class="form-select my-1" name="sizeOption" id="sizeOption">
-			<option value="">[사이즈] 옵션을 선택하세요.</option>
-			<option value="S">S</option>
-			<option value="M">M</option>
-			<option value="L">L</option>
-			<option value="XL">XL</option>
-		</select>
-		
-		<p class="lead my-1">총 상품 금액 ${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)}원</p>
-		<c:if test="${not empty sessionScope.loginInfo }">
-			<p class="lead mb-2"><a href="#" class="text-body-emphasis fw-bold" onclick="fn_add_basket('${detail.saleBoardSeq}')">장바구니</a></p>
-		</c:if>
-		<p class="lead mb-2"><a href="#" class="text-body-emphasis fw-bold" onclick="fn_order()">바로구매</a></p>
+		<div id="prdArea" class="col-lg-6 px-0">
+			<h1 class="display-4 fst-italic">${detail.bulTitNm}</h1>
+			
+			<!-- 판매가 -->
+			<p class="lead my-3 text-right">
+				<small>
+					${(detail.goodsSalePrc/detail.goodsPrc * 100).intValue()} %
+					<del> ${String.format("%,d", detail.goodsPrc)}원</del> 
+				</small>
+				/ <b>${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc)}원</b>
+			</p>
+			
+			<!-- 옵션 -->
+			<c:if test="${not empty optList}">
+				<c:forEach var="entry" items="${optList}">
+				<select class="form-select my-1" name="option[]" id="colorOption_${entry.key}">
+					<option value="">[${entry.value[0].optsNm}] 옵션을 선택하세요.</option>
+					
+					<c:forEach var="option" items="${entry.value}">
+					<option value="${option.optsCd}">${option.optsVal}</option>
+					</c:forEach>
+				</select>
+				</c:forEach>
+			</c:if>
+			
+			<!-- 기타정보/버튼 -->
+			<div class="textBox d-grid gap-2">
+				<dl class="goodsPrcInfo">
+					<dt>배송비</dt>
+					<dd>${String.format("%,d", detail.dlvPrc)}원</dd>
+					<dt>예상 구매가</dt>
+					<dd>${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)}원</dd>
+					<dt class="tt dashed">총 상품 금액</dt>
+					<dd class="dashed ">${String.format("%,d", detail.goodsPrc - detail.goodsSalePrc + detail.dlvPrc)}원</dd>
+					<dt class="tt">적립</dt>
+					<dd>${String.format("%,d", ((detail.goodsPrc - detail.goodsSalePrc) * 0.03).intValue())}원</dd>
+				</dl>
+				<c:if test="${not empty sessionScope.loginInfo }">
+				<button class="btn btn-outline-warning" type="button" onclick="fn_add_basket('${detail.saleBoardSeq}')">장바구니</button>
+				</c:if>
+				<button class="btn btn-dark" type="button" onclick="fn_order()">바로구매</button>
+			</div>
+			
 		</div>
 	</div>
 	

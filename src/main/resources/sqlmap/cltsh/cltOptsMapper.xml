@@ -3,55 +3,79 @@
 <mapper namespace="com.dev.ck.cltsh.shp.opts.service.CltOptsMapper">
 	<select id="selectOptsOne" resultType="cltOptsDto">
 		/* optsDao.selectOptsOne - 옵션 상세 */
-		SELECT
-			GOODS_OPTS_SEQ AS goodsOptsSeq	/* 상품 옵션 시퀀스 */
-			, OPTS_CD AS optsCd		/* 옵션 코드 */
-			, OPTS_NM AS optsNm		/* 옵션이름 */
-			, OPTS_VAL AS optsVal		/* 옵션값 */
-			, USE_YN AS useYn			/* 사용여부 */
-			, RGST_ID AS rgstId		/* 등록아이디 */
-			, RGST_DATE AS rgstDate	/* 등록일 */
-			, UPDT_ID AS updtId		/* 수정아이디 */
-			, UPDT_DATE AS updtDate	/* 수정일 */
-			, GOODS_CD AS goodsCd		/* 상품코드 */
-		FROM CLT_GOODS_OPTS
-		WHERE 1=1
-		AND GOODS_OPTS_SEQ = #{goodsOptsSeq}
+		SELECT 
+			opt.GOODS_OPTS_SEQ AS goodsOptsSeq		/* 상품 옵션 시퀀스 */
+			, opt.OPTS_CD AS optsCd					/* 옵션 코드 */
+			, opt.OPTS_NM AS optsNm					/* 옵션이름 */
+			, optVal.OPTS_VAL AS optsVal			/* 옵션값 */
+			, opt.RGST_ID AS rgstId					/* 등록아이디 */
+			, opt.RGST_DATE AS rgstDate				/* 등록일 */
+			, opt.UPDT_ID AS updtId					/* 수정아이디 */
+			, opt.UPDT_DATE AS updtDate				/* 수정일 */
+			, opt.GOODS_CD AS goodsCd				/* 상품코드 */
+			, opt.OPTS_ORDR AS optsOrdr				/* 노출순서 */
+			, optVal.OPTS_VAL_INY_QTY AS optInyQty	/* 재고수량 */
+			, opt.IS_MAIN_PRODUCT AS isMainProduct	/* 대표상품여부 */
+		 FROM CLT_GOODS_OPTS opt
+	LEFT JOIN CLT_GOODS_OPTS_VAL optVal
+		  ON opt.GOODS_OPTS_SEQ = optVal.GOODS_OPTS_SEQ 
+	   WHERE 1=1
+	     AND opt.GOODS_OPTS_SEQ = #{goodsOptsSeq}
 	</select>
 
 	<select id="selectOptsList" resultType="cltOptsDto">
 		/* optsDao.selectOptsList - 옵션 리스트 */
-		SELECT
-			GOODS_OPTS_SEQ AS goodsOptsSeq	/* 상품 옵션 시퀀스 */
-			, OPTS_CD AS optsCd		/* 옵션 코드 */
-			, OPTS_NM AS optsNm		/* 옵션이름 */
-			, OPTS_VAL AS optsVal		/* 옵션값 */
-			, USE_YN AS useYn			/* 사용여부 */
-			, RGST_ID AS rgstId		/* 등록아이디 */
-			, RGST_DATE AS rgstDate	/* 등록일 */
-			, UPDT_ID AS updtId		/* 수정아이디 */
-			, UPDT_DATE AS updtDate	/* 수정일 */
-			, GOODS_CD AS goodsCd		/* 상품코드 */
-		FROM CLT_GOODS_OPTS
-		WHERE 1=1
+		SELECT 
+			opt.GOODS_OPTS_SEQ AS goodsOptsSeq		/* 상품 옵션 시퀀스 */
+			, opt.OPTS_CD AS optsCd					/* 옵션 코드 */
+			, opt.OPTS_NM AS optsNm					/* 옵션이름 */
+			, optVal.OPTS_VAL AS optsVal			/* 옵션값 */
+			, opt.RGST_ID AS rgstId					/* 등록아이디 */
+			, opt.RGST_DATE AS rgstDate				/* 등록일 */
+			, opt.UPDT_ID AS updtId					/* 수정아이디 */
+			, opt.UPDT_DATE AS updtDate				/* 수정일 */
+			, opt.GOODS_CD AS goodsCd				/* 상품코드 */
+			, opt.OPTS_ORDR AS optsOrdr				/* 노출순서 */
+			, optVal.OPTS_VAL_INY_QTY AS optInyQty	/* 재고수량 */
+			, opt.IS_MAIN_PRODUCT AS isMainProduct	/* 대표상품여부 */
+		 FROM CLT_GOODS_OPTS opt
+	LEFT JOIN CLT_GOODS_OPTS_VAL optVal
+		  ON opt.GOODS_OPTS_SEQ = optVal.GOODS_OPTS_SEQ 
+	   WHERE 1=1
+		 AND opt.OPTS_USE_YN = 'Y'
+		<if test="goodsCd gt 0">
+		AND opt.GOODS_CD = #{goodsCd}
+		</if>
+		ORDER BY 
+			opt.OPTS_CD ASC
+			, opt.OPTS_ORDR ASC
 	</select>
 	
 	<select id="selectAdmOptsList" resultType="cltOptsDto">
 		/* optsDao.selectAdmOptsList - 옵션 리스트 */
-		SELECT
-			GOODS_OPTS_SEQ AS goodsOptsSeq	/* 상품 옵션 시퀀스 */
-			, OPTS_CD AS optsCd		/* 옵션 코드 */
-			, OPTS_NM AS optsNm		/* 옵션이름 */
-			, OPTS_VAL AS optsVal		/* 옵션값 */
-			, USE_YN AS useYn			/* 사용여부 */
-			, RGST_ID AS rgstId		/* 등록아이디 */
-			, RGST_DATE AS rgstDate	/* 등록일 */
-			, UPDT_ID AS updtId		/* 수정아이디 */
-			, UPDT_DATE AS updtDate	/* 수정일 */
-			, GOODS_CD AS goodsCd		/* 상품코드 */
-		FROM CLT_GOODS_OPTS
-		WHERE 1=1
-		AND GOODS_CD = #{goodsCd}
+		SELECT 
+			opt.GOODS_OPTS_SEQ AS goodsOptsSeq		/* 상품 옵션 시퀀스 */
+			, opt.OPTS_CD AS optsCd					/* 옵션 코드 */
+			, opt.OPTS_NM AS optsNm					/* 옵션이름 */
+			, optVal.OPTS_VAL AS optsVal			/* 옵션값 */
+			, opt.RGST_ID AS rgstId					/* 등록아이디 */
+			, opt.RGST_DATE AS rgstDate				/* 등록일 */
+			, opt.UPDT_ID AS updtId					/* 수정아이디 */
+			, opt.UPDT_DATE AS updtDate				/* 수정일 */
+			, opt.GOODS_CD AS goodsCd				/* 상품코드 */
+			, opt.OPTS_ORDR AS optsOrdr				/* 노출순서 */
+			, optVal.OPTS_VAL_INY_QTY AS optInyQty	/* 재고수량 */
+			, opt.IS_MAIN_PRODUCT AS isMainProduct	/* 대표상품여부 */
+		 FROM CLT_GOODS_OPTS opt
+	LEFT JOIN CLT_GOODS_OPTS_VAL optVal
+		  ON opt.GOODS_OPTS_SEQ = optVal.GOODS_OPTS_SEQ 
+	   WHERE 1=1
+		<if test="goodsCd gt 0">
+		AND opt.GOODS_CD = #{goodsCd}
+		</if>
+		ORDER BY 
+			opt.OPTS_CD	ASC
+			, opt.OPTS_ORDR ASC
 	</select>
 
 	<insert id="insertOpts">
@@ -66,6 +90,9 @@
 			, UPDT_ID /* 수정아이디 */
 			, UPDT_DATE /* 수정일 */
 			, GOODS_CD /* 상품코드 */
+			, OPTS_ORDR /* 노출순서 */
+			, INY_QTY /* 재고수량 */
+			, IS_MAIN_PRODUCT /* 대표상품여부 */
 		) VALUES
 		( #{optsCd}
 		, #{optsNm}
@@ -75,21 +102,42 @@
 		, NOW()
 		, #{updtId}
 		, NOW()
-		, #{goodsCd})
+		, #{goodsCd}
+		, #{optsOrdr}
+		, #{optInyQty}
+		, #{isMainProduct}
+		)
 	</insert>
 
 	<update id="updateOpts">
 		/* optsDao.updateOpts - 옵션 수정 */
 		UPDATE CLT_GOODS_OPTS 
-		SET OPTS_CD = #{optsCd} 		/* 옵션 코드 */
-			, OPTS_NM = #{optsNm} 		/* 옵션 이름 */
-			, OPTS_VAL = #{optsVal} 	/* 옵션값 */
-			, USE_YN = #{useYn} 		/* 사용여부 */
-			, UPDT_ID = #{updtId} 		/* 수정아이디 */
-			, UPDT_DATE = NOW() 	/* 수정일 */
-			, GOODS_CD = #{goodsCd} 	/* 수정일 */
+		SET OPTS_CD = #{optsCd} 					/* 옵션 코드 */
+			, OPTS_NM = #{optsNm} 					/* 옵션 이름 */
+			, OPTS_VAL = #{optsVal} 				/* 옵션값 */
+			, USE_YN = #{useYn} 					/* 사용여부 */
+			, INY_QTY = #{optInyQty}				/* 재고수량 */
+			, OPTS_ORDR = #{optsOrdr}				/* 노출순서 */
+			, IS_MAIN_PRODUCT = #{isMainProduct}	/* 대표상품여부 */
+			, UPDT_ID = #{updtId} 					/* 수정아이디 */
+			, UPDT_DATE = NOW() 					/* 수정일 */
+			, GOODS_CD = #{goodsCd} 				/* 수정일 */
 		WHERE 1=1
 		AND GOODS_OPTS_SEQ = #{goodsOptsSeq} /* 옵션 시퀀스 */
+	</update>
+	
+	<update id="updatePartOpts">
+		/* optsDao.updatePartOpts - 옵션 부분 수정 */
+		UPDATE CLT_GOODS_OPTS 
+		SET 
+			  USE_YN = #{useYn} 					/* 사용여부 */
+			, INY_QTY = #{optInyQty}				/* 재고수량 */
+			, OPTS_ORDR = #{optsOrdr}				/* 노출순서 */
+			, IS_MAIN_PRODUCT = #{isMainProduct}	/* 대표상품여부 */
+			, UPDT_ID = #{updtId} 					/* 수정아이디 */
+			, UPDT_DATE = NOW() 					/* 수정일 */
+		WHERE 
+			GOODS_OPTS_SEQ = #{goodsOptsSeq} /* 옵션 시퀀스 */
 	</update>
 
 	<delete id="deleteOptsOne">

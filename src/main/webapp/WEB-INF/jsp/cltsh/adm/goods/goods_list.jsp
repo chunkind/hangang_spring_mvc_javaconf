@@ -43,7 +43,7 @@
 						<td>${cnt.count}</td>
 						<td>${obj.goodsCd}</td>
 						<td><img src="${obj.imgPath}${obj.imgNm }" height="200px" width="200px" /></td>
-						<td><a href="/cltsh/adm/goods/admGoodsEdit.do?goodsInfoSeq=${obj.goodsInfoSeq}">${obj.goodsNm}</a></td>
+						<td><a href="/cltsh/adm/goods/admGoodsEditNew.do?goodsInfoSeq=${obj.goodsInfoSeq}">${obj.goodsNm}</a></td>
 						<!-- <td><input type="button" value="상품 옵션 추가" onclick="location.href='/cltsh/adm/opts/admOptsList.do?goodsCd=${obj.goodsCd}'"/></td> -->
 						<td>${obj.goodsPrc}</td>
 						<td>${obj.saleStatCd}</td>
@@ -60,7 +60,7 @@
 	<div class="d-flex justify-content-between align-items-center mt-4">
 		<div>${paging}</div>
 		<div>
-			<a href="/cltsh/adm/goods/admGoodsRegister.do" class="btn btn-primary">등록</a>
+			<a href="/cltsh/adm/goods/admGoodsRegisterNew.do" class="btn btn-primary">등록</a>
 		</div>
 	</div>
 </div>

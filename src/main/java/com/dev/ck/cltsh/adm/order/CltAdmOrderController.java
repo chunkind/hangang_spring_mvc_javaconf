@@ -105,7 +105,7 @@ public class CltAdmOrderController{
 	//주문 상태 변경
 	@RequestMapping("/cltsh/adm/order/admOrdDtlStatCdChange.do")
 	public String admOrdDtlStatCdChange(HttpServletRequest req, HttpServletResponse res, CltOrderDto pvo) {
-		orderService.admOrdDtlStatCdeChange(pvo);
+		orderService.admOrdDtlStatCdChange(pvo);
 		return "redirect:/cltsh/adm/order/admOrderList.do";
 	}
 }

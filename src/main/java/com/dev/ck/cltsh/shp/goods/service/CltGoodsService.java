@@ -80,7 +80,15 @@ public class CltGoodsService {
 	}
 	
 	public int insertGoods(CltGoodsDto pvo) {
-		return goodsDao.insertGoods(pvo);
+		
+		int result = goodsDao.insertGoods(pvo);
+		
+		// insert 성공 시 방금 저장된 데이터의 시퀀스값 반환
+		if(result > 0) {
+			result = (int) pvo.getGoodsInfoSeq();
+		}
+		
+		return result;
 	}
 	
 	public CltGoodsDto selectGoodsOne(CltGoodsDto pvo) {

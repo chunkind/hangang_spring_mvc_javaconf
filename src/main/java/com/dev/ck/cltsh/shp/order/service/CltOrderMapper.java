@@ -24,11 +24,12 @@ public interface CltOrderMapper {
 	List<CltOrderDto> selectOrdDtlList(CltOrderDto pvo);
 	int updateOrdDtl(CltOrderDto pvo);
 	int deleteOrdDtl(CltOrderDto pvo);
-	int admOrdDtlStatCdeChange(CltOrderDto pvo); //주문 상태 변경
+	int admOrdDtlStatCdChange(CltOrderDto pvo); //주문 상태 변경
 	List<CltOrderDto> searchIdOrdList(CltOrderDto pvo);
 	List<CltOrderDto> searchOrdNoList(CltOrderDto pvo);
 	CltOrderDto searchOrdClmNoList(CltOrderDto pvo);
 	CltOrderDto searchOrdNoOne(CltOrderDto pvo);
+	List<CltOrderDto> mypgOrdDtl(CltOrderDto pvo); // 마이페이지 - 주문 상세
 	List<CltOrderDto> searchOrdDtlGoods(CltOrderDto pvo);
 	List<CltOrderDto> selectOrdBaseList(CltOrderDto pvo); //매출관리 통계
 	int insertBasket(CltOrderDto pvo); //장바구니

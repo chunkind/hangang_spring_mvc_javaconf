@@ -15,7 +15,7 @@
 }
 
 .items_header {
-	background-color: #e6e3fc;
+	/*background-color: #e6e3fc;*/
 	font-weight: bold;
 	border-bottom: 1px solid black;
 	display: flex;
@@ -83,6 +83,8 @@
 <input type="hidden" id="addTextCnt" name="addTextCnt" value="0">
 <input type="hidden" id="optsCnt" name="optsCnt" value="0">
 <input type="hidden" name="goodsCd" value="${goodsCd}"/></li>
+
+
 
 <div class="items_header">
 	<span>옵션 번호</span>
