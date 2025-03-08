@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /*
- * 상품 등록 및 수정 요청 DTO
+ * 상품 등록 및 수정 요청 DTO 
  * */
 
 @Data

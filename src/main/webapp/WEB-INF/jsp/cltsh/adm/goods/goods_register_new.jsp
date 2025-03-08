@@ -3,7 +3,6 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
 <style>
 #admPrdReg h4 {
 	font-size: 1.25rem;
