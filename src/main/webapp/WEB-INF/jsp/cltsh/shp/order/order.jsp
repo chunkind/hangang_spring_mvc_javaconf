@@ -125,7 +125,6 @@
 
 			<div class="text-center my-4">
 				<input type="button" class="btn btn-primary" onclick="sendPaymentData();" value="주문하기">
-				<!-- <input type="button" class="btn btn-primary" onclick="document.getElementById('SendPayForm_id').submit();" value="주문하기"> -->
 			</div>
 		</form>
 	</div>
