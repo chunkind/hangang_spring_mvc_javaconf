@@ -78,7 +78,7 @@
 		, IMG_NM
 		, ORD_NO
 		, RVW_TAG
-		, ORD_DTL_NO
+		, ORD_CLM_DTL_SN
 		) VALUES
 		( #{saleBoardSeq}
 		, #{goodsCd}
@@ -104,7 +104,7 @@
 		, #{imgNm}
 		, #{ordNo}
 		, #{rvwTag}
-		, #{ordDtlNo}
+		, #{ordClmDtlSn}
 		)
 	</insert>
 	
@@ -162,8 +162,7 @@
 		/* dressDao.selectWriteSaleRvw - 드레스룸  */
 		SELECT
 			ORD.ORD_NO AS ordNo ,
-			ORD.USR_ID AS usrId ,
-			ORD.ENTR_NO AS entrNo ,
+			ORD.ORD_NO AS usrId ,
 			DTL.ORD_DTL_STAT_CD AS ordDtlStatCd ,
 			ORD.ORDR_ID AS ordrId ,
 			ORD.ORDR_NM AS ordrNm ,
@@ -184,7 +183,6 @@
 			ORD.RGST_DATE AS rgstDate ,
 			ORD.RGST_ID AS rgstId , 
 			ORD.BILL_NUM AS billNum ,
-			ORD.SALE_BOARD_SEQ AS saleBoardSeq ,
 			SBRW.SALE_BOARD_RPY_SEQ AS saleBoardRpySeq ,
 			SBRW.RPY_LVL AS rpyLvl ,
 			SBRW.PAR_SALE_BOARD_RPY_SN AS parSaleBoardRpySn ,
@@ -195,18 +193,19 @@
 			GOODS.IMG_NM AS imgNm ,
 			SALE.BUL_TIT_NM AS bulTitNm , 
 			SALE.BUL_CONT AS bulCont ,
-			DTL.ORD_DTL_NO AS ordDtlNo,
+			DTL.ORD_CLM_NO AS ordClmNo,
+			DTL.ORD_CLM_DTL_SN AS ordClmDtlSn,
 			DTL.GOODS_CD AS goodsCd
 		FROM CLT_ORD_BASE ORD 
 		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SBRW ON ORD.ORD_NO = SBRW.ORD_NO 
-		LEFT OUTER JOIN CLT_ORD_DTL DTL ON DTL.ORD_NO = ORD.ORD_NO 
+		LEFT OUTER JOIN CLT_ORD_DTL DTL ON DTL.ORD_CLM_NO = ORD.ORD_NO 
 		LEFT OUTER JOIN CLT_GOODS_INFO GOODS ON DTL.GOODS_CD = GOODS.GOODS_CD 
 		LEFT OUTER JOIN CLT_SALE_BOARD SALE ON DTL.GOODS_CD = SALE.GOODS_CD 
 		WHERE 1=1
 		<!-- AND SBRW.ORD_NO IS NULL -->
-		AND ORD.USR_ID = #{usrId}
-		<if test="ordDtlNo != null">
-			AND DTL.ORD_DTL_NO = #{ordDtlNo}
+		AND ORD.ORDR_ID = #{usrId}
+		<if test="ordNo != null">
+			AND ORD.ORD_NO = #{ordNo}
 		</if>
 	</select>
 	

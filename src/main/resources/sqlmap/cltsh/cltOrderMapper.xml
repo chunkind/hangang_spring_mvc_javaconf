@@ -635,7 +635,7 @@
 		LEFT OUTER JOIN CLT_SALE_BOARD_RVW SALERVW ON BASE.ORD_NO = SALERVW.ORD_NO
 		WHERE 1=1
 		AND STD.GRP_CD = 'STD004'
-		AND BASE.ORD_CLM_NO = #{ordClmNo}
+		AND BASE.ORD_NO = #{ordNo}
 	</select>
 	
 	<select id="mypgOrdDtl" resultType="cltOrderDto">

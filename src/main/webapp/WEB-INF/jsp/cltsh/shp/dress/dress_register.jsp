@@ -9,7 +9,7 @@
 			<div class="col-sm-10">
 				<select name="selectedSaleRvwItem" class="form-select" id="selectedSaleRvwItem">
 					<c:forEach items="${writeList}" var="obj">
-						<option value="${obj.ordNo}@${obj.saleBoardSeq}@${obj.goodsCd}@${obj.entrNo}@${obj.ordDtlNo}">
+						<option value="${obj.ordNo}@${obj.saleBoardSeq}@${obj.goodsCd}@${obj.entrNo}@${obj.ordClmDtlSn}">
 							${obj.bulTitNm}
 						</option>
 					</c:forEach>
