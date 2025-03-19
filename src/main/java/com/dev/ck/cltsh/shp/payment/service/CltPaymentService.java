@@ -165,13 +165,17 @@ public class CltPaymentService {
 					pvo.setGoodsPrc(resultMap.get("TotPrice"));
 					pvo.setCurrency(resultMap.get("currency"));
 					pvo.setGoodsNm(resultMap.get("goodsName"));
+					pvo.setPaymethod(resultMap.get("payMethod"));
+					pvo.setVactBankName(resultMap.get("vactBankName"));
+					pvo.setPayDevice(resultMap.get("payDevice"));
 					
 					CltPaymentDto payVo = ordNoSearch(resultMap.get("MOID"));
 					pvo.setOrdClmNo(payVo.getOrdClmNo());
 					pvo.setOrdClmDtlSn(payVo.getOrdClmDtlSn());
-					pvo.setPayState(payVo.getPayState());
+					pvo.setPayStateCd(payVo.getPayStateCd());
 					
 					insertPayment(pvo);
+					insertPayDtlInfo(pvo);
 					
 					// 수신결과를 파싱후 resultCode가 "0000"이면 승인성공 이외 실패
 					//throw new Exception("강제 망취소 요청 Exception ");
@@ -220,5 +224,14 @@ public class CltPaymentService {
 	}
 	public CltPaymentDto ordNoSearch(String ordNo) {
 		return dao.ordNoSearch(ordNo);
+	}
+	public int insertPayDtlInfo(CltPaymentDto data) {
+		return dao.insertPayDtlInfo(data);
+	}
+	public CltPaymentDto selectPayDtlInfoOne(CltPaymentDto pvo) {
+		return dao.selectPayDtlInfoOne(pvo);
+	}
+	public List<CltPaymentDto> selectPayDtlInfoList(CltPaymentDto pvo){
+		return dao.selectPayDtlInfoList(pvo);
 	}
 }

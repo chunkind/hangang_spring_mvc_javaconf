@@ -9,7 +9,7 @@ public class CltPaymentDto {
 	private int paySn;
 	private String ordClmNo;
 	private int ordClmDtlSn;
-	private int payState;
+	private int payStateCd;
 	
 	private String gopaymethod;	// Card:Directbank:vbank
 	private String tid;			// 거래 고유 식별자 (transaction_id)
@@ -32,4 +32,9 @@ public class CltPaymentDto {
 	private String paymentStatus;  //결제가 성공했는지, 실패했는지 기록하는 필드
 	private String rgstDate;		//생성일
 	private String updtDate;	//수정일
+	
+	private int payDtlInfoSeq;
+	private String paymethod; //결제 수단
+	private String vactBankName; //은행명
+	private String payDevice; //결제 디바이스
 }
