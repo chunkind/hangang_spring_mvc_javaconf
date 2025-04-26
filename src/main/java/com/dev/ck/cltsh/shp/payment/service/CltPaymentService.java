@@ -55,29 +55,13 @@ public class CltPaymentService {
 		return payVo;
 	}
 	
-	public Map<String, String> processPayment(HttpServletRequest req) throws Exception {
+	public Map<String, String> processPayment(CltPaymentDto param) throws Exception {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		CltPaymentDto pvo = new CltPaymentDto();
 		
 		try{
-			//#############################
-			// 인증결과 파라미터 일괄 수신
-			//#############################
-			req.setCharacterEncoding("UTF-8");
-
-			Map<String,String> paramMap = new Hashtable<String,String>();
 			
-			Enumeration elems = req.getParameterNames();
-			
-			String temp = "";
-
-			while(elems.hasMoreElements())
-			{
-				temp = (String) elems.nextElement();
-				paramMap.put(temp, req.getParameter(temp));
-			}
-			
-			pvo.setPaymentStatus(paramMap.get("resultMsg"));
+			pvo.setPaymentStatus(param.getPResultMsg());
 			//##############################
 			// 인증성공 resultCode=0000 확인
 			// IDC센터 확인 [idc_name=fc,ks,stg]	
@@ -85,7 +69,7 @@ public class CltPaymentService {
 			// 승인URL은  https://manual.inicis.com 참조
 			//##############################
 			
-			if("0000".equals(paramMap.get("resultCode")) && paramMap.get("authUrl").equals(ResourceBundle.getBundle("properties/idc_name").getString(paramMap.get("idc_name")))){			
+			if("0000".equals(param.getPResultCode()) && param.getPAuthUrl().equals(ResourceBundle.getBundle("properties/idc_name").getString(param.getPIdc_name()))){			
 				
 				System.out.println("####인증성공/승인요청####");
 
@@ -93,14 +77,14 @@ public class CltPaymentService {
 				// 1.전문 필드 값 설정(***가맹점 개발수정***)
 				//############################################
 				
-				String mid 		= paramMap.get("mid");
+				String mid 		= param.getPMid();
 				String timestamp= SignatureUtil.getTimestamp();
 				String charset 	= "UTF-8";
 				String format 	= "JSON";
-				String authToken= paramMap.get("authToken");
-				String authUrl	= paramMap.get("authUrl");
-				String netCancel= paramMap.get("netCancelUrl");	
-				String merchantData = paramMap.get("merchantData");
+				String authToken= param.getPAuthToken();
+				String authUrl	= param.getPAuthUrl();
+				String netCancel= param.getPNetCancelUrl();
+				String merchantData = param.getPMerchantData();
 				
 				//#####################
 				// 2.signature 생성
@@ -200,12 +184,13 @@ public class CltPaymentService {
 
 					// 망취소 결과 확인
 					System.out.println("<p>"+netcancelResultString.replaceAll("<", "&lt;").replaceAll(">", "&gt;")+"</p>");
+					
 				}
 
 			}else{
 				
-				resultMap.put("resultCode", paramMap.get("resultCode"));
-				resultMap.put("resultMsg", paramMap.get("resultMsg"));
+				resultMap.put("resultCode", param.getPResultCode());
+				resultMap.put("resultMsg", param.getPResultMsg());
 			}
 		} catch (Exception e) {
 			System.out.println(e);

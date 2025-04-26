@@ -37,4 +37,23 @@ public class CltPaymentDto {
 	private String paymethod; //결제 수단
 	private String vactBankName; //은행명
 	private String payDevice; //결제 디바이스
+	
+	
+	
+	// 이니시스에서 받아온데이터들.
+	private String pResultCode; 
+	private String pResultMsg; 
+	private String pReturnUrl; 
+	private String pCp_yn; 
+	private String pCharset; 
+	private String pOrderNumber; 
+	private String pAuthToken; 
+	private String pCheckAckUrl; 
+	private String pNetCancelUrl; 
+	private String pMid; 
+	private String pIdc_name; 
+	private String pMerchantData; 
+	private String pAuthUrl; 
+	private String pCardnum; 
+	private String pCardUsePoint;
 }
