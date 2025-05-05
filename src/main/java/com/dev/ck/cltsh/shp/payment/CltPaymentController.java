@@ -1,5 +1,7 @@
 package com.dev.ck.cltsh.shp.payment;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,15 +35,33 @@ public class CltPaymentController {
 	
 	@RequestMapping("/cltsh/order/payPcReturn.do")
 	public String payPcReturn(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		/*HttpSession session = req.getSession();
-		CltUserDto loginVo = (CltUserDto) session.getAttribute("loginInfo");
-		CltOrderDto orderVo = orderService.parameterSetting(req);
-		// 주문 생성 로직을 서비스로 위임
-		orderService.createOrder(orderVo, loginVo); // 결제 성공 후 주문 저장
-*/		
-		if ("0000".equals(req.getParameter("resultCode"))) {
+		req.setCharacterEncoding("UTF-8");
+
+		Map<String,String> paramMap = new Hashtable<String,String>();
+		
+		Enumeration elems = req.getParameterNames();
+		
+		String temp = "";
+
+		while(elems.hasMoreElements())
+		{
+			temp = (String) elems.nextElement();
+			paramMap.put(temp, req.getParameter(temp));
+		}
+		
+		CltPaymentDto param = new CltPaymentDto();
+		param.setPResultCode(paramMap.get("resultCode"));
+		param.setPResultMsg(paramMap.get("resultMsg"));
+		param.setPAuthUrl(paramMap.get("authUrl"));
+		param.setPIdc_name(paramMap.get("idc_name"));
+		param.setPMid(paramMap.get("mid"));
+		param.setPAuthToken(paramMap.get("authToken"));
+		param.setPNetCancelUrl(paramMap.get("netCancelUrl"));
+		param.setPMerchantData(paramMap.get("merchantData"));
+		
+		if ("0000".equals(param.getPResultCode())) {
 			// 주문 정보를 생성 및 저장
-			Map<String, String> resultMap = paymentService.processPayment(req);
+			Map<String, String> resultMap = paymentService.processPayment(param);
 			
 			req.setAttribute("resultMap", resultMap);
 			return "inss/INIstdpay_pc_return.view"; // 결제 성공 페이지
