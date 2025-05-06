@@ -7,20 +7,17 @@
 		SELECT PAY_SN AS paySn
 			, ORD_NO AS ordNo
 			, ORD_CLM_NO AS ordClmNo
-			, ORD_CLM_DTL_SN AS ordClmDtlSn
-			, PAY_STATE AS payStateCd 
+			, PAY_STATE_CD AS payStateCd 
 			, TID AS tid
 			, MID AS mid
-			, GOODS_PRC AS goodsPrc
 			, TIMESTAMP AS timestamp
 			, SIGNATURE AS signature
 			, VERIFICATION AS verification
+			, TOTPRICE AS totprice
 			, CURRENCY AS currency
-			, GOODS_NM AS goodsNm
 			, BUYER_NM AS buyerNm
 			, BUYER_TEL AS buyerTel
 			, BUYER_EMAIL AS buyerEmail
-			, PAYMENT_STATUS AS paymentStatus
 			, VACT_BANK_NAME AS vactBankName
 			, PAY_DEVICE AS payDevice
 			, RGST_DATE AS rgstDate
@@ -35,20 +32,17 @@
 		SELECT PAY_SN AS paySn
 			, ORD_NO AS ordNo
 			, ORD_CLM_NO AS ordClmNo
-			, ORD_CLM_DTL_SN AS ordClmDtlSn
-			, PAY_STATE AS payStateCd 
+			, PAY_STATE_CD AS payStateCd 
 			, TID AS tid
 			, MID AS mid
-			, GOODS_PRC AS goodsPrc
 			, TIMESTAMP AS timestamp
 			, SIGNATURE AS signature
 			, VERIFICATION AS verification
+			, TOTPRICE AS totprice
 			, CURRENCY AS currency
-			, GOODS_NM AS goodsNm
 			, BUYER_NM AS buyerNm
 			, BUYER_TEL AS buyerTel
 			, BUYER_EMAIL AS buyerEmail
-			, PAYMENT_STATUS AS paymentStatus
 			, VACT_BANK_NAME AS vactBankName
 			, PAY_DEVICE AS payDevice
 			, RGST_DATE AS rgstDate
@@ -68,6 +62,7 @@
 		, TIMESTAMP
 		, SIGNATURE
 		, VERIFICATION
+		, TOTPRICE
 		, CURRENCY
 		, BUYER_NM
 		, BUYER_TEL
@@ -85,6 +80,7 @@
 		, #{timestamp}
 		, #{signature}
 		, #{verification}
+		, #{totprice}
 		, #{currency}
 		, #{buyerNm}
 		, #{buyerTel}
@@ -98,9 +94,13 @@
 	<select id="ordNoSearch" resultType="cltPaymentDto">
 		/* PaymentDao.ordNoSearch */
 		SELECT base.ORD_CLM_NO AS ordClmNo,
-			dtl.ORD_CLM_DTL_SN AS ordClmDtlSn
+			dtl.ORD_CLM_DTL_SN AS ordClmDtlSn,
+			sale.BUL_TIT_NM  AS bulTitNm,
+			sale.GOODS_PRC AS goodsPrc,
+			sale.GOODS_SALE_PRC AS goodsSalePrc
 		FROM CLT_ORD_BASE base
 		JOIN CLT_ORD_DTL dtl  ON base.ORD_CLM_NO = dtl.ORD_CLM_NO
+		JOIN CLT_SALE_BOARD sale ON dtl.GOODS_CD = sale.GOODS_CD
 		WHERE 1=1
 		AND base.ORD_NO = #{ordNo};
 	</select>
@@ -110,6 +110,7 @@
 		SELECT PAY_DTL_INFO_SEQ AS payDtlInfoSeq
 			, PAY_SN AS paySn
 			, ORD_NO AS ordNo
+			, ORD_CLM_NO AS ordClmNo
 			, ORD_CLM_DTL_SN AS ordClmDtlSn
 			, GOODS_NM AS goodsNm
 			, GOODS_PRC AS goodsPrc
@@ -117,7 +118,7 @@
 			, RGST_DATE AS rgstDate
 		FROM  CLT_PAY_DTL_INFO
 		WHERE 1=1
-		AND TID = #{payDtlInfoSeq};
+		AND PAY_DTL_INFO_SEQ = #{payDtlInfoSeq};
 	</select>
 	
 	<select id="selectPayDtlInfoList" resultType="cltPaymentDto">
@@ -125,6 +126,7 @@
 		SELECT PAY_DTL_INFO_SEQ AS payDtlInfoSeq
 			, PAY_SN AS paySn
 			, ORD_NO AS ordNo
+			, ORD_CLM_NO AS ordClmNo
 			, ORD_CLM_DTL_SN AS ordClmDtlSn
 			, GOODS_NM AS goodsNm
 			, GOODS_PRC AS goodsPrc
@@ -139,6 +141,7 @@
 		INSERT INTO CLT_PAY_DTL_INFO 
 		( PAY_SN
 		, ORD_NO
+		, ORD_CLM_NO
 		, ORD_CLM_DTL_SN
 		, GOODS_NM
 		, GOODS_PRC
@@ -147,6 +150,7 @@
 		VALUES
 		( #{paySn}
 		, #{ordNo}
+		, #{ordClmNo}
 		, #{ordClmDtlSn}
 		, #{goodsNm}
 		, #{goodsPrc}

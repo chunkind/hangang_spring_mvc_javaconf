@@ -27,14 +27,14 @@ public class CltPaymentService {
 		String signKey = "SU5JTElURV9UUklQTEVERVNfS0VZU1RS";
 		String mKey = SignatureUtil.hash(signKey, "SHA-256");
 		String pinNo = OrdUtil.getPinNo();
-		String price = Integer.toString(goodsVo.getGoodsPrc() - goodsVo.getGoodsSalePrc() + goodsVo.getDlvPrc());
+		int price = goodsVo.getGoodsPrc() - goodsVo.getGoodsSalePrc() + goodsVo.getDlvPrc();
 		String timestamp = SignatureUtil.getTimestamp();
 		String useChkfake = "Y";
 		
 		// signParam 설정
 		Map<String, String> signParam = new HashMap<>();
 		signParam.put("oid", pinNo);
-		signParam.put("price", price);
+		signParam.put("price", String.valueOf(price));
 		signParam.put("timestamp", timestamp);
 		
 		// signature 및 verification 생성
@@ -146,20 +146,30 @@ public class CltPaymentService {
 					pvo.setBuyerTel(resultMap.get("buyerTel"));
 					pvo.setBuyerEmail(resultMap.get("buyerEmail"));
 					pvo.setOrdNo(resultMap.get("MOID"));
-					pvo.setGoodsPrc(resultMap.get("TotPrice"));
+					pvo.setTotprice(resultMap.get("TotPrice"));
 					pvo.setCurrency(resultMap.get("currency"));
-					pvo.setGoodsNm(resultMap.get("goodsName"));
 					pvo.setPaymethod(resultMap.get("payMethod"));
 					pvo.setVactBankName(resultMap.get("vactBankName"));
 					pvo.setPayDevice(resultMap.get("payDevice"));
 					
-					CltPaymentDto payVo = ordNoSearch(resultMap.get("MOID"));
-					pvo.setOrdClmNo(payVo.getOrdClmNo());
-					pvo.setOrdClmDtlSn(payVo.getOrdClmDtlSn());
-					pvo.setPayStateCd(payVo.getPayStateCd());
+					List<CltPaymentDto> payVo = ordNoSearch(resultMap.get("MOID")); 
 					
-					insertPayment(pvo);
-					insertPayDtlInfo(pvo);
+					boolean isFirst = true;
+
+					for (CltPaymentDto vo : payVo) {
+						pvo.setOrdClmNo(vo.getOrdClmNo());
+						pvo.setOrdClmDtlSn(vo.getOrdClmDtlSn());
+						pvo.setPayStateCd(vo.getPayStateCd());
+						pvo.setGoodsNm(vo.getBulTitNm());
+						pvo.setGoodsPrc(vo.getGoodsPrc() - vo.getGoodsSalePrc());
+
+						if (isFirst) {
+							insertPayment(pvo);  // 첫 번째 vo에서만 실행
+							isFirst = false;
+						}
+
+						insertPayDtlInfo(pvo);  // 매 반복마다 실행
+					}
 					
 					// 수신결과를 파싱후 resultCode가 "0000"이면 승인성공 이외 실패
 					//throw new Exception("강제 망취소 요청 Exception ");
@@ -207,7 +217,7 @@ public class CltPaymentService {
 	public List<CltPaymentDto> selectPaymentList(CltPaymentDto pvo){
 		return dao.selectPaymentList(pvo);
 	}
-	public CltPaymentDto ordNoSearch(String ordNo) {
+	public List<CltPaymentDto> ordNoSearch(String ordNo) {
 		return dao.ordNoSearch(ordNo);
 	}
 	public int insertPayDtlInfo(CltPaymentDto data) {
