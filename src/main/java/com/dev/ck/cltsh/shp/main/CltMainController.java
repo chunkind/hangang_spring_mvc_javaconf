@@ -1,6 +1,7 @@
 package com.dev.ck.cltsh.shp.main;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,71 +43,106 @@ public class CltMainController{
 	
 	@RequestMapping("/cltsh/main/mainCataList.do")
 	public String mainCataList(HttpServletRequest req, HttpServletResponse res, CltGoodsDetailDto pvo) {
-		List<CltCateDto> oneDepthCateList = commonCode(req);
- 		CltCateDto cateVO = new CltCateDto();
-		
-		//2depth 카테고리
+		// 1. 파라미터 수집 및 1차 카테고리 조회
 		String searchType = req.getParameter("searchType");
 		String searchCatgryCd = req.getParameter("searchCatgryCd");
 		String searchCatgryCd2 = req.getParameter("searchCatgryCd2");
-		String queryStr = "";
-		String queryStrArry[] = {"",""};
 
-//		GoodsDetailVO mainVO = new GoodsDetailVO();
-		if(null == searchCatgryCd || "".equals(searchCatgryCd)){
-			searchCatgryCd = oneDepthCateList.get(0).getCatgryCd();
-		}else {
-			queryStrArry[0] += "searchCatgryCd=" + searchCatgryCd;
-		}
-		cateVO.setUprClassCd(searchCatgryCd);
+		List<CltCateDto> oneDepthCateList = commonCode(req);
 
-		List<CltCateDto> twoDepthCateList = cateService.selectCateUnList(cateVO);
+		// 2. 서비스로 비즈니스 로직 위임 (카테고리 결정 및 쿼리스트링 세팅)
+		Map<String, Object> categoryData = mainService.getCategoryData(
+		        pvo, searchType, searchCatgryCd, searchCatgryCd2, oneDepthCateList
+		);
 
-		if(null == searchCatgryCd2 || "".equals(searchCatgryCd2)){
-			searchCatgryCd2 = twoDepthCateList.get(0).getCatgryCd();
-		}else {
-			queryStrArry[1] += "searchCatgryCd2=" + searchCatgryCd2;
-		}
-		cateVO.setCatgryCd2(searchCatgryCd2);
-
-		if(!"all".equals(searchType)){
-			pvo.setCatgryCd(searchCatgryCd);
-			pvo.setCatgryCd2(searchCatgryCd2);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////
-		String requestURI = (String) req.getAttribute("requestURI"); //페이징
-  		String page = req.getParameter("page");
+		// 3. 페이징 처리
 		int totalCnt = mainService.searchGoodsCnt(pvo);
-		
-		pvo.setPath(requestURI);
-		pvo.setParamPage(page);
+		pvo.setPath((String) req.getAttribute("requestURI"));
+		pvo.setParamPage(req.getParameter("page"));
 		pvo.setTotalCnt(totalCnt);
-		
-		if(null == searchType || "".equals(searchType)){
-			queryStr += "searchCatgryCd=" + queryStrArry[0] + "&" + "searchCatgryCd2=" + queryStrArry[1] + "&";
-			pvo.setQueryStr(queryStr);
-			PagingUtil.getPagingKeys(pvo);
-		}
-		else {
-			queryStr += "searchType=" + searchType;
-			pvo.setQueryStr(queryStr);
-			PagingUtil.getPagingKeys(pvo);
-			
-		}
-		////////////////////////////////////////////////////////////////////////////////////////////
+		PagingUtil.getPagingKeys(pvo);
 
+		// 4. 최종 상품 목록 조회
 		List<CltGoodsDetailDto> mainCateList = mainService.selectListMainCate(pvo);
 
+		// 5. 뷰로 데이터 전달
 		req.setAttribute("searchType", searchType);
 		req.setAttribute("mainCateList", mainCateList);
-		req.setAttribute("twoDepthCateList", twoDepthCateList);
-		req.setAttribute("selectedOneDepthCate", searchCatgryCd);
-		req.setAttribute("selectedTwoDepthCate", searchCatgryCd2);
+		req.setAttribute("twoDepthCateList", categoryData.get("twoDepthCateList"));
+		req.setAttribute("selectedOneDepthCate", categoryData.get("searchCatgryCd"));
+		req.setAttribute("selectedTwoDepthCate", categoryData.get("searchCatgryCd2"));
 		req.setAttribute("paging", pvo.getHtml());
-		
+
 		return "cltsh/shp/main/main_category";
 	}
+	
+//	@RequestMapping("/cltsh/main/mainCataList.do")
+//	public String mainCataList(HttpServletRequest req, HttpServletResponse res, CltGoodsDetailDto pvo) {
+//		List<CltCateDto> oneDepthCateList = commonCode(req);
+// 		CltCateDto cateVO = new CltCateDto();
+//		
+//		//2depth 카테고리
+//		String searchType = req.getParameter("searchType");
+//		String searchCatgryCd = req.getParameter("searchCatgryCd");
+//		String searchCatgryCd2 = req.getParameter("searchCatgryCd2");
+//		String queryStr = "";
+//		String queryStrArry[] = {"",""};
+//
+////		GoodsDetailVO mainVO = new GoodsDetailVO();
+//		if(null == searchCatgryCd || "".equals(searchCatgryCd)){
+//			searchCatgryCd = oneDepthCateList.get(0).getCatgryCd();
+//		}else {
+//			queryStrArry[0] += "searchCatgryCd=" + searchCatgryCd;
+//		}
+//		cateVO.setUprClassCd(searchCatgryCd);
+//
+//		List<CltCateDto> twoDepthCateList = cateService.selectCateUnList(cateVO);
+//
+//		if(null == searchCatgryCd2 || "".equals(searchCatgryCd2)){
+//			searchCatgryCd2 = twoDepthCateList.get(0).getCatgryCd();
+//		}else {
+//			queryStrArry[1] += "searchCatgryCd2=" + searchCatgryCd2;
+//		}
+//		cateVO.setCatgryCd2(searchCatgryCd2);
+//
+//		if(!"all".equals(searchType)){
+//			pvo.setCatgryCd(searchCatgryCd);
+//			pvo.setCatgryCd2(searchCatgryCd2);
+//		}
+//		
+//		////////////////////////////////////////////////////////////////////////////////////////////
+//		String requestURI = (String) req.getAttribute("requestURI"); //페이징
+//  		String page = req.getParameter("page");
+//		int totalCnt = mainService.searchGoodsCnt(pvo);
+//		
+//		pvo.setPath(requestURI);
+//		pvo.setParamPage(page);
+//		pvo.setTotalCnt(totalCnt);
+//		
+//		if(null == searchType || "".equals(searchType)){
+//			queryStr += "searchCatgryCd=" + queryStrArry[0] + "&" + "searchCatgryCd2=" + queryStrArry[1] + "&";
+//			pvo.setQueryStr(queryStr);
+//			PagingUtil.getPagingKeys(pvo);
+//		}
+//		else {
+//			queryStr += "searchType=" + searchType;
+//			pvo.setQueryStr(queryStr);
+//			PagingUtil.getPagingKeys(pvo);
+//			
+//		}
+//		////////////////////////////////////////////////////////////////////////////////////////////
+//
+//		List<CltGoodsDetailDto> mainCateList = mainService.selectListMainCate(pvo);
+//
+//		req.setAttribute("searchType", searchType);
+//		req.setAttribute("mainCateList", mainCateList);
+//		req.setAttribute("twoDepthCateList", twoDepthCateList);
+//		req.setAttribute("selectedOneDepthCate", searchCatgryCd);
+//		req.setAttribute("selectedTwoDepthCate", searchCatgryCd2);
+//		req.setAttribute("paging", pvo.getHtml());
+//		
+//		return "cltsh/shp/main/main_category";
+//	}
 	
 	@RequestMapping("/cltsh/main/mainQnaList.do")
 	public String mainQnaList(HttpServletRequest req, HttpServletResponse res, CltQnaDto pvo) {

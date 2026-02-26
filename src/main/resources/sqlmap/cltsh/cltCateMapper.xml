@@ -46,6 +46,25 @@
 		AND GOODS_CATA_SEQ = #{goodsCataSeq}
 	</select>
 	
+	<select id="selectCateAllList" resultType="cltCateDto">
+		/* cateDao.selectCateList - 카테고리 리스트 */
+		SELECT GOODS_CATA_SEQ	AS goodsCataSeq
+			, CATGRY_CD		AS catgryCd
+			, GOODS_CD		AS goodsCd
+			, CATGRY_NM		AS catgryNm
+			, NOTE_CONT		AS noteCont
+			, CLASS_LVL_CD	AS classLvlCd
+			, UPR_CLASS_CD	AS uprClassCd
+			, RGST_ID		AS rgstId
+			, RGST_DATE		AS rgstDate
+			, UPDT_ID		AS updtId
+			, UPDT_DATE		AS updtDate
+			, USE_YN		AS useYn
+		FROM CLT_GOODS_CATA
+		WHERE USE_YN = 'Y'
+		ORDER BY CLASS_LVL_CD ASC;
+	</select>
+	
 	<select id="selectCateList" resultType="cltCateDto">
 		/* cateDao.selectCateList - 카테고리 리스트 */
 		SELECT GOODS_CATA_SEQ	AS goodsCataSeq
